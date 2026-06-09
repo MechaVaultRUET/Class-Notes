@@ -6,8 +6,8 @@
     <title>Academic Vault | Modern Class Notes</title>
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #05070f 0%, #0b0914 100%);
-            --sidebar-bg: rgba(15, 23, 42, 0.7);
+            --bg-gradient: linear-gradient(135deg, #03050a 0%, #080610 100%);
+            --sidebar-bg: rgba(15, 23, 42, 0.75);
             --card-bg: rgba(255, 255, 255, 0.03);
             --card-hover-bg: rgba(255, 255, 255, 0.07);
             --text-main: #f8fafc;
@@ -44,39 +44,42 @@
             pointer-events: none;
         }
 
-        /* Perfectly Centered & High Visibility Glowing S.C Text */
-        .sc-background-container {
+        /* Diagonal Moving & High Visibility Glowing S.C Text Container */
+        .sc-diagonal-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            z-index: 1;
+            pointer-events: none;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1;
-            pointer-events: none;
-            padding-left: 280px; /* Offset for sidebar layout */
+            padding-left: 280px; /* Offset for sidebar */
         }
 
         .sc-background-text {
-            font-size: 20vw;
+            font-size: 8rem; /* Smaller font size to keep it in center without overflow */
             font-weight: 900;
-            background: linear-gradient(45deg, #00f2fe, #4facfe, #00000000);
-            background-image: linear-gradient(135deg, rgba(0, 242, 254, 0.15) 0%, rgba(192, 132, 252, 0.15) 100%);
+            color: #38bdf8;
+            /* Ultra bright neon lighting effect */
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #c084fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.2));
+            filter: drop-shadow(0 0 20px rgba(0, 242, 254, 0.8)) drop-shadow(0 0 40px rgba(192, 132, 252, 0.5));
             user-select: none;
             text-align: center;
-            line-height: 1;
-            animation: floatingText 8s ease-in-out infinite alternate;
+            letter-spacing: 5px;
+            animation: diagonalMovement 15s linear infinite alternate;
             will-change: transform;
         }
 
-        @keyframes floatingText {
-            0% { transform: translateY(-20px) rotate(-1deg) scale(1); }
-            100% { transform: translateY(20px) rotate(1deg) scale(1.03); }
+        /* Smooth Diagonal Traveling Animation inside the center screen */
+        @keyframes diagonalMovement {
+            0% { transform: translate(-80px, -80px) scale(1); }
+            50% { transform: translate(0px, 0px) scale(1.1); }
+            100% { transform: translate(80px, 80px) scale(1); }
         }
 
         /* App Wrapper to keep content above canvas */
@@ -225,8 +228,8 @@
             border: 1px solid var(--border-glass);
             border-radius: 20px;
             padding: 28px;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
@@ -236,7 +239,7 @@
         .note-card:hover {
             transform: translateY(-6px);
             background: var(--card-hover-bg);
-            border-color: rgba(56, 189, 248, 0.2);
+            border-color: rgba(56, 189, 248, 0.25);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
@@ -294,7 +297,7 @@
             main { margin-left: 240px; padding: 30px; }
             header { flex-direction: column; align-items: flex-start; }
             .search-wrapper { width: 100%; }
-            .sc-background-container { padding-left: 240px; }
+            .sc-diagonal-container { padding-left: 240px; }
         }
 
         @media (max-width: 768px) {
@@ -303,8 +306,8 @@
             main { margin-left: 0; padding: 20px; }
             .filter-menu { flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
             .filter-btn { white-space: nowrap; }
-            .sc-background-container { padding-left: 0; }
-            .sc-background-text { font-size: 45vw; }
+            .sc-diagonal-container { padding-left: 0; }
+            .sc-background-text { font-size: 4rem; }
         }
     </style>
 </head>
@@ -313,8 +316,8 @@
     <!-- Moving Interactive Canvas Particle System -->
     <canvas id="bg-canvas"></canvas>
 
-    <!-- Centered Container for S.C Text -->
-    <div class="sc-background-container">
+    <!-- Centered Box for Diagonal Floating S.C Text -->
+    <div class="sc-diagonal-container">
         <div class="sc-background-text" id="interactiveSC">S.C</div>
     </div>
 
@@ -325,8 +328,8 @@
             <div class="brand">AcademicVault</div>
             <p class="nav-label">Subjects</p>
             <div class="filter-menu">
-                <button class="filter-btn active" data-target="all" onclick="setCategory(this)">All Subjects</button>
-                <button class="filter-btn" data-target="physics" onclick="setCategory(this)">Physics</button>
+
+                
 
 
 
