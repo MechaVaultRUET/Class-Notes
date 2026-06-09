@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ইউনিভার্সিটি ক্লাস নোটস</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #2d3748;
+            --card-bg: #ffffff;
+            --primary-color: #3182ce;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #1a202c;
+            margin-bottom: 8px;
+            font-size: 2.2rem;
+        }
+
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 25px auto;
+            position: relative;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .search-bar:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px rgba(49, 130, 206, 0.2);
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .filter-btn {
+            background-color: #edf2f7;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            color: #4a5568;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .note-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .note-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tag {
+            display: inline-block;
+            background: #ebf8ff;
+            color: #2b6cb0;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .note-card h3 {
+            margin: 0 0 12px 0;
+            color: #1a202c;
+            font-size: 1.25rem;
+        }
+
+        .note-card p {
+            font-size: 0.95rem;
+            color: #4a5568;
+            margin-bottom: 15px;
+        }
+
+        .date {
+            font-size: 0.8rem;
+            color: #a0aec0;
+            display: block;
+            border-top: 1px solid #edf2f7;
+            padding-top: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>ইউনিভার্সিটি ক্লাস নোটস</h1>
+        <p>আপনার সব সাবজেক্টের লেকচার এক নজরে</p>
+    </header>
+
+    <!-- সার্চ বার -->
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="টপিক বা কীওয়ার্ড দিয়ে নোট খুঁজুন..." onkeyup="searchAndFilter()">
+    </div>
+
+    <!-- সাবজেক্ট ফিল্টার বাটনসমূহ -->
+    <div class="filter-container">
+        <button class="filter-btn active" data-target="all" onclick="setCategory(this)">সব নোট</button>
+        <button class="filter-btn" data-target="physics" onclick="setCategory(this)">Physics</button>
+        <button class="filter-btn" data-target="chemistry" onclick="setCategory(this)">Chemistry</button>
+        <button class="filter-btn" data-target="math" onclick="setCategory(this)">Math</button>
+        <button class="filter-btn" data-target="humanities" onclick="setCategory(this)">Humanities</button>
+        <button class="filter-btn" data-target="mechanical-eng" onclick="setCategory(this)">Mechanical Eng.</button>
+        <button class="filter-btn" data-target="mechanical-drawing" onclick="setCategory(this)">Mechanical Drawing</button>
+    </div>
+
+    <!-- নোট গ্রিড -->
+    <main class="notes-grid" id="notesGrid">
+        
+        <!-- Physics Note -->
+        <div class="note-card" data-subject="physics">
+            <span class="tag">Physics</span>
+            <h3>Thermodynamics Laws</h3>
+            <p>আজকে তাপগতিবিদ্যার প্রথম ও দ্বিতীয় সূত্র পড়ানো হয়েছে। এন্ট্রপির ধারণা এবং কার্নো ইঞ্জিনের দক্ষতা নির্ণয়ের ম্যাথগুলো পরীক্ষার জন্য খুব গুরুত্বপূর্ণ।</p>
+            <span class="date">তারিখ: ০৯ জুন, ২০২৬</span>
+        </div>
+
+        <!-- Chemistry Note -->
+        <div class="note-card" data-subject="chemistry">
+            <span class="tag">Chemistry</span>
+            <h3>Chemical Bonding & Hybridization</h3>
+            <p>sp3, sp2 এবং sp হাইব্রিডাইজেশনের জ্যামিতিক গঠন এবং মুক্তজোড় ইলেকট্রনের প্রভাব। পানির অণুর কোণ কেন ১০৪.৫ ডিগ্রি হয় তা আলোচনা করা হয়েছে।</p>
+            <span class="date">তারিখ: ০৮ জুন, ২০২৬</span>
+        </div>
+
+        <!-- Math Note -->
+        <div class="note-card" data-subject="math">
+            <span class="tag">Math</span>
+            <h3>Integral Calculus</h3>
+            <p>Definite Integrals ব্যবহার করে বক্ররেখার ক্ষেত্রফল নির্ণয়। Substitution method এবং Integration by parts এর কিছু গুরুত্বপূর্ণ গাণিতিক সমস্যা সমাধান করা হয়েছে।</p>
+            <span class="date">তারিখ: ০৭ জুন, ২০২৬</span>
+        </div>
+
+        <!-- Humanities Note -->
+        <div class="note-card" data-subject="humanities">
+            <span class="tag">Humanities</span>
+            <h3>Industrial Revolution Impacts</h3>
+            <p>অষ্টাদশ শতকে শিল্প বিপ্লবের সামাজিক ও অর্থনৈতিক প্রভাব। নগরায়ণ এবং শ্রমিক শ্রেণীর অধিকার আন্দোলনের উত্থান নিয়ে বিস্তারিত আলোচনা।</p>
+            <span class="date">তারিখ: ০৬ জুন, ۲۰২৬</span>
+        </div>
+
+        <!-- Mechanical Eng Note -->
+        <div class="note-card" data-subject="mechanical-eng">
+            <span class="tag">Mechanical Eng.</span>
+            <h3>Fluid Mechanics Principles</h3>
+            <p>বার্নোলির সমীকরণ (Bernoulli's Equation) এবং এর ব্যবহারিক প্রয়োগ। ভেঞ্চুরিমিটার এবং পিটট টিউবের মাধ্যমে কীভাবে ফ্লুইডের বেগ মাপা হয় তা দেখানো হয়েছে।</p>
+            <span class="date">তারিখ: ০৫ জুন, ২০২৬</span>
+        </div>
+
+        <!-- Mechanical Drawing Note -->
+        <div class="note-card" data-subject="mechanical-drawing">
+            <span class="tag">Mechanical Drawing</span>
+            <h3>Orthographic Projection</h3>
+            <p>First angle এবং Third angle প্রজেকশনের মধ্যে পার্থক্য। একটি থ্রি-ডি অবজেক্টকে কীভাবে টপ, ফ্রন্ট এবং সাইড ভিউতে ড্রয়িং শিটে আঁকতে হবে তার নিয়মাবলী।</p>
+            <span class="date">তারিখ: ০৪ জুন, ২০২৬</span>
+        </div>
+
+    </main>
+
+    <script>
+        let currentSubject = 'all';
+
+        function setCategory(button) {
+            // অ্যাক্টিভ বাটন স্টাইল পরিবর্তন
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            // বর্তমান ক্যাটাগরি সেট করা
+            currentSubject = button.getAttribute('data-target');
+            searchAndFilter();
+        }
+
+        function searchAndFilter() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.note-card');
+
+            cards.forEach(card => {
+                const subject = card.getAttribute('data-subject');
+                const title = card.querySelector('h3').innerText.toLowerCase();
+                const content = card.querySelector('p').innerText.toLowerCase();
+                
+                // সাবজেক্ট মিলছে কিনা পরীক্ষা
+                const matchSubject = (currentSubject === 'all' || subject === currentSubject);
+                // সার্চ কি-ওয়ার্ড মিলছে কিনা পরীক্ষা (টাইটেল অথবা কন্টেন্টের সাথে)
+                const matchSearch = (title.includes(searchQuery) || content.includes(searchQuery));
+
+                if (matchSubject && matchSearch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
