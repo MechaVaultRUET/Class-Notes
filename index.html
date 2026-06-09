@@ -68,12 +68,480 @@
                 0 0 10px #df24ff,
                 0 0 25px #a855f7,
                 0 0 50px #d946ef,
-                0 0 80px rgba(217, 70
-                              
+                0 0 80px rgba(217, 70, 239, 0.6);
+            user-select: none;
+            text-align: center;
+            letter-spacing: 8px;
+            animation: diagonalMovement 12s ease-in-out infinite alternate;
+            will-change: transform;
+        }
 
-                
+        /* Smooth Diagonal Path Animation inside the main area */
+        @keyframes diagonalMovement {
+            0% { transform: translate(-50px, -50px) scale(1); }
+            50% { transform: translate(0px, 0px) scale(1.06); }
+            100% { transform: translate(50px, 50px) scale(1); }
+        }
 
+        /* App Wrapper to keep content above canvas */
+        .app-container {
+            display: flex;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
 
+        /* Sidebar Navigation */
+        aside {
+            width: 280px;
+            background: var(--sidebar-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border-glass);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto; /* Enables scrolling for 9 menu options */
+        }
 
-        
+        /* Customize Scrollbar for Sidebar */
+        aside::-webkit-scrollbar {
+            width: 4px;
+        }
+        aside::-webkit-scrollbar-thumb {
+            background: var(--border-glass);
+            border-radius: 4px;
+        }
 
+        .brand {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 35px;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand::before {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+        }
+
+        .nav-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .filter-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* Changed buttons to standard links to handle clickable navigation */
+        .filter-link {
+            text-decoration: none;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 12px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: block;
+        }
+
+        .filter-link:hover {
+            background: var(--card-hover-bg);
+            color: var(--text-main);
+            transform: translateX(4px);
+        }
+
+        .filter-link.active {
+            background: var(--accent-gradient);
+            color: #ffffff;
+            font-weight: 700;
+            box-shadow: 0 4px 20px rgba(217, 70, 239, 0.4);
+        }
+
+        /* Main Content Area */
+        main {
+            margin-left: 280px;
+            flex: 1;
+            padding: 40px 50px;
+            max-width: 1400px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            gap: 20px;
+        }
+
+        .welcome-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .welcome-text p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 350px;
+        }
+
+        .search-bar {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-glass);
+            padding: 14px 20px;
+            border-radius: 14px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-bar:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.15);
+        }
+
+        /* Notes Grid Dashboard */
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .note-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 28px;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-decoration: none; /* Allows entire card to be beautifully clickable */
+        }
+
+        .note-card:hover {
+            transform: translateY(-6px);
+            background: var(--card-hover-bg);
+            border-color: rgba(217, 70, 239, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+
+        .tag {
+            background: rgba(217, 70, 239, 0.12);
+            color: #f472b6;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .note-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
+
+        .note-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border-glass);
+            padding-top: 16px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            width: 100%;
+        }
+
+        .action-btn {
+            background: transparent;
+            border: none;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            aside { width: 240px; }
+            main { margin-left: 240px; padding: 30px; }
+            header { flex-direction: column; align-items: flex-start; }
+            .search-wrapper { width: 100%; }
+            .sc-diagonal-container { padding-left: 240px; }
+        }
+
+        @media (max-width: 768px) {
+            .app-container { flex-direction: column; }
+            aside { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border-glass); padding: 20px; }
+            main { margin-left: 0; padding: 20px; }
+            .filter-menu { flex-direction: row; overflow-x: auto; padding-bottom: 10px; gap: 12px; }
+            .filter-link { white-space: nowrap; }
+            .sc-diagonal-container { padding-left: 0; }
+            .sc-background-text { font-size: 3.2rem; letter-spacing: 4px; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="sc-diagonal-container">
+        <div class="sc-background-text" id="interactiveSC">ME S.C</div>
+    </div>
+
+    <div class="app-container">
+        <aside>
+            <div class="brand">AcademicVault</div>
+            <p class="nav-label">Subjects</p>
+            <div class="filter-menu">
+                <a href="index.html" class="filter-link active">Dashboard</a>
+                <a href="physics.html" class="filter-link">Physics</a>
+                <a href="chemistry.html" class="filter-link">Chemistry</a>
+                <a href="math.html" class="filter-link">Math</a>
+                <a href="me-drawing.html" class="filter-link">ME Drawing</a>
+                <a href="basic-me.html" class="filter-link">Basic ME</a>
+                <a href="humanities.html" class="filter-link">Humanities</a>
+                <a href="me-workshop.html" class="filter-link">ME Workshop</a>
+                <a href="physics-sessional.html" class="filter-link">Physics Sessional</a>
+                <a href="chemistry-sessional.html" class="filter-link">Chemistry Sessional</a>
+            </div>
+        </aside>
+
+        <main>
+            <header>
+                <div class="welcome-text">
+                    <h1>Welcome Back</h1>
+                    <p>Access your curated engineering studies modules below.</p>
+                </div>
+                <div class="search-wrapper">
+                    <input type="text" class="search-bar" placeholder="Search class modules or topics...">
+                </div>
+            </header>
+
+            <section class="notes-grid">
+                <a href="physics.html" class="note-card">
+                    <div>
+                        <div class="card-header">
+                            <span class="tag">Theory</span>
+                        </div>
+                        <h3>Physics</h3>
+                        <p>Core concepts including mechanics, wave optics, and electrodynamics structures.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span>Module 01</span>
+                        <span class="action-btn">Open Notes &rarr;</span>
+                    </div>
+                </a>
+
+                <a href="chemistry.html" class="note-card">
+                    <div>
+                        <div class="card-header">
+                            <span class="tag">Theory</span>
+                        </div>
+                        <h3>Chemistry</h3>
+                        <p>Molecular configurations, polymerizations, and industrial organic compounds.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span>Module 02</span>
+                        <span class="action-btn">Open Notes &rarr;</span>
+                    </div>
+                </a>
+
+                <a href="math.html" class="note-card">
+                    <div>
+                        <div class="card-header">
+                            <span class="tag">Core Math</span>
+                        </div>
+                        <h3>Mathematics</h3>
+                        <p>Differential calculus, coordinate structures, matrix arrays, and integration properties.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span>Module 03</span>
+                        <span class="action-btn">Open Notes &rarr;</span>
+                    </div>
+                </a>
+
+                <a href="me-drawing.html" class="note-card">
+                    <div>
+                        <div class="card-header">
+                            <span class="tag">Technical</span>
+                        </div>
+                        <h3>ME Drawing</h3>
+                        <p>Isometric views, orthographic projections, and computer-aided drafting foundations.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span>Module 04</span>
+                        <span class="action-btn">Open Notes &rarr;</span>
+                    </div>
+                </a>
+
+                <a href="basic-me.html" class="note-card">
+                    <div>
+                        <div class="card-header">
+                            <span class="tag">Engineering</span>
+                        </div>
+                        <h3>Basic ME</h3>
+                        <p>Thermodynamics properties, internal combustion setups, and power transmission cycles.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span>Module 05</span>
+                        <span class="action-btn">Open Notes &rarr;</span>
+                    </div>
+                </a>
+
+                <a href="humanities.html" class="note-card">
+                    <div>
+                        <div class="card-header">
+                            <span class="tag">General</span>
+                        </div>
+                        <h3>Humanities</h3>
+                        <p>Technical communication strategies, ethics in engineering, and macroeconomics basics.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span>Module 06</span>
+                        <span class="action-btn">Open Notes &rarr;</span>
+                    </div>
+                </a>
+
+                <a href="me-workshop.html" class="note-card">
+                    <div>
+                        <div class="card-header">
+                            <span class="tag">Practical</span>
+                        </div>
+                        <h3>ME Workshop</h3>
+                        <p>Machining systems, safety protocols, welding procedures, and fitting operations.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span>Module 07</span>
+                        <span class="action-btn">Open Notes &rarr;</span>
+                    </div>
+                </a>
+
+                <a href="physics-sessional.html" class="note-card">
+                    <div>
+                        <div class="card-header">
+                            <span class="tag">Lab</span>
+                        </div>
+                        <h3>Physics Sessional</h3>
+                        <p>Experimental labs tracking spectrometer constants, prisms, and error evaluation metrics.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span>Module 08</span>
+                        <span class="action-btn">Open Notes &rarr;</span>
+                    </div>
+                </a>
+
+                <a href="chemistry-sessional.html" class="note-card">
+                    <div>
+                        <div class="card-header">
+                            <span class="tag">Lab</span>
+                        </div>
+                        <h3>Chemistry Sessional</h3>
+                        <p>Volumetric titration records, chemical mixture properties, and water purification steps.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span>Module 09</span>
+                        <span class="action-btn">Open Notes &rarr;</span>
+                    </div>
+                </a>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 0.3 - 0.15;
+                this.speedY = Math.random() * 0.3 - 0.15;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(168, 85, 247, 0.2)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 60; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
