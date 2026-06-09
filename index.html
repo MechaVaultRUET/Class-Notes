@@ -6,15 +6,15 @@
     <title>Academic Vault | Modern Class Notes</title>
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            --sidebar-bg: rgba(30, 41, 59, 0.7);
-            --card-bg: rgba(255, 255, 255, 0.04);
-            --card-hover-bg: rgba(255, 255, 255, 0.08);
+            --bg-gradient: linear-gradient(135deg, #070a13 0%, #0f0c20 100%);
+            --sidebar-bg: rgba(15, 23, 42, 0.6);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-hover-bg: rgba(255, 255, 255, 0.07);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --accent-color: #6366f1;
             --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-glass: rgba(255, 255, 255, 0.06);
         }
 
         * {
@@ -29,21 +29,63 @@
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Interactive Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Floating Interactive S.C Text Background */
+        .sc-background-text {
+            position: fixed;
+            font-size: 25vw;
+            font-weight: 900;
+            background: linear-gradient(45deg, rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.05));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            filter: blur(2px);
+            animation: floatingText 12s ease-in-out infinite alternate;
+            will-change: transform;
+        }
+
+        @keyframes floatingText {
+            0% { transform: translate(5%, 10%) rotate(0deg) scale(1); }
+            50% { transform: translate(15%, 25%) rotate(5deg) scale(1.05); filter: blur(1px); }
+            100% { transform: translate(-5%, 15%) rotate(-3deg) scale(0.95); }
+        }
+
+        /* App Wrapper to keep content above canvas */
+        .app-container {
+            display: flex;
+            width: 100%;
+            position: relative;
+            z-index: 2;
         }
 
         /* Sidebar Navigation */
         aside {
             width: 280px;
             background: var(--sidebar-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-right: 1px solid var(--border-glass);
             padding: 30px 20px;
             display: flex;
             flex-direction: column;
             position: fixed;
             height: 100vh;
-            z-index: 10;
         }
 
         .brand {
@@ -105,7 +147,7 @@
         .filter-btn.active {
             background: var(--accent-gradient);
             color: #ffffff;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.25);
         }
 
         /* Main Content Area */
@@ -142,7 +184,7 @@
 
         .search-bar {
             width: 100%;
-            background: rgba(15, 23, 42, 0.4);
+            background: rgba(15, 23, 42, 0.5);
             border: 1px solid var(--border-glass);
             padding: 14px 20px;
             border-radius: 14px;
@@ -155,7 +197,6 @@
         .search-bar:focus {
             border-color: var(--accent-color);
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
-            background: rgba(15, 23, 42, 0.6);
         }
 
         /* Notes Grid Dashboard */
@@ -170,8 +211,8 @@
             border: 1px solid var(--border-glass);
             border-radius: 20px;
             padding: 28px;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
@@ -181,8 +222,8 @@
         .note-card:hover {
             transform: translateY(-6px);
             background: var(--card-hover-bg);
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
         .card-header {
@@ -193,13 +234,12 @@
         }
 
         .tag {
-            background: rgba(99, 102, 241, 0.15);
+            background: rgba(99, 102, 241, 0.12);
             color: #a5b4fc;
             padding: 6px 12px;
             border-radius: 8px;
             font-size: 0.75rem;
             font-weight: 600;
-            letter-spacing: 0.5px;
         }
 
         .note-card h3 {
@@ -207,7 +247,6 @@
             font-weight: 600;
             color: var(--text-main);
             margin-bottom: 12px;
-            line-height: 1.4;
         }
 
         .note-card p {
@@ -215,7 +254,6 @@
             font-size: 0.95rem;
             line-height: 1.6;
             margin-bottom: 20px;
-            flex-grow: 1;
         }
 
         .card-footer {
@@ -234,12 +272,6 @@
             color: var(--accent-color);
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.85rem;
-            transition: color 0.2s;
-        }
-
-        .action-btn:hover {
-            color: #a855f7;
         }
 
         /* Responsive Design */
@@ -251,61 +283,40 @@
         }
 
         @media (max-width: 768px) {
-            body { flex-direction: column; }
+            .app-container { flex-direction: column; }
             aside { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border-glass); padding: 20px; }
             main { margin-left: 0; padding: 20px; }
             .filter-menu { flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
             .filter-btn { white-space: nowrap; }
+            .sc-background-text { font-size: 40vw; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar Section -->
-    <aside>
-        <div class="brand">AcademicVault</div>
-        <p class="nav-label">Subjects</p>
-        <div class="filter-menu">
-            <button class="filter-btn active" data-target="all" onclick="setCategory(this)">All Subjects</button>
-            <button class="filter-btn" data-target="physics" onclick="setCategory(this)">Physics</button>
-            <button class="filter-btn" data-target="chemistry" onclick="setCategory(this)">Chemistry</button>
-            <button class="filter-btn" data-target="math" onclick="setCategory(this)">Mathematics</button>
-            <button class="filter-btn" data-target="humanities" onclick="setCategory(this)">Humanities</button>
-            <button class="filter-btn" data-target="mechanical-eng" onclick="setCategory(this)">Mechanical Eng.</button>
-            <button class="filter-btn" data-target="mechanical-drawing" onclick="setCategory(this)">Mechanical Drawing</button>
-        </div>
-    </aside>
+    <!-- Moving Interactive Canvas Particle System -->
+    <canvas id="bg-canvas"></canvas>
 
-    <!-- Main Dashboard -->
-    <main>
-        <header>
-            <div class="welcome-text">
-                <h1>Class Lectures & Notes</h1>
-                <p>Streamlined repository for your university curriculum</p>
-            </div>
-            <div class="search-wrapper">
-                <input type="text" id="searchInput" class="search-bar" placeholder="Search topics or keywords..." onkeyup="searchAndFilter()">
-            </div>
-        </header>
+    <!-- Glowing Interactive Floating Text -->
+    <div class="sc-background-text" id="interactiveSC">S.C</div>
 
-        <!-- Notes Grid -->
-        <div class="notes-grid" id="notesGrid">
-            
-            <div class="note-card" data-subject="physics">
-                <div class="card-header">
-                    <span class="tag">Physics</span>
-                </div>
-                <h3>Thermodynamics & Entropy</h3>
-                <p>Detailed analysis of the First and Second Laws of Thermodynamics. Focus on Carnot Engine efficiency derivations and numerical problems regarding entropy changes.</p>
-                <div class="card-footer">
-                    <span>June 09, 2026</span>
-                    <button class="action-btn" onclick="alert('Note content expanded!')">Read Full</button>
-                </div>
+    <!-- App Content Wrapper -->
+    <div class="app-container">
+        <!-- Sidebar Section -->
+        <aside>
+            <div class="brand">AcademicVault</div>
+            <p class="nav-label">Subjects</p>
+            <div class="filter-menu">
+                <button class="filter-btn active" data-target="all" onclick="setCategory(this)">All Subjects</button>
+                <button class="filter-btn" data-target="physics" onclick="setCategory(this)">Physics</button>
+                <button class="filter-btn" data-target="chemistry" onclick="setCategory(this)">Chemistry</button>
+                <button class="filter-btn" data-target="math" onclick="setCategory(this)">Mathematics</button>
+                <button class="filter-btn" data-target="humanities" onclick="setCategory(this)">Humanities</button>
+                <button class="filter-btn" data-target="mechanical-eng" onclick="setCategory(this)">Mechanical Eng.</button>
+                <button class="filter-btn" data-target="mechanical-drawing" onclick="setCategory(this)">Mechanical Drawing</button>
             </div>
+        </aside>
 
-            <div class="note-card" data-subject="chemistry">
-                <div class="card-header">
-                    <span class="tag">Chemistry</span>
-                </div>
-                <h3>Chemical Bonding & Hybridization</h3>
+
+        
 
