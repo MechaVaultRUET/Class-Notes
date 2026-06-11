@@ -1,547 +1,901 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Vault | Modern Class Notes</title>
-    <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #020205 0%, #05030a 100%);
-            --sidebar-bg: rgba(10, 15, 30, 0.8);
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --card-hover-bg: rgba(255, 255, 255, 0.07);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-color: #d946ef;
-            --accent-gradient: linear-gradient(135deg, #a855f7 0%, #d946ef 100%);
-            --border-glass: rgba(255, 255, 255, 0.06);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Vault | ME-C1</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        }
+<style>
 
-        body {
-            background: var(--bg-gradient);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            position: relative;
-            overflow-x: hidden;
-        }
+:root{
+--bg-gradient:linear-gradient(135deg,#020205 0%,#05030a 100%);
+--sidebar-bg:rgba(10,15,30,.85);
+--card-bg:rgba(255,255,255,.03);
+--card-hover-bg:rgba(255,255,255,.07);
+--text-main:#f8fafc;
+--text-muted:#94a3b8;
+--accent-color:#d946ef;
+--accent-gradient:linear-gradient(135deg,#a855f7 0%,#d946ef 100%);
+--border-glass:rgba(255,255,255,.06);
+}
 
-        /* Interactive Canvas Background */
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',system-ui,sans-serif;
+}
 
-        /* Ultra-Bright, Centered, Solid Purple-Violet ME S.C Text */
-        .sc-diagonal-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding-left: 280px; /* Offset to push center to the content area */
-        }
+body{
+background:var(--bg-gradient);
+color:var(--text-main);
+min-height:100vh;
+overflow-x:hidden;
+}
 
-        .sc-background-text {
-            font-size: 5.5rem; /* Perfect visibility size to avoid cuts */
-            font-weight: 900;
-            color: #e0aaff; /* Solid light lavender base for high visibility */
-            /* Extreme Neon Violet and Purple glow layers */
-            text-shadow: 
-                0 0 10px #df24ff,
-                0 0 25px #a855f7,
-                0 0 50px #d946ef,
-                0 0 80px rgba(217, 70, 239, 0.6);
-            user-select: none;
-            text-align: center;
-            letter-spacing: 8px;
-            animation: diagonalMovement 12s ease-in-out infinite alternate;
-            will-change: transform;
-        }
+body.light{
+background:white;
+color:black;
+}
 
-        /* Smooth Diagonal Path Animation inside the main area */
-        @keyframes diagonalMovement {
-            0% { transform: translate(-50px, -50px) scale(1); }
-            50% { transform: translate(0px, 0px) scale(1.06); }
-            100% { transform: translate(50px, 50px) scale(1); }
-        }
+#bg-canvas{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:1;
+pointer-events:none;
+}
 
-        /* App Wrapper to keep content above canvas */
-        .app-container {
-            display: flex;
-            width: 100%;
-            position: relative;
-            z-index: 2;
-        }
+.sc-diagonal-container{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+pointer-events:none;
+z-index:1;
+padding-left:280px;
+}
 
-        /* Sidebar Navigation */
-        aside {
-            width: 280px;
-            background: var(--sidebar-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-right: 1px solid var(--border-glass);
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto; /* Enables scrolling for 9 menu options */
-        }
+.sc-background-text{
+font-size:5.5rem;
+font-weight:900;
+color:#e0aaff;
+letter-spacing:8px;
 
-        /* Customize Scrollbar for Sidebar */
-        aside::-webkit-scrollbar {
-            width: 4px;
-        }
-        aside::-webkit-scrollbar-thumb {
-            background: var(--border-glass);
-            border-radius: 4px;
-        }
+text-shadow:
+0 0 10px #df24ff,
+0 0 25px #a855f7,
+0 0 50px #d946ef,
+0 0 80px rgba(217,70,239,.6);
 
-        .brand {
-            font-size: 1.4rem;
-            font-weight: 800;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 35px;
-            letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+animation:diagonalMovement 12s ease-in-out infinite alternate;
+}
 
-        .brand::before {
-            content: '';
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            background: var(--accent-gradient);
-            border-radius: 50%;
-        }
+@keyframes diagonalMovement{
 
-        .nav-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
+0%{
+transform:translate(-50px,-50px);
+}
 
-        .filter-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+50%{
+transform:translate(0px,0px) scale(1.05);
+}
 
-        /* Changed buttons to standard links to handle clickable navigation */
-        .filter-link {
-            text-decoration: none;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 12px 16px;
-            border-radius: 10px;
-            cursor: pointer;
-            text-align: left;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            display: block;
-        }
+100%{
+transform:translate(50px,50px);
+}
 
-        .filter-link:hover {
-            background: var(--card-hover-bg);
-            color: var(--text-main);
-            transform: translateX(4px);
-        }
+}
 
-        .filter-link.active {
-            background: var(--accent-gradient);
-            color: #ffffff;
-            font-weight: 700;
-            box-shadow: 0 4px 20px rgba(217, 70, 239, 0.4);
-        }
+.app-container{
+display:flex;
+position:relative;
+z-index:2;
+}
 
-        /* Main Content Area */
-        main {
-            margin-left: 280px;
-            flex: 1;
-            padding: 40px 50px;
-            max-width: 1400px;
-        }
+aside{
+width:280px;
+background:var(--sidebar-bg);
+backdrop-filter:blur(20px);
+border-right:1px solid var(--border-glass);
+padding:30px 20px;
+position:fixed;
+height:100vh;
+overflow-y:auto;
+}
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-            gap: 20px;
-        }
+.brand{
+font-size:1.5rem;
+font-weight:800;
+background:var(--accent-gradient);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:30px;
+}
 
-        .welcome-text h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
+.nav-label{
+font-size:.8rem;
+letter-spacing:1px;
+color:var(--text-muted);
+margin-bottom:15px;
+font-weight:700;
+}
 
-        .welcome-text p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
+.filter-menu{
+display:flex;
+flex-direction:column;
+gap:8px;
+}
 
-        .search-wrapper {
-            position: relative;
-            width: 350px;
-        }
+.filter-link{
+text-decoration:none;
+padding:13px 16px;
+border-radius:12px;
+color:var(--text-muted);
+transition:.3s;
+}
 
-        .search-bar {
-            width: 100%;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid var(--border-glass);
-            padding: 14px 20px;
-            border-radius: 14px;
-            color: var(--text-main);
-            font-size: 0.95rem;
-            outline: none;
-            transition: all 0.3s;
-        }
+.filter-link:hover{
+background:var(--card-hover-bg);
+color:white;
+transform:translateX(4px);
+}
 
-        .search-bar:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.15);
-        }
+.filter-link.active{
+background:var(--accent-gradient);
+color:white;
+font-weight:700;
+}
 
-        /* Notes Grid Dashboard */
-        .notes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-        }
+main{
+margin-left:280px;
+padding:40px 50px;
+flex:1;
+}
 
-        .note-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-glass);
-            border-radius: 20px;
-            padding: 28px;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            text-decoration: none; /* Allows entire card to be beautifully clickable */
-        }
+.top-bar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+}
 
-        .note-card:hover {
-            transform: translateY(-6px);
-            background: var(--card-hover-bg);
-            border-color: rgba(217, 70, 239, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        }
+.notice-btn{
+background:var(--accent-gradient);
+padding:12px 22px;
+border-radius:14px;
+text-decoration:none;
+color:white;
+font-weight:700;
+}
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 18px;
-        }
+#themeBtn{
+background:var(--accent-gradient);
+border:none;
+padding:12px 22px;
+border-radius:14px;
+color:white;
+cursor:pointer;
+}
 
-        .tag {
-            background: rgba(217, 70, 239, 0.12);
-            color: #f472b6;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
+.center-title{
+display:flex;
+justify-content:center;
+margin-bottom:30px;
+}
 
-        .note-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-main);
-            margin-bottom: 12px;
-        }
+.center-title h1{
+font-size:2rem;
+font-weight:900;
+background:var(--accent-gradient);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
 
-        .note-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:40px;
+gap:20px;
+}
 
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid var(--border-glass);
-            padding-top: 16px;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            width: 100%;
-        }
+.welcome-text h1{
+font-size:1.8rem;
+margin-bottom:8px;
+}
 
-        .action-btn {
-            background: transparent;
-            border: none;
-            color: var(--accent-color);
-            font-weight: 600;
-        }
+.welcome-text p{
+color:var(--text-muted);
+}
 
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            aside { width: 240px; }
-            main { margin-left: 240px; padding: 30px; }
-            header { flex-direction: column; align-items: flex-start; }
-            .search-wrapper { width: 100%; }
-            .sc-diagonal-container { padding-left: 240px; }
-        }
+#clock{
+margin-top:10px;
+color:#d946ef;
+font-weight:700;
+}
 
-        @media (max-width: 768px) {
-            .app-container { flex-direction: column; }
-            aside { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border-glass); padding: 20px; }
-            main { margin-left: 0; padding: 20px; }
-            .filter-menu { flex-direction: row; overflow-x: auto; padding-bottom: 10px; gap: 12px; }
-            .filter-link { white-space: nowrap; }
-            .sc-diagonal-container { padding-left: 0; }
-            .sc-background-text { font-size: 3.2rem; letter-spacing: 4px; }
-        }
-    </style>
+.search-wrapper{
+width:350px;
+}
+
+.search-bar{
+width:100%;
+padding:15px 20px;
+border-radius:14px;
+border:1px solid var(--border-glass);
+background:rgba(15,23,42,.6);
+color:white;
+outline:none;
+}
+
+.stats-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:25px;
+margin-bottom:40px;
+}
+
+.stat-card{
+background:var(--card-bg);
+padding:30px;
+border-radius:20px;
+text-align:center;
+backdrop-filter:blur(20px);
+}
+
+.stat-card h2{
+font-size:2rem;
+color:#d946ef;
+margin-bottom:10px;
+}
+
+.notes-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+gap:25px;
+}     
+
+
+
+
+
+
+.note-card{
+background:var(--card-bg);
+border:1px solid var(--border-glass);
+border-radius:20px;
+padding:28px;
+text-decoration:none;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+transition:.3s;
+animation:fadeUp .8s ease;
+}
+
+.note-card:hover{
+transform:translateY(-8px);
+background:var(--card-hover-bg);
+}
+
+.card-header{
+margin-bottom:18px;
+}
+
+.tag{
+background:rgba(217,70,239,.12);
+color:#f472b6;
+padding:6px 12px;
+border-radius:8px;
+font-size:.8rem;
+}
+
+.note-card h3{
+color:white;
+margin:15px 0;
+}
+
+.note-card p{
+color:var(--text-muted);
+line-height:1.6;
+}
+
+.card-footer{
+display:flex;
+justify-content:space-between;
+border-top:1px solid var(--border-glass);
+padding-top:16px;
+margin-top:20px;
+color:var(--text-muted);
+}
+
+.action-btn{
+color:#d946ef;
+font-weight:700;
+}
+
+.extra-tools{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+margin-top:50px;
+}
+
+.tool-card{
+background:var(--card-bg);
+padding:30px;
+border-radius:20px;
+}
+
+.progress-card{
+margin-top:50px;
+background:var(--card-bg);
+padding:30px;
+border-radius:20px;
+}
+
+progress{
+width:100%;
+height:15px;
+accent-color:#d946ef;
+margin-top:20px;
+}
+
+#topBtn{
+position:fixed;
+bottom:30px;
+right:30px;
+width:55px;
+height:55px;
+border:none;
+border-radius:50%;
+background:#d946ef;
+color:white;
+font-size:22px;
+cursor:pointer;
+z-index:999;
+}
+
+.ai-button{
+position:fixed;
+bottom:110px;
+right:30px;
+width:70px;
+height:70px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:30px;
+background:var(--accent-gradient);
+box-shadow:0 0 30px rgba(217,70,239,.6);
+cursor:pointer;
+z-index:999;
+}
+
+@keyframes fadeUp{
+
+from{
+opacity:0;
+transform:translateY(40px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+@media(max-width:768px){
+
+aside{
+width:100%;
+height:auto;
+position:relative;
+}
+
+main{
+margin-left:0;
+padding:20px;
+}
+
+header{
+flex-direction:column;
+}
+
+.search-wrapper{
+width:100%;
+}
+
+.sc-diagonal-container{
+padding-left:0;
+}
+
+.sc-background-text{
+font-size:3rem;
+letter-spacing:4px;
+}
+
+}
+
+</style>
 </head>
+
 <body>
 
-    <canvas id="bg-canvas"></canvas>
+<canvas id="bg-canvas"></canvas>
 
-    <div class="sc-diagonal-container">
-        <div class="sc-background-text" id="interactiveSC">ME S.C</div>
-    </div>
+<div class="sc-diagonal-container">
+<div class="sc-background-text">
+ME S.C
+</div>
+</div>
 
-    <div class="app-container">
-        <aside>
-            <div class="brand">AcademicVault</div>
-            <p class="nav-label">Subjects</p>
-            <div class="filter-menu">
-                <a href="index.html" class="filter-link active">Dashboard</a>
-                <a href="physics.html" class="filter-link">Physics</a>
-                <a href="chemistry.html" class="filter-link">Chemistry</a>
-                <a href="math.html" class="filter-link">Math</a>
-                <a href="me-drawing.html" class="filter-link">ME Drawing</a>
-                <a href="basic-me.html" class="filter-link">Basic ME</a>
-                <a href="humanities.html" class="filter-link">Humanities</a>
-                <a href="me-workshop.html" class="filter-link">ME Workshop</a>
-                <a href="physics-sessional.html" class="filter-link">Physics Sessional</a>
-                <a href="chemistry-sessional.html" class="filter-link">Chemistry Sessional</a>
-            </div>
-        </aside>
+<div class="app-container">
 
-        <main>
-            <header>
-                <div class="welcome-text">
-                    <h1>Welcome Back</h1>
-                    <p>Access your curated engineering studies modules below.</p>
-                </div>
-                <div class="search-wrapper">
-                    <input type="text" class="search-bar" placeholder="Search class modules or topics...">
-                </div>
-            </header>
+<aside>
 
-            <section class="notes-grid">
-                <a href="physics.html" class="note-card">
-                    <div>
-                        <div class="card-header">
-                            <span class="tag">Theory</span>
-                        </div>
-                        <h3>Physics</h3>
-                        <p>Core concepts including mechanics, wave optics, and electrodynamics structures.</p>
-                    </div>
-                    <div class="card-footer">
-                        <span>Module 01</span>
-                        <span class="action-btn">Open Notes &rarr;</span>
-                    </div>
-                </a>
+<div class="brand">
+AcademicVault
+</div>
 
-                <a href="chemistry.html" class="note-card">
-                    <div>
-                        <div class="card-header">
-                            <span class="tag">Theory</span>
-                        </div>
-                        <h3>Chemistry</h3>
-                        <p>Molecular configurations, polymerizations, and industrial organic compounds.</p>
-                    </div>
-                    <div class="card-footer">
-                        <span>Module 02</span>
-                        <span class="action-btn">Open Notes &rarr;</span>
-                    </div>
-                </a>
+<p class="nav-label">
+Subjects
+</p>
 
-                <a href="math.html" class="note-card">
-                    <div>
-                        <div class="card-header">
-                            <span class="tag">Core Math</span>
-                        </div>
-                        <h3>Mathematics</h3>
-                        <p>Differential calculus, coordinate structures, matrix arrays, and integration properties.</p>
-                    </div>
-                    <div class="card-footer">
-                        <span>Module 03</span>
-                        <span class="action-btn">Open Notes &rarr;</span>
-                    </div>
-                </a>
+<div class="filter-menu">
 
-                <a href="me-drawing.html" class="note-card">
-                    <div>
-                        <div class="card-header">
-                            <span class="tag">Technical</span>
-                        </div>
-                        <h3>ME Drawing</h3>
-                        <p>Isometric views, orthographic projections, and computer-aided drafting foundations.</p>
-                    </div>
-                    <div class="card-footer">
-                        <span>Module 04</span>
-                        <span class="action-btn">Open Notes &rarr;</span>
-                    </div>
-                </a>
+<a href="" target="_blank" class="filter-link active">CHEM-1121</a>
 
-                <a href="basic-me.html" class="note-card">
-                    <div>
-                        <div class="card-header">
-                            <span class="tag">Engineering</span>
-                        </div>
-                        <h3>Basic ME</h3>
-                        <p>Thermodynamics properties, internal combustion setups, and power transmission cycles.</p>
-                    </div>
-                    <div class="card-footer">
-                        <span>Module 05</span>
-                        <span class="action-btn">Open Notes &rarr;</span>
-                    </div>
-                </a>
+<a href="" target="_blank" class="filter-link">PHY-1121</a>
 
-                <a href="humanities.html" class="note-card">
-                    <div>
-                        <div class="card-header">
-                            <span class="tag">General</span>
-                        </div>
-                        <h3>Humanities</h3>
-                        <p>Technical communication strategies, ethics in engineering, and macroeconomics basics.</p>
-                    </div>
-                    <div class="card-footer">
-                        <span>Module 06</span>
-                        <span class="action-btn">Open Notes &rarr;</span>
-                    </div>
-                </a>
+<a href="" target="_blank" class="filter-link">HUM-1121</a>
 
-                <a href="me-workshop.html" class="note-card">
-                    <div>
-                        <div class="card-header">
-                            <span class="tag">Practical</span>
-                        </div>
-                        <h3>ME Workshop</h3>
-                        <p>Machining systems, safety protocols, welding procedures, and fitting operations.</p>
-                    </div>
-                    <div class="card-footer">
-                        <span>Module 07</span>
-                        <span class="action-btn">Open Notes &rarr;</span>
-                    </div>
-                </a>
+<a href="" target="_blank" class="filter-link">MATH-1121</a>
 
-                <a href="physics-sessional.html" class="note-card">
-                    <div>
-                        <div class="card-header">
-                            <span class="tag">Lab</span>
-                        </div>
-                        <h3>Physics Sessional</h3>
-                        <p>Experimental labs tracking spectrometer constants, prisms, and error evaluation metrics.</p>
-                    </div>
-                    <div class="card-footer">
-                        <span>Module 08</span>
-                        <span class="action-btn">Open Notes &rarr;</span>
-                    </div>
-                </a>
+<a href="" target="_blank" class="filter-link">ME-1121</a>
 
-                <a href="chemistry-sessional.html" class="note-card">
-                    <div>
-                        <div class="card-header">
-                            <span class="tag">Lab</span>
-                        </div>
-                        <h3>Chemistry Sessional</h3>
-                        <p>Volumetric titration records, chemical mixture properties, and water purification steps.</p>
-                    </div>
-                    <div class="card-footer">
-                        <span>Module 09</span>
-                        <span class="action-btn">Open Notes &rarr;</span>
-                    </div>
-                </a>
-            </section>
-        </main>
-    </div>
+<a href="" target="_blank" class="filter-link">CHEM-1122</a>
 
-    <script>
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
+<a href="" target="_blank" class="filter-link">PHY-1122</a>
 
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
+<a href="" target="_blank" class="filter-link">ME-1102</a>
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = Math.random() * 0.3 - 0.15;
-                this.speedY = Math.random() * 0.3 - 0.15;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.y > canvas.height) this.y = 0;
-                if (this.y < 0) this.y = canvas.height;
-            }
-            draw() {
-                ctx.fillStyle = 'rgba(168, 85, 247, 0.2)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
+<a href="" target="_blank" class="filter-link">ME-1100</a>
 
-        for (let i = 0; i < 60; i++) {
-            particles.push(new Particle());
-        }
+<a href="" target="_blank" class="filter-link">MES-1108</a>
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
-    </script>
+</div>
+
+</aside>
+
+<main>
+
+<div class="top-bar">
+
+<a href="" target="_blank" class="notice-btn">
+📢 Notices
+</a>
+
+<button id="themeBtn">
+🌙 Theme
+</button>
+
+</div>
+
+<div class="center-title">
+<h1>ME-C1</h1>
+</div>
+
+<header>
+
+<div class="welcome-text">
+
+<h1>
+Welcome Back
+</h1>
+
+<p>
+Access your engineering resources and notes.
+</p>
+
+<div id="clock"></div>
+
+</div>
+
+<div class="search-wrapper">
+
+<input
+id="searchInput"
+class="search-bar"
+type="text"
+placeholder="Search modules or subjects..."
+>
+
+</div>
+
+</header>
+
+<div class="stats-grid">
+
+<div class="stat-card">
+<h2>10</h2>
+<p>Subjects</p>
+</div>
+
+<div class="stat-card">
+<h2>2</h2>
+<p>Sessional Courses</p>
+</div>
+
+<div class="stat-card">
+<h2>8</h2>
+<p>Theory Courses</p>
+</div>
+
+</div>
+
+<section class="notes-grid">     
+
+
+
+
+
+
+
+<a href="" target="_blank" class="note-card">
+<div>
+<div class="card-header">
+<span class="tag">Chemistry</span>
+</div>
+<h3>CHEM-1121</h3>
+<p>Chemistry notes, assignments and important PDFs.</p>
+</div>
+<div class="card-footer">
+<span>Module 01</span>
+<span class="action-btn">Open →</span>
+</div>
+</a>
+
+<a href="" target="_blank" class="note-card">
+<div>
+<div class="card-header">
+<span class="tag">Physics</span>
+</div>
+<h3>PHY-1121</h3>
+<p>Physics theory notes and resources.</p>
+</div>
+<div class="card-footer">
+<span>Module 02</span>
+<span class="action-btn">Open →</span>
+</div>
+</a>
+
+<a href="" target="_blank" class="note-card">
+<div>
+<div class="card-header">
+<span class="tag">Humanities</span>
+</div>
+<h3>HUM-1121</h3>
+<p>Humanities and communication resources.</p>
+</div>
+<div class="card-footer">
+<span>Module 03</span>
+<span class="action-btn">Open →</span>
+</div>
+</a>
+
+<a href="" target="_blank" class="note-card">
+<div>
+<div class="card-header">
+<span class="tag">Mathematics</span>
+</div>
+<h3>MATH-1121</h3>
+<p>Calculus, matrices and engineering mathematics.</p>
+</div>
+<div class="card-footer">
+<span>Module 04</span>
+<span class="action-btn">Open →</span>
+</div>
+</a>
+
+<a href="" target="_blank" class="note-card">
+<div>
+<div class="card-header">
+<span class="tag">Mechanical</span>
+</div>
+<h3>ME-1121</h3>
+<p>Mechanical Engineering lecture resources.</p>
+</div>
+<div class="card-footer">
+<span>Module 05</span>
+<span class="action-btn">Open →</span>
+</div>
+</a>
+
+<a href="" target="_blank" class="note-card">
+<div>
+<div class="card-header">
+<span class="tag">Chemistry Lab</span>
+</div>
+<h3>CHEM-1122</h3>
+<p>Chemistry sessional reports and practical PDFs.</p>
+</div>
+<div class="card-footer">
+<span>Module 06</span>
+<span class="action-btn">Open →</span>
+</div>
+</a>
+
+<a href="" target="_blank" class="note-card">
+<div>
+<div class="card-header">
+<span class="tag">Physics Lab</span>
+</div>
+<h3>PHY-1122</h3>
+<p>Experiment sheets and lab reports.</p>
+</div>
+<div class="card-footer">
+<span>Module 07</span>
+<span class="action-btn">Open →</span>
+</div>
+</a>
+
+<a href="" target="_blank" class="note-card">
+<div>
+<div class="card-header">
+<span class="tag">Workshop</span>
+</div>
+<h3>ME-1102</h3>
+<p>Workshop practices and manuals.</p>
+</div>
+<div class="card-footer">
+<span>Module 08</span>
+<span class="action-btn">Open →</span>
+</div>
+</a>
+
+<a href="" target="_blank" class="note-card">
+<div>
+<div class="card-header">
+<span class="tag">Drawing</span>
+</div>
+<h3>ME-1100</h3>
+<p>Engineering drawing resources.</p>
+</div>
+<div class="card-footer">
+<span>Module 09</span>
+<span class="action-btn">Open →</span>
+</div>
+</a>
+
+<a href="" target="_blank" class="note-card">
+<div>
+<div class="card-header">
+<span class="tag">Sessional</span>
+</div>
+<h3>MES-1108</h3>
+<p>Sessional works and manuals.</p>
+</div>
+<div class="card-footer">
+<span>Module 10</span>
+<span class="action-btn">Open →</span>
+</div>
+</a>
+
+</section>
+
+<div class="progress-card">
+
+<h2>Study Progress</h2>
+
+<progress value="45" max="100"></progress>
+
+<br><br>
+
+<p>45% Completed</p>
+
+</div>
+
+</main>
+
+</div>
+
+<button id="topBtn">
+↑
+</button>
+
+<div class="ai-button">
+🤖
+</div>
+
+<script>
+
+const canvas=document.getElementById('bg-canvas');
+const ctx=canvas.getContext('2d');
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+window.addEventListener('resize',()=>{
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+});
+
+let particles=[];
+
+class Particle{
+
+constructor(){
+
+this.x=Math.random()*canvas.width;
+this.y=Math.random()*canvas.height;
+this.size=Math.random()*2+0.5;
+this.speedX=Math.random()*0.3-.15;
+this.speedY=Math.random()*0.3-.15;
+
+}
+
+update(){
+
+this.x+=this.speedX;
+this.y+=this.speedY;
+
+if(this.x>canvas.width)this.x=0;
+if(this.x<0)this.x=canvas.width;
+if(this.y>canvas.height)this.y=0;
+if(this.y<0)this.y=canvas.height;
+
+}
+
+draw(){
+
+ctx.fillStyle='rgba(168,85,247,.2)';
+
+ctx.beginPath();
+
+ctx.arc(
+this.x,
+this.y,
+this.size,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+}
+
+}
+
+for(let i=0;i<60;i++){
+
+particles.push(
+new Particle()
+);
+
+}
+
+function animate(){
+
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+particles.forEach(p=>{
+
+p.update();
+
+p.draw();
+
+});
+
+requestAnimationFrame(
+animate
+);
+
+}
+
+animate();
+
+
+
+const searchInput=document.getElementById("searchInput");
+
+searchInput.addEventListener("keyup",()=>{
+
+const filter=searchInput.value.toLowerCase();
+
+document.querySelectorAll(".note-card").forEach(card=>{
+
+const title=card.querySelector("h3").textContent.toLowerCase();
+
+if(title.includes(filter)){
+
+card.style.display="flex";
+
+}
+else{
+
+card.style.display="none";
+
+}
+
+});
+
+});
+
+
+
+if(localStorage.getItem("theme")==="light"){
+
+document.body.classList.add("light");
+
+}
+
+document.getElementById("themeBtn")
+.onclick=()=>{
+
+document.body.classList.toggle("light");
+
+localStorage.setItem(
+"theme",
+document.body.classList.contains("light")
+?"light"
+:"dark"
+);
+
+};
+
+
+
+setInterval(()=>{
+
+document.getElementById("clock")
+.innerHTML=
+new Date().toLocaleString();
+
+},1000);
+
+
+
+document.getElementById("topBtn")
+.onclick=()=>{
+
+window.scrollTo({
+
+top:0,
+behavior:"smooth"
+
+});
+
+};
+
+
+
+document.querySelector(".ai-button")
+.onclick=()=>{
+
+alert(
+"AI Assistant feature coming soon."
+);
+
+};
+
+</script>
+
 </body>
 </html>
