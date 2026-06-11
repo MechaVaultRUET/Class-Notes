@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Academic Vault | ME-C1</title>
 
 <style>
@@ -34,8 +36,8 @@ overflow-x:hidden;
 }
 
 body.light{
-background:white;
-color:black;
+background:#ffffff;
+color:#111827;
 }
 
 #bg-canvas{
@@ -44,8 +46,8 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-z-index:1;
 pointer-events:none;
+z-index:1;
 }
 
 .sc-diagonal-container{
@@ -163,7 +165,7 @@ flex:1;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:30px;
+margin-bottom:25px;
 }
 
 .notice-btn{
@@ -202,13 +204,13 @@ header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:40px;
 gap:20px;
+margin-bottom:40px;
 }
 
 .welcome-text h1{
 font-size:1.8rem;
-margin-bottom:8px;
+margin-bottom:10px;
 }
 
 .welcome-text p{
@@ -217,8 +219,8 @@ color:var(--text-muted);
 
 #clock{
 margin-top:10px;
-color:#d946ef;
 font-weight:700;
+color:#d946ef;
 }
 
 .search-wrapper{
@@ -260,7 +262,12 @@ margin-bottom:10px;
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
 gap:25px;
-}     
+}    
+
+
+
+
+
 
 
 
@@ -321,33 +328,6 @@ color:#d946ef;
 font-weight:700;
 }
 
-.extra-tools{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:25px;
-margin-top:50px;
-}
-
-.tool-card{
-background:var(--card-bg);
-padding:30px;
-border-radius:20px;
-}
-
-.progress-card{
-margin-top:50px;
-background:var(--card-bg);
-padding:30px;
-border-radius:20px;
-}
-
-progress{
-width:100%;
-height:15px;
-accent-color:#d946ef;
-margin-top:20px;
-}
-
 #topBtn{
 position:fixed;
 bottom:30px;
@@ -375,6 +355,7 @@ justify-content:center;
 align-items:center;
 font-size:30px;
 background:var(--accent-gradient);
+color:white;
 box-shadow:0 0 30px rgba(217,70,239,.6);
 cursor:pointer;
 z-index:999;
@@ -392,6 +373,57 @@ opacity:1;
 transform:translateY(0);
 }
 
+}
+
+/* LIGHT MODE FIXES */
+
+body.light .note-card{
+background:#f8fafc;
+}
+
+body.light .note-card h3{
+color:#111827;
+}
+
+body.light .note-card p{
+color:#475569;
+}
+
+body.light .card-footer{
+color:#475569;
+}
+
+body.light .filter-link{
+color:#374151;
+}
+
+body.light .filter-link:hover{
+color:#111827;
+}
+
+body.light .search-bar{
+background:white;
+color:#111827;
+border:1px solid #d1d5db;
+}
+
+body.light .stat-card{
+background:#f8fafc;
+}
+
+body.light .tag{
+color:#d946ef;
+}
+
+body.light .welcome-text p{
+color:#475569;
+}
+
+body.light .notice-btn,
+body.light #themeBtn,
+body.light #topBtn,
+body.light .ai-button{
+color:white;
 }
 
 @media(max-width:768px){
@@ -427,6 +459,7 @@ letter-spacing:4px;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -434,9 +467,11 @@ letter-spacing:4px;
 <canvas id="bg-canvas"></canvas>
 
 <div class="sc-diagonal-container">
+
 <div class="sc-background-text">
 ME S.C
 </div>
+
 </div>
 
 <div class="app-container">
@@ -492,7 +527,11 @@ Subjects
 </div>
 
 <div class="center-title">
-<h1>ME-C1</h1>
+
+<h1>
+ME-C1
+</h1>
+
 </div>
 
 <header>
@@ -528,22 +567,25 @@ placeholder="Search modules or subjects..."
 
 <div class="stat-card">
 <h2>10</h2>
-<p>Subjects</p>
+<p>Total Courses</p>
 </div>
 
 <div class="stat-card">
-<h2>2</h2>
-<p>Sessional Courses</p>
-</div>
-
-<div class="stat-card">
-<h2>8</h2>
+<h2>5</h2>
 <p>Theory Courses</p>
 </div>
 
+<div class="stat-card">
+<h2>5</h2>
+<p>Sessional Courses</p>
 </div>
 
-<section class="notes-grid">     
+</div>
+
+<section class="notes-grid">    
+
+
+
 
 
 
@@ -554,7 +596,7 @@ placeholder="Search modules or subjects..."
 <a href="" target="_blank" class="note-card">
 <div>
 <div class="card-header">
-<span class="tag">Chemistry</span>
+<span class="tag">Theory</span>
 </div>
 <h3>CHEM-1121</h3>
 <p>Chemistry notes, assignments and important PDFs.</p>
@@ -568,10 +610,10 @@ placeholder="Search modules or subjects..."
 <a href="" target="_blank" class="note-card">
 <div>
 <div class="card-header">
-<span class="tag">Physics</span>
+<span class="tag">Theory</span>
 </div>
 <h3>PHY-1121</h3>
-<p>Physics theory notes and resources.</p>
+<p>Physics notes and important resources.</p>
 </div>
 <div class="card-footer">
 <span>Module 02</span>
@@ -582,10 +624,10 @@ placeholder="Search modules or subjects..."
 <a href="" target="_blank" class="note-card">
 <div>
 <div class="card-header">
-<span class="tag">Humanities</span>
+<span class="tag">Theory</span>
 </div>
 <h3>HUM-1121</h3>
-<p>Humanities and communication resources.</p>
+<p>Humanities and communication materials.</p>
 </div>
 <div class="card-footer">
 <span>Module 03</span>
@@ -596,7 +638,7 @@ placeholder="Search modules or subjects..."
 <a href="" target="_blank" class="note-card">
 <div>
 <div class="card-header">
-<span class="tag">Mathematics</span>
+<span class="tag">Theory</span>
 </div>
 <h3>MATH-1121</h3>
 <p>Calculus, matrices and engineering mathematics.</p>
@@ -610,10 +652,10 @@ placeholder="Search modules or subjects..."
 <a href="" target="_blank" class="note-card">
 <div>
 <div class="card-header">
-<span class="tag">Mechanical</span>
+<span class="tag">Theory</span>
 </div>
 <h3>ME-1121</h3>
-<p>Mechanical Engineering lecture resources.</p>
+<p>Mechanical Engineering fundamentals.</p>
 </div>
 <div class="card-footer">
 <span>Module 05</span>
@@ -624,10 +666,10 @@ placeholder="Search modules or subjects..."
 <a href="" target="_blank" class="note-card">
 <div>
 <div class="card-header">
-<span class="tag">Chemistry Lab</span>
+<span class="tag">Sessional</span>
 </div>
 <h3>CHEM-1122</h3>
-<p>Chemistry sessional reports and practical PDFs.</p>
+<p>Chemistry lab reports and practical sheets.</p>
 </div>
 <div class="card-footer">
 <span>Module 06</span>
@@ -638,10 +680,10 @@ placeholder="Search modules or subjects..."
 <a href="" target="_blank" class="note-card">
 <div>
 <div class="card-header">
-<span class="tag">Physics Lab</span>
+<span class="tag">Sessional</span>
 </div>
 <h3>PHY-1122</h3>
-<p>Experiment sheets and lab reports.</p>
+<p>Physics experiment sheets and lab manuals.</p>
 </div>
 <div class="card-footer">
 <span>Module 07</span>
@@ -652,10 +694,10 @@ placeholder="Search modules or subjects..."
 <a href="" target="_blank" class="note-card">
 <div>
 <div class="card-header">
-<span class="tag">Workshop</span>
+<span class="tag">Sessional</span>
 </div>
 <h3>ME-1102</h3>
-<p>Workshop practices and manuals.</p>
+<p>Workshop practice and machine tools.</p>
 </div>
 <div class="card-footer">
 <span>Module 08</span>
@@ -666,10 +708,10 @@ placeholder="Search modules or subjects..."
 <a href="" target="_blank" class="note-card">
 <div>
 <div class="card-header">
-<span class="tag">Drawing</span>
+<span class="tag">Sessional</span>
 </div>
 <h3>ME-1100</h3>
-<p>Engineering drawing resources.</p>
+<p>Engineering drawing and projection materials.</p>
 </div>
 <div class="card-footer">
 <span>Module 09</span>
@@ -683,7 +725,7 @@ placeholder="Search modules or subjects..."
 <span class="tag">Sessional</span>
 </div>
 <h3>MES-1108</h3>
-<p>Sessional works and manuals.</p>
+<p>Sessional files and laboratory resources.</p>
 </div>
 <div class="card-footer">
 <span>Module 10</span>
@@ -692,18 +734,6 @@ placeholder="Search modules or subjects..."
 </a>
 
 </section>
-
-<div class="progress-card">
-
-<h2>Study Progress</h2>
-
-<progress value="45" max="100"></progress>
-
-<br><br>
-
-<p>45% Completed</p>
-
-</div>
 
 </main>
 
@@ -719,35 +749,30 @@ placeholder="Search modules or subjects..."
 
 <script>
 
-const canvas=document.getElementById('bg-canvas');
-const ctx=canvas.getContext('2d');
+const canvas=document.getElementById("bg-canvas");
+const ctx=canvas.getContext("2d");
 
+function resize(){
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
+}
+resize();
 
-window.addEventListener('resize',()=>{
-
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-});
+window.addEventListener("resize",resize);
 
 let particles=[];
 
 class Particle{
 
 constructor(){
-
 this.x=Math.random()*canvas.width;
 this.y=Math.random()*canvas.height;
 this.size=Math.random()*2+0.5;
-this.speedX=Math.random()*0.3-.15;
-this.speedY=Math.random()*0.3-.15;
-
+this.speedX=Math.random()*0.3-0.15;
+this.speedY=Math.random()*0.3-0.15;
 }
 
 update(){
-
 this.x+=this.speedX;
 this.y+=this.speedY;
 
@@ -755,63 +780,35 @@ if(this.x>canvas.width)this.x=0;
 if(this.x<0)this.x=canvas.width;
 if(this.y>canvas.height)this.y=0;
 if(this.y<0)this.y=canvas.height;
-
 }
 
 draw(){
-
-ctx.fillStyle='rgba(168,85,247,.2)';
-
+ctx.fillStyle="rgba(168,85,247,.2)";
 ctx.beginPath();
-
-ctx.arc(
-this.x,
-this.y,
-this.size,
-0,
-Math.PI*2
-);
-
+ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
 ctx.fill();
-
 }
 
 }
 
 for(let i=0;i<60;i++){
-
-particles.push(
-new Particle()
-);
-
+particles.push(new Particle());
 }
 
 function animate(){
 
-ctx.clearRect(
-0,
-0,
-canvas.width,
-canvas.height
-);
+ctx.clearRect(0,0,canvas.width,canvas.height);
 
 particles.forEach(p=>{
-
 p.update();
-
 p.draw();
-
 });
 
-requestAnimationFrame(
-animate
-);
+requestAnimationFrame(animate);
 
 }
 
 animate();
-
-
 
 const searchInput=document.getElementById("searchInput");
 
@@ -824,30 +821,21 @@ document.querySelectorAll(".note-card").forEach(card=>{
 const title=card.querySelector("h3").textContent.toLowerCase();
 
 if(title.includes(filter)){
-
 card.style.display="flex";
-
 }
 else{
-
 card.style.display="none";
-
 }
 
 });
 
 });
-
-
 
 if(localStorage.getItem("theme")==="light"){
-
 document.body.classList.add("light");
-
 }
 
-document.getElementById("themeBtn")
-.onclick=()=>{
+document.getElementById("themeBtn").onclick=()=>{
 
 document.body.classList.toggle("light");
 
@@ -860,38 +848,25 @@ document.body.classList.contains("light")
 
 };
 
-
-
 setInterval(()=>{
 
-document.getElementById("clock")
-.innerHTML=
+document.getElementById("clock").innerHTML=
 new Date().toLocaleString();
 
 },1000);
 
-
-
-document.getElementById("topBtn")
-.onclick=()=>{
+document.getElementById("topBtn").onclick=()=>{
 
 window.scrollTo({
-
 top:0,
 behavior:"smooth"
-
 });
 
 };
 
+document.querySelector(".ai-button").onclick=()=>{
 
-
-document.querySelector(".ai-button")
-.onclick=()=>{
-
-alert(
-"AI Assistant feature coming soon."
-);
+alert("AI Assistant feature coming soon.");
 
 };
 
