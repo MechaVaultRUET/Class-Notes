@@ -1,1 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Vault | Notices</title>
 
+<style>
+
+:root{
+--bg-gradient:linear-gradient(135deg,#020205 0%,#05030a 100%);
+--card-bg:rgba(255,255,255,.04);
+--border-glass:rgba(255,255,255,.08);
+--accent-gradient:linear-gradient(135deg,#a855f7 0%,#d946ef 100%);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',system-ui,sans-serif;
+}
+
+body{
+background:var(--bg-gradient);
+color:white;
+padding:30px 15px;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+}
+
+.title{
+text-align:center;
+margin-bottom:50px;
+}
+
+.title h1{
+font-size:3rem;
+font-weight:900;
+background:var(--accent-gradient);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.notice-box{
+background:var(--card-bg);
+border:1px solid var(--border-glass);
+border-radius:25px;
+padding:30px;
+margin-bottom:25px;
+}
+
+.latest{
+box-shadow:0 0 30px rgba(217,70,239,.5);
+}
+
+.new-badge{
+display:inline-block;
+background:red;
+padding:5px 12px;
+border-radius:20px;
+font-size:.8rem;
+font-weight:700;
+margin-bottom:15px;
+}
+
+.notice-number{
+font-size:2rem;
+font-weight:900;
+color:#d946ef;
+margin-bottom:10px;
+}
+
+.notice-date{
+font-size:.95rem;
+color:#94a3b8;
+margin-bottom:15px;
+}
+
+.notice-text{
+font-size:1.2rem;
+font-weight:700;
+line-height:1.8;
+}
+
+.home-btn{
+display:inline-block;
+margin-top:40px;
+padding:15px 25px;
+border-radius:15px;
+background:linear-gradient(135deg,#a855f7,#d946ef);
+text-decoration:none;
+color:white;
+font-weight:700;
+}
+
+@media(max-width:768px){
+
+.title h1{
+font-size:2.2rem;
+}
+
+.notice-number{
+font-size:1.6rem;
+}
+
+.notice-text{
+font-size:1.05rem;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="title">
+<h1>📢 NOTICE BOARD</h1>
+</div>
+
+
+<div class="notice-box latest">
+
+<div class="new-badge">
+NEW
+</div>
+
+<div class="notice-number">
+1.
+</div>
+
+<div class="notice-date">
+13 July 2026
+</div>
+
+<div class="notice-text">
+Write your newest notice here.
+</div>
+
+</div>
+
+
+<div class="notice-box">
+
+<div class="notice-number">
+2.
+</div>
+
+<div class="notice-date">
+12 July 2026
+</div>
+
+<div class="notice-text">
+Write notice number 2 here.
+</div>
+
+</div>
+
+
+<div class="notice-box">
+
+<div class="notice-number">
+3.
+</div>
+
+<div class="notice-date">
+11 July 2026
+</div>
+
+<div class="notice-text">
+Write notice number 3 here.
+</div>
+
+</div>
+
+
+<div class="notice-box">
+
+<div class="notice-number">
+4.
+</div>
+
+<div class="notice-date">
+10 July 2026
+</div>
+
+<div class="notice-text">
+Write notice number 4 here.
+</div>
+
+</div>
+
+
+<div class="notice-box">
+
+<div class="notice-number">
+5.
+</div>
+
+<div class="notice-date">
+9 July 2026
+</div>
+
+<div class="notice-text">
+Write notice number 5 here.
+</div>
+
+</div>
+
+
+<a href="index.html" class="home-btn">
+← Back to Home
+</a>
+
+</div>
+
+</body>
+</html>
