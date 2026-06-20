@@ -1,14 +1,304 @@
-
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Academic Vault | ME-C1</title>
 
-<style>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="sc-diagonal-container">
+    <div class="sc-background-text">
+        ME S.C
+    </div>
+</div>
+
+<div class="app-container">
+
+    <aside>
+
+        <div class="brand">
+            AcademicVault
+        </div>
+
+        <p class="nav-label">
+            Subjects
+        </p>
+
+        <div class="filter-menu">
+
+            <a href="https://drive.google.com/drive/folders/1eMSMgbEPnWtjO-j12XxSElUA_D-AfdT2" target="_blank" class="filter-link active">CHEM-1121</a>
+
+            <a href="https://drive.google.com/drive/folders/1qpGaxu1vsXVbviyzQDT7ckazPkKvxsLt" target="_blank" class="filter-link">PHY-1121</a>
+
+            <a href="https://drive.google.com/drive/folders/1b48oZTDUjAkzIsHNkj9gxaCZt6GN4q8P" target="_blank" class="filter-link">HUM-1121</a>
+
+            <a href="https://drive.google.com/drive/folders/1Ed4GI8FYkWSNJNiAbIxAlwKNHSNnhwnb" target="_blank" class="filter-link">MATH-1121</a>
+
+            <a href="https://drive.google.com/drive/folders/1rbBvHJMX0kJ2qVKwbW05mEn3GWdX071p" target="_blank" class="filter-link">ME-1101</a>
+
+            <a href="https://drive.google.com/drive/folders/1hntowkpmajFNICe5UiVh3Bh4UWouneIM" target="_blank" class="filter-link">CHEM-1122</a>
+
+            <a href="https://drive.google.com/drive/folders/1Qk_H_6QbSk6wWNxUzTKbqu8V0DrWMRhx" target="_blank" class="filter-link">PHY-1122</a>
+
+            <a href="https://drive.google.com/drive/folders/1QiFcgUKNQJdV1FpbF72gFgNrECBGDVOK" target="_blank" class="filter-link">ME-1102</a>
+
+            <a href="https://drive.google.com/drive/folders/1k3TksXF8wcJd4S8riM6XtZE3Vo1p9IN0" target="_blank" class="filter-link">ME-1100</a>
+
+            <a href="https://drive.google.com/drive/folders/1uR2REAd6SWtC2iJ04hauvoyD-8nyc_df" target="_blank" class="filter-link">MES-1108</a>
+
+        </div>
+
+    </aside>
+
+    <main>
+
+        <div class="top-bar">
+
+            <a href="notice.html" target="_blank" class="notice-btn">
+                🔔 Notices
+                <span class="badge">NEW</span>
+            </a>
+
+            <button id="themeBtn">
+                🌙 Theme
+            </button>
+
+        </div>
+
+        <div class="center-title">
+            <h1>
+                ME-C1
+            </h1>
+        </div>
+
+        <header>
+
+            <div class="welcome-text">
+
+                <h1>
+                    Welcome Back
+                </h1>
+
+                <p>
+                    Access your engineering resources and notes.
+                </p>
+
+                <div id="clock"></div>
+
+            </div>
+
+            <div class="search-wrapper">
+
+                <input
+                    id="searchInput"
+                    class="search-bar"
+                    type="text"
+                    placeholder="Search modules or subjects..."
+                >
+
+            </div>
+
+        </header>
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <h2>10</h2>
+                <p>Total Courses</p>
+            </div>
+
+            <div class="stat-card">
+                <h2>5</h2>
+                <p>Theory Courses</p>
+            </div>
+
+            <div class="stat-card">
+                <h2>5</h2>
+                <p>Sessional Courses</p>
+            </div>
+
+        </div>
+
+        <section class="notes-grid">
+
+            <a href="https://drive.google.com/drive/folders/1eMSMgbEPnWtjO-j12XxSElUA_D-AfdT2?usp=drive_link" target="_blank" class="note-card">
+                <div>
+                    <div class="card-header">
+                        <span class="tag">Theory</span>
+                    </div>
+                    <h3>CHEM-1121</h3>
+                    <p>Chemistry notes, assignments and important PDFs.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Module 01</span>
+                    <span class="action-btn">Open →</span>
+                </div>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1qpGaxu1vsXVbviyzQDT7ckazPkKvxsLt?usp=drive_link" target="_blank" class="note-card">
+                <div>
+                    <div class="card-header">
+                        <span class="tag">Theory</span>
+                    </div>
+                    <h3>PHY-1121</h3>
+                    <p>Physics notes and important resources.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Module 02</span>
+                    <span class="action-btn">Open →</span>
+                </div>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1b48oZTDUjAkzIsHNkj9gxaCZt6GN4q8P?usp=drive_link" target="_blank" class="note-card">
+                <div>
+                    <div class="card-header">
+                        <span class="tag">Theory</span>
+                    </div>
+                    <h3>HUM-1121</h3>
+                    <p>Humanities and communication materials.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Module 03</span>
+                    <span class="action-btn">Open →</span>
+                </div>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1Ed4GI8FYkWSNJNiAbIxAlwKNHSNnhwnb?usp=drive_link" target="_blank" class="note-card">
+                <div>
+                    <div class="card-header">
+                        <span class="tag">Theory</span>
+                    </div>
+                    <h3>MATH-1121</h3>
+                    <p>Calculus, matrices and engineering mathematics.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Module 04</span>
+                    <span class="action-btn">Open →</span>
+                </div>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1rbBvHJMX0kJ2qVKwbW05mEn3GWdX071p?usp=drive_link" target="_blank" class="note-card">
+                <div>
+                    <div class="card-header">
+                        <span class="tag">Theory</span>
+                    </div>
+                    <h3>ME-1101</h3>
+                    <p>Mechanical Engineering fundamentals.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Module 05</span>
+                    <span class="action-btn">Open →</span>
+                </div>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1hntowkpmajFNICe5UiVh3Bh4UWouneIM?usp=drive_link" target="_blank" class="note-card">
+                <div>
+                    <div class="card-header">
+                        <span class="tag">Sessional</span>
+                    </div>
+                    <h3>CHEM-1122</h3>
+                    <p>Chemistry lab reports and practical sheets.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Module 06</span>
+                    <span class="action-btn">Open →</span>
+                </div>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1Qk_H_6QbSk6wWNxUzTKbqu8V0DrWMRhx?usp=drive_link" target="_blank" class="note-card">
+                <div>
+                    <div class="card-header">
+                        <span class="tag">Sessional</span>
+                    </div>
+                    <h3>PHY-1122</h3>
+                    <p>Physics experiment sheets and lab manuals.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Module 07</span>
+                    <span class="action-btn">Open →</span>
+                </div>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1QiFcgUKNQJdV1FpbF72gFgNrECBGDVOK?usp=drive_link" target="_blank" class="note-card">
+                <div>
+                    <div class="card-header">
+                        <span class="tag">Sessional</span>
+                    </div>
+                    <h3>ME-1102</h3>
+                    <p>Workshop practice and machine tools.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Module 08</span>
+                    <span class="action-btn">Open →</span>
+                </div>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1k3TksXF8wcJd4S8riM6XtZE3Vo1p9IN0?usp=drive_link" target="_blank" class="note-card">
+                <div>
+                    <div class="card-header">
+                        <span class="tag">Sessional</span>
+                    </div>
+                    <h3>ME-1100</h3>
+                    <p>Engineering drawing and projection materials.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Module 09</span>
+                    <span class="action-btn">Open →</span>
+                </div>
+            </a>
+
+            <a href="https://drive.google.com/drive/folders/1uR2REAd6SWtC2iJ04hauvoyD-8nyc_df?usp=drive_link" target="_blank" class="note-card">
+                <div>
+                    <div class="card-header">
+                        <span class="tag">Sessional</span>
+                    </div>
+                    <h3>MES-1108</h3>
+                    <p>Sessional files and laboratory resources.</p>
+                </div>
+                <div class="card-footer">
+                    <span>Module 10</span>
+                    <span class="action-btn">Open →</span>
+                </div>
+            </a>
+
+        </section>
+
+    </main>
+
+</div>
+
+<button id="topBtn">
+    ↑
+</button>
+
+<div class="ai-button">
+    🤖
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 :root{
 --bg-gradient:linear-gradient(135deg,#020205 0%,#05030a 100%);
@@ -292,12 +582,9 @@ margin-bottom:10px;
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
 gap:25px;
+margin-bottom:40px;
 }
-```
 
-
-
-  ```html
 .note-card{
 background:var(--card-bg);
 border:1px solid var(--border-glass);
@@ -482,417 +769,135 @@ letter-spacing:4px;
 
 }
 
-</style>
 
-</head>
 
-<body>
 
-<canvas id="bg-canvas"></canvas>
 
-<div class="sc-diagonal-container">
 
-<div class="sc-background-text">
-ME S.C
-</div>
 
-</div>
 
-<div class="app-container">
 
-<aside>
 
-<div class="brand">
-AcademicVault
-</div>
 
-<p class="nav-label">
-Subjects
-</p>
 
-<div class="filter-menu">
+const canvas = document.getElementById("bg-canvas");
+const ctx = canvas.getContext("2d");
 
-<a href="https://drive.google.com/drive/folders/1eMSMgbEPnWtjO-j12XxSElUA_D-AfdT2" target="_blank" class="filter-link active">CHEM-1121</a>
-
-<a href="https://drive.google.com/drive/folders/1qpGaxu1vsXVbviyzQDT7ckazPkKvxsLt" target="_blank" class="filter-link">PHY-1121</a>
-
-<a href="https://drive.google.com/drive/folders/1b48oZTDUjAkzIsHNkj9gxaCZt6GN4q8P" target="_blank" class="filter-link">HUM-1121</a>
-
-<a href="https://drive.google.com/drive/folders/1Ed4GI8FYkWSNJNiAbIxAlwKNHSNnhwnb" target="_blank" class="filter-link">MATH-1121</a>
-
-<a href="https://drive.google.com/drive/folders/1rbBvHJMX0kJ2qVKwbW05mEn3GWdX071p" target="_blank" class="filter-link">ME-1101</a>
-
-<a href="https://drive.google.com/drive/folders/1hntowkpmajFNICe5UiVh3Bh4UWouneIM" target="_blank" class="filter-link">CHEM-1122</a>
-
-<a href="https://drive.google.com/drive/folders/1Qk_H_6QbSk6wWNxUzTKbqu8V0DrWMRhx" target="_blank" class="filter-link">PHY-1122</a>
-
-<a href="https://drive.google.com/drive/folders/1QiFcgUKNQJdV1FpbF72gFgNrECBGDVOK" target="_blank" class="filter-link">ME-1102</a>
-
-<a href="https://drive.google.com/drive/folders/1k3TksXF8wcJd4S8riM6XtZE3Vo1p9IN0" target="_blank" class="filter-link">ME-1100</a>
-
-<a href="https://drive.google.com/drive/folders/1uR2REAd6SWtC2iJ04hauvoyD-8nyc_df" target="_blank" class="filter-link">MES-1108</a>
-
-</div>
-
-</aside>
-
-<main>
-
-<div class="top-bar">
-
-<a href="notice.html" target="_blank" class="notice-btn">
-🔔 Notices
-<span class="badge">NEW</span>
-</a>
-
-<button id="themeBtn">
-🌙 Theme
-</button>
-
-</div>
-
-<div class="center-title">
-
-<h1>
-ME-C1
-</h1>
-
-</div>
-
-<header>
-
-<div class="welcome-text">
-
-<h1>
-Welcome Back
-</h1>
-
-<p>
-Access your engineering resources and notes.
-</p>
-
-<div id="clock"></div>
-
-</div>
-
-<div class="search-wrapper">
-
-<input
-id="searchInput"
-class="search-bar"
-type="text"
-placeholder="Search modules or subjects..."
->
-
-</div>
-
-</header>
-
-<div class="stats-grid">
-
-<div class="stat-card">
-<h2>10</h2>
-<p>Total Courses</p>
-</div>
-
-<div class="stat-card">
-<h2>5</h2>
-<p>Theory Courses</p>
-</div>
-
-<div class="stat-card">
-<h2>5</h2>
-<p>Sessional Courses</p>
-</div>
-
-</div>
-
-<section class="notes-grid">
-```
-
-
-
-
-
-  <a href="https://drive.google.com/drive/folders/1eMSMgbEPnWtjO-j12XxSElUA_D-AfdT2?usp=drive_link" target="_blank" class="note-card">
-<div>
-<div class="card-header">
-<span class="tag">Theory</span>
-</div>
-<h3>CHEM-1121</h3>
-<p>Chemistry notes, assignments and important PDFs.</p>
-</div>
-<div class="card-footer">
-<span>Module 01</span>
-<span class="action-btn">Open →</span>
-</div>
-</a>
-
-<a href="https://drive.google.com/drive/folders/1qpGaxu1vsXVbviyzQDT7ckazPkKvxsLt?usp=drive_link" target="_blank" class="note-card">
-<div>
-<div class="card-header">
-<span class="tag">Theory</span>
-</div>
-<h3>PHY-1121</h3>
-<p>Physics notes and important resources.</p>
-</div>
-<div class="card-footer">
-<span>Module 02</span>
-<span class="action-btn">Open →</span>
-</div>
-</a>
-
-<a href="https://drive.google.com/drive/folders/1b48oZTDUjAkzIsHNkj9gxaCZt6GN4q8P?usp=drive_link" target="_blank" class="note-card">
-<div>
-<div class="card-header">
-<span class="tag">Theory</span>
-</div>
-<h3>HUM-1121</h3>
-<p>Humanities and communication materials.</p>
-</div>
-<div class="card-footer">
-<span>Module 03</span>
-<span class="action-btn">Open →</span>
-</div>
-</a>
-
-<a href="https://drive.google.com/drive/folders/1Ed4GI8FYkWSNJNiAbIxAlwKNHSNnhwnb?usp=drive_link" target="_blank" class="note-card">
-<div>
-<div class="card-header">
-<span class="tag">Theory</span>
-</div>
-<h3>MATH-1121</h3>
-<p>Calculus, matrices and engineering mathematics.</p>
-</div>
-<div class="card-footer">
-<span>Module 04</span>
-<span class="action-btn">Open →</span>
-</div>
-</a>
-
-<a href="https://drive.google.com/drive/folders/1rbBvHJMX0kJ2qVKwbW05mEn3GWdX071p?usp=drive_link" target="_blank" class="note-card">
-<div>
-<div class="card-header">
-<span class="tag">Theory</span>
-</div>
-<h3>ME-1101</h3>
-<p>Mechanical Engineering fundamentals.</p>
-</div>
-<div class="card-footer">
-<span>Module 05</span>
-<span class="action-btn">Open →</span>
-</div>
-</a>
-
-<a href="https://drive.google.com/drive/folders/1hntowkpmajFNICe5UiVh3Bh4UWouneIM?usp=drive_link" target="_blank" class="note-card">
-<div>
-<div class="card-header">
-<span class="tag">Sessional</span>
-</div>
-<h3>CHEM-1122</h3>
-<p>Chemistry lab reports and practical sheets.</p>
-</div>
-<div class="card-footer">
-<span>Module 06</span>
-<span class="action-btn">Open →</span>
-</div>
-</a>
-
-<a href="https://drive.google.com/drive/folders/1Qk_H_6QbSk6wWNxUzTKbqu8V0DrWMRhx?usp=drive_link" target="_blank" class="note-card">
-<div>
-<div class="card-header">
-<span class="tag">Sessional</span>
-</div>
-<h3>PHY-1122</h3>
-<p>Physics experiment sheets and lab manuals.</p>
-</div>
-<div class="card-footer">
-<span>Module 07</span>
-<span class="action-btn">Open →</span>
-</div>
-</a>
-
-<a href="https://drive.google.com/drive/folders/1QiFcgUKNQJdV1FpbF72gFgNrECBGDVOK?usp=drive_link" target="_blank" class="note-card">
-<div>
-<div class="card-header">
-<span class="tag">Sessional</span>
-</div>
-<h3>ME-1102</h3>
-<p>Workshop practice and machine tools.</p>
-</div>
-<div class="card-footer">
-<span>Module 08</span>
-<span class="action-btn">Open →</span>
-</div>
-</a>
-
-<a href="https://drive.google.com/drive/folders/1k3TksXF8wcJd4S8riM6XtZE3Vo1p9IN0?usp=drive_link" target="_blank" class="note-card">
-<div>
-<div class="card-header">
-<span class="tag">Sessional</span>
-</div>
-<h3>ME-1100</h3>
-<p>Engineering drawing and projection materials.</p>
-</div>
-<div class="card-footer">
-<span>Module 09</span>
-<span class="action-btn">Open →</span>
-</div>
-</a>
-
-<a href="https://drive.google.com/drive/folders/1uR2REAd6SWtC2iJ04hauvoyD-8nyc_df?usp=drive_link" target="_blank" class="note-card">
-<div>
-<div class="card-header">
-<span class="tag">Sessional</span>
-</div>
-<h3>MES-1108</h3>
-<p>Sessional files and laboratory resources.</p>
-</div>
-<div class="card-footer">
-<span>Module 10</span>
-<span class="action-btn">Open →</span>
-</div>
-</a>
-
-</section>
-
-</main>
-
-</div>
-
-<button id="topBtn">
-↑
-</button>
-
-<div class="ai-button">
-🤖
-</div>
-
-<script>
-
-const canvas=document.getElementById("bg-canvas");
-const ctx=canvas.getContext("2d");
-
-function resize(){
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 }
 
 resize();
 
-window.addEventListener("resize",resize);
+window.addEventListener("resize", resize);
 
-let particles=[];
+let particles = [];
 
-class Particle{
+class Particle {
 
-constructor(){
-this.x=Math.random()*canvas.width;
-this.y=Math.random()*canvas.height;
-this.size=Math.random()*2+0.5;
-this.speedX=Math.random()*0.3-0.15;
-this.speedY=Math.random()*0.3-0.15;
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = Math.random() * 0.3 - 0.15;
+        this.speedY = Math.random() * 0.3 - 0.15;
+    }
+
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x > canvas.width) this.x = 0;
+        if (this.x < 0) this.x = canvas.width;
+        if (this.y > canvas.height) this.y = 0;
+        if (this.y < 0) this.y = canvas.height;
+    }
+
+    draw() {
+        ctx.fillStyle = "rgba(168,85,247,.2)";
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
 }
 
-update(){
-this.x+=this.speedX;
-this.y+=this.speedY;
-
-if(this.x>canvas.width)this.x=0;
-if(this.x<0)this.x=canvas.width;
-if(this.y>canvas.height)this.y=0;
-if(this.y<0)this.y=canvas.height;
+for (let i = 0; i < 60; i++) {
+    particles.push(new Particle());
 }
 
-draw(){
-ctx.fillStyle="rgba(168,85,247,.2)";
-ctx.beginPath();
-ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-ctx.fill();
-}
+function animate() {
 
-}
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-for(let i=0;i<60;i++){
-particles.push(new Particle());
-}
+    particles.forEach(p => {
+        p.update();
+        p.draw();
+    });
 
-function animate(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-particles.forEach(p=>{
-p.update();
-p.draw();
-});
-
-requestAnimationFrame(animate);
+    requestAnimationFrame(animate);
 
 }
 
 animate();
 
-const searchInput=document.getElementById("searchInput");
+const searchInput = document.getElementById("searchInput");
 
-searchInput.addEventListener("keyup",()=>{
+searchInput.addEventListener("keyup", () => {
 
-const filter=searchInput.value.toLowerCase();
+    const filter = searchInput.value.toLowerCase();
 
-document.querySelectorAll(".note-card").forEach(card=>{
+    document.querySelectorAll(".note-card").forEach(card => {
 
-const title=card.querySelector("h3").textContent.toLowerCase();
+        const title = card.querySelector("h3").textContent.toLowerCase();
 
-if(title.includes(filter)){
-card.style.display="flex";
-}
-else{
-card.style.display="none";
-}
+        if (title.includes(filter)) {
+            card.style.display = "flex";
+        }
+        else {
+            card.style.display = "none";
+        }
+
+    });
 
 });
 
-});
-
-if(localStorage.getItem("theme")==="light"){
-document.body.classList.add("light");
+if (localStorage.getItem("theme") === "light") {
+    document.body.classList.add("light");
 }
 
-document.getElementById("themeBtn").onclick=()=>{
+document.getElementById("themeBtn").onclick = () => {
 
-document.body.classList.toggle("light");
+    document.body.classList.toggle("light");
 
-localStorage.setItem(
-"theme",
-document.body.classList.contains("light")
-?"light"
-:"dark"
-);
-
-};
-
-setInterval(()=>{
-
-document.getElementById("clock").innerHTML=
-new Date().toLocaleString();
-
-},1000);
-
-document.getElementById("topBtn").onclick=()=>{
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
+    localStorage.setItem(
+        "theme",
+        document.body.classList.contains("light")
+            ? "light"
+            : "dark"
+    );
 
 };
 
-document.querySelector(".ai-button").onclick=()=>{
+setInterval(() => {
 
-alert("AI Assistant feature coming soon.");
+    document.getElementById("clock").innerHTML =
+        new Date().toLocaleString();
+
+}, 1000);
+
+document.getElementById("topBtn").onclick = () => {
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
 
 };
 
-</script>
+document.querySelector(".ai-button").onclick = () => {
 
-</body>
-</html>
+    alert("AI Assistant feature coming soon.");
+
+};
