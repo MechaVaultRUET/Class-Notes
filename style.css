@@ -954,22 +954,24 @@ body.light .bar { background: #0f172a; }
     #sidebar .submenu {
         display: flex !important;
         flex-direction: column !important;
+        gap: 6px !important;
         overflow: hidden !important;
         max-height: 0 !important;
         opacity: 0 !important;
-        transition: max-height 0.4s ease, opacity 0.3s ease !important;
     }
 
     aside .submenu-container.expanded .submenu,
     #sidebar .submenu-container.expanded .submenu {
         max-height: 500px !important;
         opacity: 1 !important;
-        display: flex !important;
+        margin-top: 6px !important;
+        margin-bottom: 6px !important;
     }
 
-    aside .submenu-toggle,
-    #sidebar .submenu-toggle {
-        cursor: pointer !important;
+    aside .sub-link,
+    #sidebar .sub-link {
+        display: block !important;
+        width: 100% !important;
     }
 
 }
