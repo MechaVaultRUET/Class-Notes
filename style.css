@@ -729,12 +729,6 @@ body.light .bar { background: #0f172a; }
 
     .mobile-header .brand { margin-bottom: 0; }
 
-    /* Expanded Accessible Touch Target Buttons Mapping */
-    .touch-target {
-        min-width: 44px;
-        min-height: 44px;
-    }
-
     #menuToggle {
         background: transparent;
         border: none;
@@ -781,7 +775,7 @@ body.light .bar { background: #0f172a; }
         gap: 20px;
     }
 
-    /* Active Darkening Layer Filter Backdrops */
+    /* Background Dimming Overlay */
     #sidebarOverlay {
         display: block !important;
         position: fixed !important;
@@ -789,7 +783,7 @@ body.light .bar { background: #0f172a; }
         left: 0 !important;
         width: 100vw !important;
         height: calc(100vh - 70px) !important;
-        background: rgba(0, 0, 0, 0.7) !important; /* Dark dim layer instead of a broken blur filter */
+        background: rgba(0, 0, 0, 0.7) !important;
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
         z-index: 9998 !important;
@@ -803,24 +797,23 @@ body.light .bar { background: #0f172a; }
         visibility: visible !important;
     }
 
-    /* Fixed Clean Mobile Navigation Drawer Side Overrides */
+    /* FIX 1: Enable full vertical scrolling so lower links can be reached */
     aside, 
     #sidebar {
-        display: flex !important; /* Overrides accidental structural display flags */
+        display: flex !important;
         flex-direction: column !important;
         width: 300px !important;
         position: fixed !important;
         left: -300px !important;
         top: 70px !important;
         height: calc(100vh - 70px) !important;
-        padding: 30px 20px !important;
-        background: #020205 !important; /* Deep layout canvas color */
-        background-color: #020205 !important;
+        overflow-y: auto !important; /* Forces scrollbar for lower items */
+        -webkit-overflow-scscrolling: touch !important;
+        padding: 30px 20px 60px 20px !important; /* Bottom padding gives breathing room */
+        background: #0d0b14 !important; /* Slightly lighter solid premium dark background */
         box-shadow: 25px 0 40px rgba(0,0,0,0.6) !important;
         z-index: 99999 !important;
         transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), left 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
-        
-        /* Strips out the layout rendering crash mechanics entirely */
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
         filter: none !important;
@@ -836,55 +829,61 @@ body.light .bar { background: #0f172a; }
     .filter-menu {
         display: flex !important;
         flex-direction: column !important;
-        gap: 12px !important;
+        gap: 8px !important;
         width: 100% !important;
     }
 
-    /* Force mobile drawer links to stay fully visible and solid white */
+    /* FIX 2: Radical contrast boost. Enforces clean ultra-sharp visible links */
     html body aside .filter-link,
     html body #sidebar .filter-link,
     html body aside .searchable-item,
-    html body #sidebar .searchable-item,
-    html body aside span,
-    html body aside .menu-title {
+    html body #sidebar .searchable-item {
         display: flex !important;
-        color: #ffffff !important;
+        color: #f1f5f9 !important; /* Crisp off-white */
         opacity: 1 !important;
-        font-weight: 700 !important;
+        font-weight: 600 !important;
         font-size: 1.05rem !important;
         filter: none !important;
         -webkit-filter: none !important;
-        padding: 14px 18px !important;
+        padding: 14px 16px !important;
         width: 100% !important;
+        background: rgba(255, 255, 255, 0.03) !important; /* Subtly lights up item boundary */
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        border-radius: 12px !important;
+        margin-bottom: 4px !important;
         text-align: left !important;
         visibility: visible !important;
     }
 
-    /* Active background state styling updates */
+    /* Active State Glow */
     html body aside .filter-link.active,
     html body #sidebar .filter-link.active {
         background: linear-gradient(135deg, #a855f7 0%, #d946ef 100%) !important;
         color: #ffffff !important;
+        border-color: transparent !important;
     }
 
-    /* Clear secondary hierarchy links visibility indicators */
+    /* Expanded Submenu links fix */
     html body aside .sub-link,
     html body #sidebar .sub-link {
-        color: #e2e8f0 !important;
+        color: #cbd5e1 !important; /* Visible light grey text */
         font-weight: 500 !important;
         display: block !important;
+        padding: 10px 16px !important;
+        background: rgba(255, 255, 255, 0.01) !important;
     }
 
     html body aside .nav-label,
     html body #sidebar .nav-label {
         display: block !important;
-        color: #d946ef !important;
+        color: #e879f9 !important; /* Bright Magenta navigation header */
         opacity: 1 !important;
         font-weight: 800 !important;
-        margin-bottom: 12px !important;
+        letter-spacing: 1px !important;
+        margin-top: 15px !important;
+        margin-bottom: 10px !important;
     }
 
-    /* Fail-safe: Forcefully dismiss loading screen if JS caches stall */
     .loader-overlay {
         animation: mobileForceDismiss 0.4s ease 2s forwards !important;
     }
