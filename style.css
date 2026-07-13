@@ -950,20 +950,26 @@ body.light .bar { background: #0f172a; }
 
 @media (max-width:768px){
 
-    aside .brand,
-    #sidebar .brand {
-        color: #ffffff !important;
+    aside .submenu,
+    #sidebar .submenu {
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: hidden !important;
+        max-height: 0 !important;
+        opacity: 0 !important;
+        transition: max-height 0.4s ease, opacity 0.3s ease !important;
     }
 
-    aside .nav-label,
-    #sidebar .nav-label {
-        color: #ff79c6 !important;
+    aside .submenu-container.expanded .submenu,
+    #sidebar .submenu-container.expanded .submenu {
+        max-height: 500px !important;
+        opacity: 1 !important;
+        display: flex !important;
     }
 
-    aside .filter-link,
-    #sidebar .filter-link {
-        color: #ffffff !important;
-        background: rgba(255,255,255,0.12) !important;
+    aside .submenu-toggle,
+    #sidebar .submenu-toggle {
+        cursor: pointer !important;
     }
 
 }
