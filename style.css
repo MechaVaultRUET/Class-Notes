@@ -949,30 +949,22 @@ body.light .bar { background: #0f172a; }
 }
 /* ================= MOBILE LIGHT MODE SIDEBAR FIX ================= */
 
-@media (max-width:768px) {
+@media (max-width:768px){
 
-    body.light aside,
-    body.light #sidebar {
-        background: rgba(255,255,255,0.96) !important;
-        box-shadow: 25px 0 40px rgba(0,0,0,0.15) !important;
+    aside .brand,
+    #sidebar .brand {
+        color: #ffffff !important;
     }
 
-    body.light aside .filter-link,
-    body.light #sidebar .filter-link {
-        color: #0f172a !important;
-        background: rgba(15,23,42,0.05) !important;
-        border: 1px solid rgba(15,23,42,0.1) !important;
+    aside .nav-label,
+    #sidebar .nav-label {
+        color: #ff79c6 !important;
     }
 
-    body.light aside .filter-link *,
-    body.light #sidebar .filter-link * {
-        color: #0f172a !important;
-    }
-
-    body.light aside .sub-link,
-    body.light #sidebar .sub-link {
-        color: #334155 !important;
-        background: rgba(15,23,42,0.03) !important;
+    aside .filter-link,
+    #sidebar .filter-link {
+        color: #ffffff !important;
+        background: rgba(255,255,255,0.12) !important;
     }
 
 }
