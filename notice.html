@@ -1,244 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Academic Vault | Notices</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Vault | Notices</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Specific page adjustments for Notice Board alignment */
+        .notice-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
 
-<style>
+        .notice-board-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: var(--transition-smooth);
+            animation: fadeUp 0.6s ease both;
+        }
 
-:root{
---bg-gradient:linear-gradient(135deg,#020205 0%,#05030a 100%);
---card-bg:rgba(255,255,255,.04);
---border-glass:rgba(255,255,255,.08);
---accent-gradient:linear-gradient(135deg,#a855f7 0%,#d946ef 100%);
-}
+        .notice-board-card:hover {
+            transform: translateY(-4px);
+            background: var(--card-hover-bg);
+            border-color: rgba(217, 70, 239, 0.2);
+        }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',system-ui,sans-serif;
-}
+        .notice-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
 
-body{
-background:var(--bg-gradient);
-color:white;
-padding:30px 15px;
-}
+        .notice-number {
+            font-weight: 800;
+            color: #d946ef;
+            background: rgba(217, 70, 239, 0.1);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
 
-.container{
-max-width:1000px;
-margin:auto;
-}
+        .notice-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
 
-.title{
-text-align:center;
-margin-bottom:50px;
-}
+        .notice-board-card h2 {
+            font-size: 1.4rem;
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
 
-.title h1{
-font-size:3rem;
-font-weight:900;
-background:var(--accent-gradient);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
+        .notice-board-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 0.98rem;
+        }
 
-.notice-box{
-background:var(--card-bg);
-border:1px solid var(--border-glass);
-border-radius:25px;
-padding:30px;
-margin-bottom:25px;
-}
+        /* Light mode textual corrections */
+        body.light .notice-board-card {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        body.light .notice-board-card h2 {
+            color: #0f172a;
+        }
+        body.light .notice-number {
+            background: rgba(168, 85, 247, 0.1);
+            color: #a855f7;
+        }
 
-.latest{
-box-shadow:0 0 30px rgba(217,70,239,.5);
-}
-
-.new-badge{
-display:inline-block;
-background:red;
-padding:5px 12px;
-border-radius:20px;
-font-size:.8rem;
-font-weight:700;
-margin-bottom:15px;
-}
-
-.notice-number{
-font-size:2rem;
-font-weight:900;
-color:#d946ef;
-margin-bottom:10px;
-}
-
-.notice-date{
-font-size:.95rem;
-color:#94a3b8;
-margin-bottom:15px;
-}
-
-.notice-text{
-font-size:1.2rem;
-font-weight:700;
-line-height:1.8;
-}
-
-.home-btn{
-display:inline-block;
-margin-top:40px;
-padding:15px 25px;
-border-radius:15px;
-background:linear-gradient(135deg,#a855f7,#d946ef);
-text-decoration:none;
-color:white;
-font-weight:700;
-}
-
-@media(max-width:768px){
-
-.title h1{
-font-size:2.2rem;
-}
-
-.notice-number{
-font-size:1.6rem;
-}
-
-.notice-text{
-font-size:1.05rem;
-}
-
-}
-
-</style>
+        /* Staggered load delays for notices */
+        .notice-board-card:nth-child(1) { animation-delay: 0.1s; }
+        .notice-board-card:nth-child(2) { animation-delay: 0.2s; }
+        .notice-board-card:nth-child(3) { animation-delay: 0.3s; }
+        .notice-board-card:nth-child(4) { animation-delay: 0.4s; }
+        .notice-board-card:nth-child(5) { animation-delay: 0.5s; }
+    </style>
 </head>
 <body>
 
-<div class="container">
+    <canvas id="bg-canvas"></canvas>
 
-<div class="title">
-<h1>📢 NOTICE BOARD</h1>
-</div>
+    <div class="sc-diagonal-container">
+        <div class="sc-background-text">ME S.C</div>
+    </div>
 
+    <div class="mobile-header">
+        <div class="brand">AcademicVault</div>
+        <button id="menuToggle" aria-label="Toggle Navigation Menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </div>
 
-<div class="notice-box latest">
+    <div class="app-container">
+        <aside id="sidebar">
+            <div class="brand desktop-only">AcademicVault</div>
+            
+            <p class="nav-label">Navigation</p>
+            <nav class="filter-menu">
+                <a href="index.html" class="filter-link searchable-item">← Back to Home</a>
+                <a href="#" class="filter-link searchable-item">Class Routine</a>
+                
+                <div class="submenu-container">
+                    <button class="filter-link submenu-toggle searchable-item">
+                        <span>CT</span>
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div class="submenu">
+                        <a href="#" class="filter-link sub-link searchable-item">CT Syllabus</a>
+                        <a href="#" class="filter-link sub-link searchable-item">CT Routine</a>
+                    </div>
+                </div>
 
-<div class="new-badge">
-NEW
-</div>
+                <a href="#" class="filter-link searchable-item">Lab</a>
+                <a href="#" class="filter-link searchable-item">Cover Page Generator</a>
+                
+                <div class="submenu-container">
+                    <button class="filter-link submenu-toggle searchable-item">
+                        <span>Contacts</span>
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div class="submenu">
+                        <a href="#" class="filter-link sub-link searchable-item">25 Series</a>
+                        <a href="#" class="filter-link sub-link searchable-item">24 Series</a>
+                    </div>
+                </div>
 
-<div class="notice-number">
-1.
-</div>
+                <a href="#" class="filter-link searchable-item">MechaVerse</a>
+                <a href="#" class="filter-link searchable-item">MechaBot</a>
+            </nav>
+        </aside>
 
-<div class="notice-date">
-5 july 2026
-</div>
+        <main>
+            <div class="top-bar">
+                <div></div>
+                <button id="themeBtn">🌙 Theme</button>
+            </div>
 
-<div class="notice-text">
-classes for Tomorrow: 8:00 to 10:30 <br>
-  1.PHY- 1121 - [AAM] <br>
-  2.MATH- 1121 - [MAH] <br>
-  3.ME- 1101 - [MSU] <br>
-</div>
+            <div class="center-title">
+                <h1>Official Notice Board</h1>
+            </div>
 
-</div>
+            <div class="notice-container">
+                
+                <article class="notice-board-card">
+                    <div class="notice-meta">
+                        <span class="notice-number">Notice #01</span>
+                        <span class="notice-date">Post Date: July 14, 2026</span>
+                    </div>
+                    <h2>Upcoming Term Examination Schedule</h2>
+                    <p>
+                        Please find your upcoming mid-term sessional and theory breakdown allocations inside the corresponding drive folder links. Direct parameters concerning room matrices and physical assignments will be uploaded explicitly by corresponding instructors.
+                    </p>
+                </article>
 
+                <article class="notice-board-card">
+                    <div class="notice-meta">
+                        <span class="notice-number">Notice #02</span>
+                        <span class="notice-date">Post Date: July 10, 2026</span>
+                    </div>
+                    <h2>Mechanical Workshop Manual Updates</h2>
+                    <p>
+                        The workshop manual criteria listings for sessional courses ME-1102 and ME-1100 have been synchronized. Make sure to check updates and reference points ahead of submission target gates.
+                    </p>
+                </article>
 
-<div class="notice-box">
+                <article class="notice-board-card">
+                    <div class="notice-meta">
+                        <span class="notice-number">Notice #03</span>
+                        <span class="notice-date">Post Date: July 05, 2026</span>
+                    </div>
+                    <h2>Class Test (CT) Routine Adjustments</h2>
+                    <p>
+                        Review the newly appended CT submenus configuration on the primary sidebar navigation panels. Syllabi revisions map directly to recent evaluation directives.
+                    </p>
+                </article>
 
-<div class="notice-number">
-2.
-</div>
+                <article class="notice-board-card">
+                    <div class="notice-meta">
+                        <span class="notice-number">Notice #04</span>
+                        <span class="notice-date">Post Date: June 28, 2026</span>
+                    </div>
+                    <h2>Cover Page Generator Release</h2>
+                    <p>
+                        Automated compilation frameworks have been linked. Use the sidebar link to map cover profiles with consistent typographical parameters across standard lab reports.
+                    </p>
+                </article>
 
-<div class="notice-date">
-5 july 2026
-</div>
+                <article class="notice-board-card">
+                    <div class="notice-meta">
+                        <span class="notice-number">Notice #05</span>
+                        <span class="notice-date">Post Date: June 15, 2026</span>
+                    </div>
+                    <h2>Welcome to Academic Vault Modular Portal</h2>
+                    <p>
+                        Your resource node deployment is active. Use search tools or category structures to query notes, module documents, or batch connection lines cleanly.
+                    </p>
+                </article>
 
-<div class="notice-text">
-++ LAB : CHEM-1122 <br>
- 10:50 TO 1:20 <br>
-  ***OPEN FOR FIRST 30***<br>
-  ***OFF FOR SECOND 30 ***<br>
- 
-++
-</div>
+            </div>
+        </main>
+    </div>
 
-</div>
+    <button id="topBtn" title="Back to Top">↑</button>
 
+    <a href="https://gemini.google.com" target="_blank" class="ai-button" title="Open Gemini Assistant">🤖</a>
 
-<div class="notice-box">
+    <div id="sidebarOverlay"></div>
 
-<div class="notice-number">
-3.
-</div>
-
-<div class="notice-date">
- 6 july 2026[MONDAY]
-</div>
-
-<div class="notice-text">
-CT.7 || <br> PHY-1121(MNZ) || <br> syllabus:<br> 
-  || CT Topics: <br>
-1.PHOTOELCTRIC EFFECT<br>
-2.COMPTON EFFECT<br>
-  Time: TO BE ANNOUNCCED<br>
-  Venue:TO BE ANNOUNCCED<br>
-</div>
-
-</div>
-
-
-<div class="notice-box">
-
-<div class="notice-number">
-4.
-</div>
-
-<div class="notice-date">
-7 JuLY 2026[TUESDAY]
-</div>
-
-<div class="notice-text">
-CT.8 || <br>MATH-1121(MI) || <br> syllabus:<br> 
-  || CT Topics: <br>
-1.CHANGE OF AXIS<br>
-2.PAIR OF STRAIGHT LINES  <br>
-  Time: To be announced<br>
-  Venue:To be announced <br>
-
-
-  
-</div>
-
-</div>
-
-
-<div class="notice-box">
-
-<div class="notice-number">
-5.
-</div>
-
-<div class="notice-date">
-[AFTER MIDTERM RECESS] [X] July 2026
-</div>
-
-<div class="notice-text">
-MSU ASSIGNMENT<br>
-</div>
-
-</div>
-
-
-<a href="index.html" class="home-btn">
-← Back to Home
-</a>
-
-</div>
-
+    <script src="script.js"></script>
 </body>
 </html>
