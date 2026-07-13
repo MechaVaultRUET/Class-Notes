@@ -21,56 +21,62 @@
         .notice-board-card {
             background: var(--card-bg);
             border: 1px solid var(--border-glass);
-            border-radius: 20px;
-            padding: 30px;
+            border-radius: 24px;
+            padding: 35px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             transition: var(--transition-smooth);
-            animation: fadeUp 0.6s ease both;
+            animation: fadeUp 0.7s cubic-bezier(0.25, 1, 0.5, 1) both;
+            will-change: transform, opacity;
         }
 
         .notice-board-card:hover {
             transform: translateY(-4px);
             background: var(--card-hover-bg);
-            border-color: rgba(217, 70, 239, 0.2);
+            border-color: rgba(217, 70, 239, 0.25);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
         }
 
         .notice-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .notice-number {
             font-weight: 800;
             color: #d946ef;
             background: rgba(217, 70, 239, 0.1);
-            padding: 4px 12px;
-            border-radius: 8px;
-            font-size: 0.9rem;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
         }
 
         .notice-date {
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             color: var(--text-muted);
+            font-weight: 500;
         }
 
         .notice-board-card h2 {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             color: var(--text-main);
-            margin-bottom: 12px;
+            margin-bottom: 14px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
         }
 
         .notice-board-card p {
             color: var(--text-muted);
-            line-height: 1.7;
-            font-size: 0.98rem;
+            line-height: 1.75;
+            font-size: 1rem;
         }
 
-        /* Light mode textual corrections */
+        /* Light mode structural balance overrides */
         body.light .notice-board-card {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
         }
         body.light .notice-board-card h2 {
             color: #0f172a;
@@ -80,15 +86,33 @@
             color: #a855f7;
         }
 
-        /* Staggered load delays for notices */
-        .notice-board-card:nth-child(1) { animation-delay: 0.1s; }
-        .notice-board-card:nth-child(2) { animation-delay: 0.2s; }
-        .notice-board-card:nth-child(3) { animation-delay: 0.3s; }
-        .notice-board-card:nth-child(4) { animation-delay: 0.4s; }
-        .notice-board-card:nth-child(5) { animation-delay: 0.5s; }
+        /* Staggered card appearance delays */
+        .notice-board-card:nth-child(1) { animation-delay: 0.05s; }
+        .notice-board-card:nth-child(2) { animation-delay: 0.10s; }
+        .notice-board-card:nth-child(3) { animation-delay: 0.15s; }
+        .notice-board-card:nth-child(4) { animation-delay: 0.20s; }
+        .notice-board-card:nth-child(5) { animation-delay: 0.25s; }
+
+        @media (max-width: 768px) {
+            .notice-board-card {
+                padding: 24px;
+            }
+            .notice-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .notice-board-card h2 {
+                font-size: 1.3rem;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <div id="pageLoader" class="loader-overlay" aria-hidden="true">
+        <div class="spinner"></div>
+    </div>
 
     <canvas id="bg-canvas"></canvas>
 
@@ -96,58 +120,70 @@
         <div class="sc-background-text">ME S.C</div>
     </div>
 
-    <div class="mobile-header">
+    <header class="mobile-header">
         <div class="brand">AcademicVault</div>
-        <button id="menuToggle" aria-label="Toggle Navigation Menu">
+        <button id="menuToggle" class="touch-target" aria-label="Toggle Navigation Menu" aria-expanded="false" aria-controls="sidebar">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
         </button>
-    </div>
+    </header>
 
     <div class="app-container">
-        <aside id="sidebar">
+        <aside id="sidebar" aria-label="Primary Navigation">
             <div class="brand desktop-only">AcademicVault</div>
             
-            <p class="nav-label">Navigation</p>
+            <p class="nav-label">Navigation System</p>
             <nav class="filter-menu">
-                <a href="index.html" class="filter-link searchable-item">← Back to Home</a>
-                <a href="#" class="filter-link searchable-item">Class Routine</a>
+                <a href="index.html" class="filter-link searchable-item touch-target">
+                    <span>← Back to Home</span>
+                </a>
+                <a href="#" class="filter-link searchable-item touch-target">
+                    <span>Class Routine</span>
+                </a>
                 
                 <div class="submenu-container">
-                    <button class="filter-link submenu-toggle searchable-item">
-                        <span>CT</span>
-                        <span class="arrow">▼</span>
+                    <button class="filter-link submenu-toggle searchable-item touch-target" aria-haspopup="true" aria-expanded="false">
+                        <span class="menu-title">CT</span>
+                        <span class="arrow" aria-hidden="true">▼</span>
                     </button>
-                    <div class="submenu">
-                        <a href="#" class="filter-link sub-link searchable-item">CT Syllabus</a>
-                        <a href="#" class="filter-link sub-link searchable-item">CT Routine</a>
+                    <div class="submenu" role="menu">
+                        <a href="#" class="filter-link sub-link searchable-item touch-target" role="menuitem">CT Syllabus</a>
+                        <a href="#" class="filter-link sub-link searchable-item touch-target" role="menuitem">CT Routine</a>
                     </div>
                 </div>
 
-                <a href="#" class="filter-link searchable-item">Lab</a>
-                <a href="#" class="filter-link searchable-item">Cover Page Generator</a>
+                <a href="#" class="filter-link searchable-item touch-target">
+                    <span>Lab</span>
+                </a>
+                <a href="#" class="filter-link searchable-item touch-target">
+                    <span>Cover Page Generator</span>
+                </a>
                 
                 <div class="submenu-container">
-                    <button class="filter-link submenu-toggle searchable-item">
-                        <span>Contacts</span>
-                        <span class="arrow">▼</span>
+                    <button class="filter-link submenu-toggle searchable-item touch-target" aria-haspopup="true" aria-expanded="false">
+                        <span class="menu-title">Contacts</span>
+                        <span class="arrow" aria-hidden="true">▼</span>
                     </button>
-                    <div class="submenu">
-                        <a href="#" class="filter-link sub-link searchable-item">25 Series</a>
-                        <a href="#" class="filter-link sub-link searchable-item">24 Series</a>
+                    <div class="submenu" role="menu">
+                        <a href="#" class="filter-link sub-link searchable-item touch-target" role="menuitem">25 Series</a>
+                        <a href="#" class="filter-link sub-link searchable-item touch-target" role="menuitem">24 Series</a>
                     </div>
                 </div>
 
-                <a href="#" class="filter-link searchable-item">MechaVerse</a>
-                <a href="#" class="filter-link searchable-item">MechaBot</a>
+                <a href="#" class="filter-link searchable-item touch-target">
+                    <span>MechaVerse</span>
+                </a>
+                <a href="#" class="filter-link searchable-item touch-target">
+                    <span>MechaBot</span>
+                </a>
             </nav>
         </aside>
 
-        <main>
+        <main id="mainContent">
             <div class="top-bar">
-                <div></div>
-                <button id="themeBtn">🌙 Theme</button>
+                <div class="bar-spacer"></div>
+                <button id="themeBtn" class="touch-target" aria-label="Toggle Brightness Theme Mode">🌙 Theme</button>
             </div>
 
             <div class="center-title">
@@ -215,11 +251,13 @@
         </main>
     </div>
 
-    <button id="topBtn" title="Back to Top">↑</button>
+    <button id="topBtn" class="touch-target" title="Scroll back to Top orientation layout" aria-label="Scroll back to Top">↑</button>
 
-    <a href="https://gemini.google.com" target="_blank" class="ai-button" title="Open Gemini Assistant">🤖</a>
+    <a href="https://gemini.google.com" target="_blank" class="ai-button touch-target" title="Open Gemini Assistant Platform Interface" aria-label="Open Gemini Assistant">
+        🤖
+    </a>
 
-    <div id="sidebarOverlay"></div>
+    <div id="sidebarOverlay" aria-hidden="true"></div>
 
     <script src="script.js"></script>
 </body>
