@@ -707,6 +707,9 @@ body.light .bar { background: #0f172a; }
 /* ==========================================================================
    FINAL SECURED MOBILE OPTIMIZATION - ALL RENDERING & STACKING BUGS RESOLVED
    ========================================================================== */
+/* ==========================================================================
+   FINAL PRODUCTION MOBILE FIX: KILLS DARK TEXT FLASHING & SUBPIXEL BLUR
+   ========================================================================== */
 @media (max-width: 768px) {
     body {
         padding-top: 70px !important;
@@ -727,7 +730,7 @@ body.light .bar { background: #0f172a; }
         background: #09070f !important;
         border-bottom: 1px solid var(--border-glass) !important;
         padding: 0 24px !important;
-        z-index: 100000 !important; /* Highest layer level */
+        z-index: 100000 !important;
     }
 
     .mobile-header .brand { margin-bottom: 0 !important; }
@@ -754,13 +757,9 @@ body.light .bar { background: #0f172a; }
     }
     #menuToggle .bar:nth-child(2) { width: 20px !important; }
 
-    #menuToggle.active .bar:nth-child(1) {
-        transform: translateY(9px) rotate(45deg) !important;
-    }
+    #menuToggle.active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg) !important; }
     #menuToggle.active .bar:nth-child(2) { opacity: 0 !important; }
-    #menuToggle.active .bar:nth-child(3) {
-        transform: translateY(-9px) rotate(-45deg) !important;
-    }
+    #menuToggle.active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg) !important; }
 
     main {
         margin-left: 0 !important;
@@ -776,7 +775,7 @@ body.light .bar { background: #0f172a; }
         gap: 20px !important;
     }
 
-    /* CRITICAL FIX 1: Pushed behind the sidebar container so it can never block text clicks or visibility */
+    /* Pushed completely behind the sidebar container */
     #sidebarOverlay {
         display: block !important;
         position: fixed !important;
@@ -784,13 +783,13 @@ body.light .bar { background: #0f172a; }
         left: 0 !important;
         width: 100vw !important;
         height: calc(100vh - 70px) !important;
-        background: rgba(0, 0, 0, 0.7) !important; 
+        background: rgba(0, 0, 0, 0.75) !important;
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
-        z-index: 9998 !important; /* Kept LOWER than aside/sidebar layer */
+        z-index: 9998 !important;
         opacity: 0 !important;
         visibility: hidden !important;
-        transition: opacity 0.3s ease, visibility 0.3s ease !important;
+        transition: opacity 0.25s ease, visibility 0.25s ease !important;
     }
 
     #sidebarOverlay.visible {
@@ -798,7 +797,7 @@ body.light .bar { background: #0f172a; }
         visibility: visible !important;
     }
 
-    /* CRITICAL FIX 2: Height isolation, explicit scroll containment, and zero blur filters */
+    /* Fixed Height Container & Scroll Configuration */
     aside, 
     #sidebar {
         display: flex !important;
@@ -809,15 +808,15 @@ body.light .bar { background: #0f172a; }
         top: 70px !important;
         height: calc(100vh - 70px) !important;
         max-height: calc(100vh - 70px) !important;
-        overflow-y: auto !important; /* Smooth scrolling lane */
+        overflow-y: auto !important; 
         -webkit-overflow-scrolling: touch !important;
         padding: 25px 20px 80px 20px !important;
-        background: #09070f !important; /* Solid matte background to block background canvas interference */
+        background: #09070f !important; /* Matte dark surface background color */
         box-shadow: 25px 0 40px rgba(0,0,0,0.6) !important;
-        z-index: 99999 !important; /* Placed HIGHER than the overlay layer */
-        transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), left 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        z-index: 99999 !important;
+        transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
         
-        /* Absolute cancellation of browser-level blurring artifacts */
+        /* Complete elimination of text blurring artifacts */
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
         filter: none !important;
@@ -825,9 +824,12 @@ body.light .bar { background: #0f172a; }
         visibility: visible !important;
     }
 
+    /* Clear dynamic transforms on open state to keep text pixel-perfect */
     aside.open,
     #sidebar.open { 
         left: 0 !important; 
+        transform: none !important;
+        -webkit-transform: none !important;
     }
 
     .filter-menu {
@@ -837,7 +839,7 @@ body.light .bar { background: #0f172a; }
         width: 100% !important;
     }
 
-    /* CRITICAL FIX 3: Enforcing absolute contrast plates and disabling conflicting dynamic fading transitions */
+    /* Force parent links to stay solid and white */
     html body aside .filter-link,
     html body #sidebar .filter-link,
     html body aside .searchable-item,
@@ -847,39 +849,53 @@ body.light .bar { background: #0f172a; }
     html body aside a,
     html body #sidebar a {
         display: flex !important;
-        color: #ffffff !important; /* Guaranteed deep solid pure white */
+        align-items: center !important;
+        color: #ffffff !important; 
         opacity: 1 !important;
         font-weight: 700 !important;
         font-size: 1.05rem !important;
-        background: rgba(255, 255, 255, 0.07) !important; /* High contrast dark-mode card buttons */
+        background: rgba(255, 255, 255, 0.07) !important; 
         border: 1px solid rgba(255, 255, 255, 0.12) !important;
         border-radius: 12px !important;
         padding: 14px 18px !important;
         width: 100% !important;
         text-align: left !important;
         margin-bottom: 4px !important;
-        
-        /* Clears dynamic browser fading bugs */
-        transition: none !important;
-        will-change: auto !important;
-        transform: translateZ(0) !important;
-        
+        transition: none !important; /* Removes color blending delays */
         filter: none !important;
         -webkit-filter: none !important;
         visibility: visible !important;
     }
 
-    /* Active Highlight States */
+    /* CRITICAL TARGETING: Forces all inner text/spans to be solid white and crisp */
+    html body aside .filter-link *,
+    html body #sidebar .filter-link *,
+    html body aside .searchable-item *,
+    html body #sidebar .searchable-item * {
+        color: #ffffff !important;
+        opacity: 1 !important;
+        font-weight: 700 !important;
+        background: transparent !important;
+        transition: none !important;
+        filter: none !important;
+        -webkit-filter: none !important;
+    }
+
+    /* Active Highlight state updates */
     html body aside .filter-link.active,
     html body #sidebar .filter-link.active {
         background: linear-gradient(135deg, #a855f7 0%, #d946ef 100%) !important;
-        color: #ffffff !important;
         border-color: transparent !important;
     }
+    html body aside .filter-link.active *,
+    html body #sidebar .filter-link.active * {
+        color: #ffffff !important;
+    }
 
-    /* Submenu Internal Choices Setup */
+    /* Submenu Internal Links Visibility */
     html body aside .sub-link,
-    html body #sidebar .sub-link {
+    html body #sidebar .sub-link,
+    html body aside .sub-link * {
         color: #f1f5f9 !important;
         font-weight: 600 !important;
         display: block !important;
@@ -890,11 +906,11 @@ body.light .bar { background: #0f172a; }
         transition: none !important;
     }
 
-    /* Main Category System Headers */
+    /* Main Navigation Label Title Headers */
     html body aside .nav-label,
     html body #sidebar .nav-label {
         display: block !important;
-        color: #ff79c6 !important; /* Vivid bright pink for flawless legibility */
+        color: #ff79c6 !important; /* Vivid bright high contrast pink */
         opacity: 1 !important;
         font-weight: 800 !important;
         font-size: 0.85rem !important;
