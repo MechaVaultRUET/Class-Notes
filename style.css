@@ -100,7 +100,7 @@ a:focus-visible {
     box-shadow: var(--focus-ring) !important;
 }
 
-/* Background Animated Canvas Canvas */
+/* Background Animated Canvas */
 #bg-canvas {
     position: fixed;
     top: 0;
@@ -148,7 +148,7 @@ a:focus-visible {
     z-index: 2;
 }
 
-/* Fixed High Fidelity Desktop Sidebar Configuration */
+/* Fixed Desktop Sidebar Configuration */
 aside {
     width: 280px;
     background: var(--sidebar-bg);
@@ -192,7 +192,7 @@ aside {
     text-decoration: none;
     padding: 14px 18px;
     border-radius: 14px;
-    color: var(--text-main); /* Max visibility within mobile frameworks */
+    color: var(--text-main);
     font-weight: 500;
     transition: var(--transition-smooth);
     display: flex;
@@ -219,7 +219,7 @@ aside {
     box-shadow: 0 4px 15px rgba(217, 70, 239, 0.3);
 }
 
-/* Submenu Architecture with Core Dropdown Animations */
+/* Submenu Architecture with Dropdown Animations */
 .submenu-container {
     display: flex;
     flex-direction: column;
@@ -460,7 +460,7 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%; /* Forces exact grid alignment boundaries */
+    height: 100%;
     transition: var(--transition-smooth);
     animation: fadeUp 0.7s cubic-bezier(0.25, 1, 0.5, 1) both;
     will-change: transform, opacity;
@@ -620,7 +620,7 @@ main {
 .note-card:nth-child(2) { animation-delay: 0.08s; }
 .note-card:nth-child(3) { animation-delay: 0.12s; }
 .note-card:nth-child(4) { animation-delay: 0.16s; }
-.note-child:nth-child(5) { animation-delay: 0.20s; }
+.note-card:nth-child(5) { animation-delay: 0.20s; }
 .note-card:nth-child(6) { animation-delay: 0.24s; }
 .note-card:nth-child(7) { animation-delay: 0.28s; }
 .note-card:nth-child(8) { animation-delay: 0.32s; }
@@ -706,7 +706,7 @@ body.light .bar { background: #0f172a; }
 
 @media (max-width: 768px) {
     body {
-        padding-top: 70px; /* Safe clearing block offsets for sticky tracking menus */
+        padding-top: 70px;
     }
 
     .desktop-only { display: none !important; }
@@ -769,17 +769,43 @@ body.light .bar { background: #0f172a; }
         width: 28px;
     }
 
-    /* Dynamic Mobile Drawer Navigation Layout */
+    /* ———————————————————————————————————————————————————————————————— */
+    /* FIXED CRISP MOBILE DRAWER OVERRIDES                              */
+    /* ———————————————————————————————————————————————————————————————— */
     aside {
         width: 300px;
         left: -300px;
         top: 70px;
         height: calc(100vh - 70px);
         padding: 30px 20px;
-        box-shadow: 25px 0 40px rgba(0,0,0,0.35);
+        box-shadow: 25px 0 40px rgba(0,0,0,0.5);
+        
+        /* FIX: Remove glassmorphism blur on mobile to prevent browser rendering bugs */
+        background: #09070f !important; 
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
     }
 
-    aside.open { left: 0; }
+    aside.open { 
+        left: 0; 
+    }
+
+    /* FIX: Force high-visibility, sharp text colors for mobile navigation items */
+    aside .filter-link {
+        color: #ffffff !important;
+        font-weight: 600 !important;
+        opacity: 1 !important;
+        filter: none !important;
+    }
+
+    aside .sub-link {
+        color: #cbd5e1 !important;
+    }
+
+    aside .nav-label {
+        color: #a855f7 !important;
+        opacity: 1 !important;
+    }
 
     main {
         margin-left: 0;
@@ -815,5 +841,18 @@ body.light .bar { background: #0f172a; }
     #sidebarOverlay.visible {
         opacity: 1;
         visibility: visible;
+    }
+
+    /* Fail-safe: Forcefully dismiss loading screen if JS caches stall */
+    .loader-overlay {
+        animation: mobileForceDismiss 0.4s ease 2s forwards !important;
+    }
+}
+
+@keyframes mobileForceDismiss {
+    to {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
     }
 }
