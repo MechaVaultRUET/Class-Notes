@@ -816,11 +816,11 @@ body.light .bar { background: #0f172a; }
 
     padding: 25px 20px 80px 20px !important;
 
-    background: rgba(10, 15, 30, 0.98) !important;
+    background: rgba(10,15,30,0.92) !important;
 
     border-right: 1px solid rgba(255,255,255,0.15) !important;
 
-    box-shadow: 15px 0 40px rgba(0,0,0,0.8) !important;
+    box-shadow: 8px 0 20px rgba(0,0,0,0.35) !important;
 
     z-index: 100000 !important;
 
