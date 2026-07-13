@@ -11,73 +11,88 @@
 </head>
 <body>
 
+    <div id="pageLoader" class="loader-overlay" aria-hidden="true">
+        <div class="spinner"></div>
+    </div>
+
     <canvas id="bg-canvas"></canvas>
 
     <div class="sc-diagonal-container">
         <div class="sc-background-text">ME S.C</div>
     </div>
 
-    <div class="mobile-header">
+    <header class="mobile-header">
         <div class="brand">AcademicVault</div>
-        <button id="menuToggle" aria-label="Toggle Navigation Menu">
+        <button id="menuToggle" class="touch-target" aria-label="Toggle Navigation Menu" aria-expanded="false" aria-controls="sidebar">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
         </button>
-    </div>
+    </header>
 
     <div class="app-container">
-        <aside id="sidebar">
+        <aside id="sidebar" aria-label="Primary Navigation">
             <div class="brand desktop-only">AcademicVault</div>
             
-            <p class="nav-label">Navigation</p>
+            <p class="nav-label">Navigation System</p>
             <nav class="filter-menu">
-                <a href="#" class="filter-link searchable-item">Class Routine</a>
+                <a href="#" class="filter-link searchable-item touch-target">
+                    <span>Class Routine</span>
+                </a>
                 
                 <div class="submenu-container">
-                    <button class="filter-link submenu-toggle searchable-item">
-                        <span>CT</span>
-                        <span class="arrow">▼</span>
+                    <button class="filter-link submenu-toggle searchable-item touch-target" aria-haspopup="true" aria-expanded="false">
+                        <span class="menu-title">CT</span>
+                        <span class="arrow" aria-hidden="true">▼</span>
                     </button>
-                    <div class="submenu">
-                        <a href="#" class="filter-link sub-link searchable-item">CT Syllabus</a>
-                        <a href="#" class="filter-link sub-link searchable-item">CT Routine</a>
+                    <div class="submenu" role="menu">
+                        <a href="#" class="filter-link sub-link searchable-item touch-target" role="menuitem">CT Syllabus</a>
+                        <a href="#" class="filter-link sub-link searchable-item touch-target" role="menuitem">CT Routine</a>
                     </div>
                 </div>
 
-                <a href="#" class="filter-link searchable-item">Lab</a>
-                <a href="#" class="filter-link searchable-item">Cover Page Generator</a>
+                <a href="#" class="filter-link searchable-item touch-target">
+                    <span>Lab</span>
+                </a>
+                <a href="#" class="filter-link searchable-item touch-target">
+                    <span>Cover Page Generator</span>
+                </a>
                 
                 <div class="submenu-container">
-                    <button class="filter-link submenu-toggle searchable-item">
-                        <span>Contacts</span>
-                        <span class="arrow">▼</span>
+                    <button class="filter-link submenu-toggle searchable-item touch-target" aria-haspopup="true" aria-expanded="false">
+                        <span class="menu-title">Contacts</span>
+                        <span class="arrow" aria-hidden="true">▼</span>
                     </button>
-                    <div class="submenu">
-                        <a href="#" class="filter-link sub-link searchable-item">25 Series</a>
-                        <a href="#" class="filter-link sub-link searchable-item">24 Series</a>
+                    <div class="submenu" role="menu">
+                        <a href="#" class="filter-link sub-link searchable-item touch-target" role="menuitem">25 Series</a>
+                        <a href="#" class="filter-link sub-link searchable-item touch-target" role="menuitem">24 Series</a>
                     </div>
                 </div>
 
-                <a href="#" class="filter-link searchable-item">MechaVerse</a>
-                <a href="#" class="filter-link searchable-item">MechaBot</a>
+                <a href="#" class="filter-link searchable-item touch-target">
+                    <span>MechaVerse</span>
+                </a>
+                <a href="#" class="filter-link searchable-item touch-target">
+                    <span>MechaBot</span>
+                </a>
             </nav>
         </aside>
 
-        <main>
+        <main id="mainContent">
             <div class="top-bar">
-                <div></div> <button id="themeBtn">🌙 Theme</button>
+                <div class="bar-spacer"></div>
+                <button id="themeBtn" class="touch-target" aria-label="Toggle Brightness Theme Mode">🌙 Theme</button>
             </div>
 
             <div class="center-title">
                 <h1>ME-C1</h1>
             </div>
 
-            <header>
+            <section class="welcome-header-block" aria-label="Dashboard Greetings">
                 <div class="welcome-text">
                     <h1>Welcome Back</h1>
                     <p>Access your engineering resources and notes.</p>
-                    <div id="clock"></div>
+                    <div id="clock" aria-live="off"></div>
                 </div>
 
                 <div class="search-wrapper">
@@ -85,34 +100,38 @@
                         id="searchInput" 
                         class="search-bar" 
                         type="text" 
-                        placeholder="Search modules, subjects, or menus..."
+                        placeholder="Search subjects, modules, or sidebar items..."
+                        aria-label="Global Site Resource Query Search Input"
                     >
                 </div>
-            </header>
+            </section>
 
-            <div class="stats-grid">
+            <section class="stats-grid" aria-label="Course Metrics Statistics">
                 <div class="stat-card">
+                    <div class="stat-icon-glow"></div>
                     <h2>10</h2>
                     <p>Total Courses</p>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-icon-glow"></div>
                     <h2>5</h2>
                     <p>Theory Courses</p>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-icon-glow"></div>
                     <h2>5</h2>
                     <p>Sessional Courses</p>
                 </div>
+            </section>
+
+            <div id="noResults" class="no-results-hidden" role="alert">
+                <p>🔍 No matching resources, metadata text modules, or navigation links were found.</p>
             </div>
 
-            <div id="noResults" class="no-results-hidden">
-                <p>🔍 No matching resources or navigation items found.</p>
-            </div>
-
-            <section class="notes-grid" id="notesGrid">
+            <section class="notes-grid" id="notesGrid" aria-label="Course Folders Resource Repository">
                 
-                <a href="https://drive.google.com/drive/folders/1eMSMgbEPnWtjO-j12XxSElUA_D-AfdT2?usp=drive_link" target="_blank" class="note-card note-card-searchable">
-                    <div>
+                <a href="https://drive.google.com/drive/folders/1eMSMgbEPnWtjO-j12XxSElUA_D-AfdT2?usp=drive_link" target="_blank" class="note-card note-card-searchable touch-target">
+                    <div class="card-inner-wrapper">
                         <div class="card-header">
                             <span class="tag">Theory</span>
                         </div>
@@ -121,12 +140,12 @@
                     </div>
                     <div class="card-footer">
                         <span>Module 01</span>
-                        <span class="action-btn">Open →</span>
+                        <span class="action-btn" aria-hidden="true">Open →</span>
                     </div>
                 </a>
 
-                <a href="https://drive.google.com/drive/folders/1qpGaxu1vsXVbviyzQDT7ckazPkKvxsLt?usp=drive_link" target="_blank" class="note-card note-card-searchable">
-                    <div>
+                <a href="https://drive.google.com/drive/folders/1qpGaxu1vsXVbviyzQDT7ckazPkKvxsLt?usp=drive_link" target="_blank" class="note-card note-card-searchable touch-target">
+                    <div class="card-inner-wrapper">
                         <div class="card-header">
                             <span class="tag">Theory</span>
                         </div>
@@ -135,12 +154,12 @@
                     </div>
                     <div class="card-footer">
                         <span>Module 02</span>
-                        <span class="action-btn">Open →</span>
+                        <span class="action-btn" aria-hidden="true">Open →</span>
                     </div>
                 </a>
 
-                <a href="https://drive.google.com/drive/folders/1b48oZTDUjAkzIsHNkj9gxaCZt6GN4q8P?usp=drive_link" target="_blank" class="note-card note-card-searchable">
-                    <div>
+                <a href="https://drive.google.com/drive/folders/1b48oZTDUjAkzIsHNkj9gxaCZt6GN4q8P?usp=drive_link" target="_blank" class="note-card note-card-searchable touch-target">
+                    <div class="card-inner-wrapper">
                         <div class="card-header">
                             <span class="tag">Theory</span>
                         </div>
@@ -149,12 +168,12 @@
                     </div>
                     <div class="card-footer">
                         <span>Module 03</span>
-                        <span class="action-btn">Open →</span>
+                        <span class="action-btn" aria-hidden="true">Open →</span>
                     </div>
                 </a>
 
-                <a href="https://drive.google.com/drive/folders/1Ed4GI8FYkWSNJNiAbIxAlwKNHSNnhwnb?usp=drive_link" target="_blank" class="note-card note-card-searchable">
-                    <div>
+                <a href="https://drive.google.com/drive/folders/1Ed4GI8FYkWSNJNiAbIxAlwKNHSNnhwnb?usp=drive_link" target="_blank" class="note-card note-card-searchable touch-target">
+                    <div class="card-inner-wrapper">
                         <div class="card-header">
                             <span class="tag">Theory</span>
                         </div>
@@ -163,12 +182,12 @@
                     </div>
                     <div class="card-footer">
                         <span>Module 04</span>
-                        <span class="action-btn">Open →</span>
+                        <span class="action-btn" aria-hidden="true">Open →</span>
                     </div>
                 </a>
 
-                <a href="https://drive.google.com/drive/folders/1rbBvHJMX0kJ2qVKwbW05mEn3GWdX071p?usp=drive_link" target="_blank" class="note-card note-card-searchable">
-                    <div>
+                <a href="https://drive.google.com/drive/folders/1rbBvHJMX0kJ2qVKwbW05mEn3GWdX071p?usp=drive_link" target="_blank" class="note-card note-card-searchable touch-target">
+                    <div class="card-inner-wrapper">
                         <div class="card-header">
                             <span class="tag">Theory</span>
                         </div>
@@ -177,12 +196,12 @@
                     </div>
                     <div class="card-footer">
                         <span>Module 05</span>
-                        <span class="action-btn">Open →</span>
+                        <span class="action-btn" aria-hidden="true">Open →</span>
                     </div>
                 </a>
 
-                <a href="https://drive.google.com/drive/folders/1hntowkpmajFNICe5UiVh3Bh4UWouneIM?usp=drive_link" target="_blank" class="note-card note-card-searchable">
-                    <div>
+                <a href="https://drive.google.com/drive/folders/1hntowkpmajFNICe5UiVh3Bh4UWouneIM?usp=drive_link" target="_blank" class="note-card note-card-searchable touch-target">
+                    <div class="card-inner-wrapper">
                         <div class="card-header">
                             <span class="tag">Sessional</span>
                         </div>
@@ -191,12 +210,12 @@
                     </div>
                     <div class="card-footer">
                         <span>Module 06</span>
-                        <span class="action-btn">Open →</span>
+                        <span class="action-btn" aria-hidden="true">Open →</span>
                     </div>
                 </a>
 
-                <a href="https://drive.google.com/drive/folders/1Qk_H_6QbSk6wWNxUzTKbqu8V0DrWMRhx?usp=drive_link" target="_blank" class="note-card note-card-searchable">
-                    <div>
+                <a href="https://drive.google.com/drive/folders/1Qk_H_6QbSk6wWNxUzTKbqu8V0DrWMRhx?usp=drive_link" target="_blank" class="note-card note-card-searchable touch-target">
+                    <div class="card-inner-wrapper">
                         <div class="card-header">
                             <span class="tag">Sessional</span>
                         </div>
@@ -205,12 +224,12 @@
                     </div>
                     <div class="card-footer">
                         <span>Module 07</span>
-                        <span class="action-btn">Open →</span>
+                        <span class="action-btn" aria-hidden="true">Open →</span>
                     </div>
                 </a>
 
-                <a href="https://drive.google.com/drive/folders/1QiFcgUKNQJdV1FpbF72gFgNrECBGDVOK?usp=drive_link" target="_blank" class="note-card note-card-searchable">
-                    <div>
+                <a href="https://drive.google.com/drive/folders/1QiFcgUKNQJdV1FpbF72gFgNrECBGDVOK?usp=drive_link" target="_blank" class="note-card note-card-searchable touch-target">
+                    <div class="card-inner-wrapper">
                         <div class="card-header">
                             <span class="tag">Sessional</span>
                         </div>
@@ -219,12 +238,12 @@
                     </div>
                     <div class="card-footer">
                         <span>Module 08</span>
-                        <span class="action-btn">Open →</span>
+                        <span class="action-btn" aria-hidden="true">Open →</span>
                     </div>
                 </a>
 
-                <a href="https://drive.google.com/drive/folders/1k3TksXF8wcJd4S8riM6XtZE3Vo1p9IN0?usp=drive_link" target="_blank" class="note-card note-card-searchable">
-                    <div>
+                <a href="https://drive.google.com/drive/folders/1k3TksXF8wcJd4S8riM6XtZE3Vo1p9IN0?usp=drive_link" target="_blank" class="note-card note-card-searchable touch-target">
+                    <div class="card-inner-wrapper">
                         <div class="card-header">
                             <span class="tag">Sessional</span>
                         </div>
@@ -233,12 +252,12 @@
                     </div>
                     <div class="card-footer">
                         <span>Module 09</span>
-                        <span class="action-btn">Open →</span>
+                        <span class="action-btn" aria-hidden="true">Open →</span>
                     </div>
                 </a>
 
-                <a href="https://drive.google.com/drive/folders/1uR2REAd6SWtC2iJ04hauvoyD-8nyc_df?usp=drive_link" target="_blank" class="note-card note-card-searchable">
-                    <div>
+                <a href="https://drive.google.com/drive/folders/1uR2REAd6SWtC2iJ04hauvoyD-8nyc_df?usp=drive_link" target="_blank" class="note-card note-card-searchable touch-target">
+                    <div class="card-inner-wrapper">
                         <div class="card-header">
                             <span class="tag">Sessional</span>
                         </div>
@@ -247,7 +266,7 @@
                     </div>
                     <div class="card-footer">
                         <span>Module 10</span>
-                        <span class="action-btn">Open →</span>
+                        <span class="action-btn" aria-hidden="true">Open →</span>
                     </div>
                 </a>
 
@@ -255,13 +274,13 @@
         </main>
     </div>
 
-    <button id="topBtn" title="Back to Top">↑</button>
+    <button id="topBtn" class="touch-target" title="Scroll back to Top orientation layout" aria-label="Scroll back to Top">↑</button>
 
-    <a href="https://gemini.google.com" target="_blank" class="ai-button" title="Open Gemini Assistant">
+    <a href="https://gemini.google.com" target="_blank" class="ai-button touch-target" title="Open Gemini Assistant Platform Interface" aria-label="Open Gemini Assistant">
         🤖
     </a>
 
-    <div id="sidebarOverlay"></div>
+    <div id="sidebarOverlay" aria-hidden="true"></div>
 
     <script src="script.js"></script>
 </body>
