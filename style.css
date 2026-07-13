@@ -704,78 +704,79 @@ body.light .bar { background: #0f172a; }
     .search-wrapper { width: 100%; }
 }
 
+/* ==========================================================================
+   FINAL SECURED MOBILE OPTIMIZATION - ALL RENDERING & STACKING BUGS RESOLVED
+   ========================================================================== */
 @media (max-width: 768px) {
     body {
-        padding-top: 70px;
+        padding-top: 70px !important;
     }
 
     .desktop-only { display: none !important; }
 
-    /* Crisp High Target Mobile Header Structure */
+    /* Mobile Header Layout Bar */
     .mobile-header {
         display: flex !important;
         justify-content: space-between;
         align-items: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 70px;
-        background: #09070f;
-        border-bottom: 1px solid var(--border-glass);
-        padding: 0 24px;
-        z-index: 100000;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 70px !important;
+        background: #09070f !important;
+        border-bottom: 1px solid var(--border-glass) !important;
+        padding: 0 24px !important;
+        z-index: 100000 !important; /* Highest layer level */
     }
 
-    .mobile-header .brand { margin-bottom: 0; }
+    .mobile-header .brand { margin-bottom: 0 !important; }
 
     #menuToggle {
-        background: transparent;
-        border: none;
-        width: 44px;
-        height: 44px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-end;
-        gap: 6px;
-        cursor: pointer;
+        background: transparent !important;
+        border: none !important;
+        width: 44px !important;
+        height: 44px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: flex-end !important;
+        gap: 6px !important;
+        cursor: pointer !important;
     }
 
     .bar {
-        width: 28px;
-        height: 3px;
-        background: white;
-        border-radius: 2px;
-        transition: var(--transition-smooth);
+        width: 28px !important;
+        height: 3px !important;
+        background: #ffffff !important;
+        border-radius: 2px !important;
+        transition: var(--transition-smooth) !important;
     }
-    #menuToggle .bar:nth-child(2) { width: 20px; }
+    #menuToggle .bar:nth-child(2) { width: 20px !important; }
 
     #menuToggle.active .bar:nth-child(1) {
-        transform: translateY(9px) rotate(45deg);
-        width: 28px;
+        transform: translateY(9px) rotate(45deg) !important;
     }
-    #menuToggle.active .bar:nth-child(2) { opacity: 0; }
+    #menuToggle.active .bar:nth-child(2) { opacity: 0 !important; }
     #menuToggle.active .bar:nth-child(3) {
-        transform: translateY(-9px) rotate(-45deg);
-        width: 28px;
+        transform: translateY(-9px) rotate(-45deg) !important;
     }
 
     main {
         margin-left: 0 !important;
-        padding: 24px 20px;
+        padding: 24px 20px !important;
     }
 
-    .sc-diagonal-container { padding-left: 0; }
-    .center-title h1 { font-size: 2rem; }
-    .welcome-text h1 { font-size: 1.65rem; }
+    .sc-diagonal-container { padding-left: 0 !important; }
+    .center-title h1 { font-size: 2rem !important; }
+    .welcome-text h1 { font-size: 1.65rem !important; }
 
     .stats-grid, .notes-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
     }
 
-    /* Background Dimming Overlay */
+    /* CRITICAL FIX 1: Pushed behind the sidebar container so it can never block text clicks or visibility */
     #sidebarOverlay {
         display: block !important;
         position: fixed !important;
@@ -783,12 +784,12 @@ body.light .bar { background: #0f172a; }
         left: 0 !important;
         width: 100vw !important;
         height: calc(100vh - 70px) !important;
-        background: rgba(0, 0, 0, 0.7) !important;
+        background: rgba(0, 0, 0, 0.7) !important; 
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
-        z-index: 9998 !important;
-        opacity: 0;
-        visibility: hidden;
+        z-index: 9998 !important; /* Kept LOWER than aside/sidebar layer */
+        opacity: 0 !important;
+        visibility: hidden !important;
         transition: opacity 0.3s ease, visibility 0.3s ease !important;
     }
 
@@ -797,7 +798,7 @@ body.light .bar { background: #0f172a; }
         visibility: visible !important;
     }
 
-    /* FIX 1: Enable full vertical scrolling so lower links can be reached */
+    /* CRITICAL FIX 2: Height isolation, explicit scroll containment, and zero blur filters */
     aside, 
     #sidebar {
         display: flex !important;
@@ -807,13 +808,16 @@ body.light .bar { background: #0f172a; }
         left: -300px !important;
         top: 70px !important;
         height: calc(100vh - 70px) !important;
-        overflow-y: auto !important; /* Forces scrollbar for lower items */
-        -webkit-overflow-scscrolling: touch !important;
-        padding: 30px 20px 60px 20px !important; /* Bottom padding gives breathing room */
-        background: #0d0b14 !important; /* Slightly lighter solid premium dark background */
+        max-height: calc(100vh - 70px) !important;
+        overflow-y: auto !important; /* Smooth scrolling lane */
+        -webkit-overflow-scrolling: touch !important;
+        padding: 25px 20px 80px 20px !important;
+        background: #09070f !important; /* Solid matte background to block background canvas interference */
         box-shadow: 25px 0 40px rgba(0,0,0,0.6) !important;
-        z-index: 99999 !important;
-        transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), left 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        z-index: 99999 !important; /* Placed HIGHER than the overlay layer */
+        transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), left 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
+        
+        /* Absolute cancellation of browser-level blurring artifacts */
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
         filter: none !important;
@@ -829,33 +833,43 @@ body.light .bar { background: #0f172a; }
     .filter-menu {
         display: flex !important;
         flex-direction: column !important;
-        gap: 8px !important;
+        gap: 10px !important;
         width: 100% !important;
     }
 
-    /* FIX 2: Radical contrast boost. Enforces clean ultra-sharp visible links */
+    /* CRITICAL FIX 3: Enforcing absolute contrast plates and disabling conflicting dynamic fading transitions */
     html body aside .filter-link,
     html body #sidebar .filter-link,
     html body aside .searchable-item,
-    html body #sidebar .searchable-item {
+    html body #sidebar .searchable-item,
+    html body aside button,
+    html body #sidebar button,
+    html body aside a,
+    html body #sidebar a {
         display: flex !important;
-        color: #f1f5f9 !important; /* Crisp off-white */
+        color: #ffffff !important; /* Guaranteed deep solid pure white */
         opacity: 1 !important;
-        font-weight: 600 !important;
+        font-weight: 700 !important;
         font-size: 1.05rem !important;
+        background: rgba(255, 255, 255, 0.07) !important; /* High contrast dark-mode card buttons */
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        border-radius: 12px !important;
+        padding: 14px 18px !important;
+        width: 100% !important;
+        text-align: left !important;
+        margin-bottom: 4px !important;
+        
+        /* Clears dynamic browser fading bugs */
+        transition: none !important;
+        will-change: auto !important;
+        transform: translateZ(0) !important;
+        
         filter: none !important;
         -webkit-filter: none !important;
-        padding: 14px 16px !important;
-        width: 100% !important;
-        background: rgba(255, 255, 255, 0.03) !important; /* Subtly lights up item boundary */
-        border: 1px solid rgba(255, 255, 255, 0.05) !important;
-        border-radius: 12px !important;
-        margin-bottom: 4px !important;
-        text-align: left !important;
         visibility: visible !important;
     }
 
-    /* Active State Glow */
+    /* Active Highlight States */
     html body aside .filter-link.active,
     html body #sidebar .filter-link.active {
         background: linear-gradient(135deg, #a855f7 0%, #d946ef 100%) !important;
@@ -863,25 +877,31 @@ body.light .bar { background: #0f172a; }
         border-color: transparent !important;
     }
 
-    /* Expanded Submenu links fix */
+    /* Submenu Internal Choices Setup */
     html body aside .sub-link,
     html body #sidebar .sub-link {
-        color: #cbd5e1 !important; /* Visible light grey text */
-        font-weight: 500 !important;
+        color: #f1f5f9 !important;
+        font-weight: 600 !important;
         display: block !important;
-        padding: 10px 16px !important;
-        background: rgba(255, 255, 255, 0.01) !important;
+        padding: 12px 18px !important;
+        background: rgba(255, 255, 255, 0.04) !important;
+        border: 1px solid rgba(255, 255, 255, 0.06) !important;
+        border-radius: 10px !important;
+        transition: none !important;
     }
 
+    /* Main Category System Headers */
     html body aside .nav-label,
     html body #sidebar .nav-label {
         display: block !important;
-        color: #e879f9 !important; /* Bright Magenta navigation header */
+        color: #ff79c6 !important; /* Vivid bright pink for flawless legibility */
         opacity: 1 !important;
         font-weight: 800 !important;
-        letter-spacing: 1px !important;
-        margin-top: 15px !important;
-        margin-bottom: 10px !important;
+        font-size: 0.85rem !important;
+        letter-spacing: 1.5px !important;
+        text-transform: uppercase !important;
+        margin-top: 22px !important;
+        margin-bottom: 12px !important;
     }
 
     .loader-overlay {
