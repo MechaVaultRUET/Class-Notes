@@ -816,8 +816,7 @@ body.light .bar { background: #0f172a; }
 
     padding: 25px 20px 80px 20px !important;
 
-    background: #111827 !important;
-
+    background: #1e293b !important;
     border-right: 1px solid rgba(255,255,255,0.15) !important;
 
     box-shadow: 8px 0 20px rgba(0,0,0,0.35) !important;
@@ -861,7 +860,7 @@ body.light .bar { background: #0f172a; }
         opacity: 1 !important;
         font-weight: 700 !important;
         font-size: 1.1rem !important;
-        background: rgba(255,255,255,0.15) !important;/* Light card background overlay */
+        background: rgba(255, 255, 255, 0.18) !important;/* Light card background overlay */
         border: 1px solid rgba(255, 255, 255, 0.15) !important;
         border-radius: 12px !important;
         padding: 14px 18px !important;
