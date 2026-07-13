@@ -710,6 +710,9 @@ body.light .bar { background: #0f172a; }
 /* ==========================================================================
    FINAL PRODUCTION MOBILE FIX: KILLS DARK TEXT FLASHING & SUBPIXEL BLUR
    ========================================================================== */
+/* ==========================================================================
+   FINAL PRODUCTION MOBILE OVERRIDE: FORCED PURE WHITE MENU OPTIONS
+   ========================================================================== */
 @media (max-width: 768px) {
     body {
         padding-top: 70px !important;
@@ -797,7 +800,7 @@ body.light .bar { background: #0f172a; }
         visibility: visible !important;
     }
 
-    /* Fixed Height Container & Scroll Configuration */
+    /* Mobile Navigation Container Panel */
     aside, 
     #sidebar {
         display: flex !important;
@@ -811,12 +814,10 @@ body.light .bar { background: #0f172a; }
         overflow-y: auto !important; 
         -webkit-overflow-scrolling: touch !important;
         padding: 25px 20px 80px 20px !important;
-        background: #09070f !important; /* Matte dark surface background color */
+        background: #09070f !important; /* Deep matte black background surface */
         box-shadow: 25px 0 40px rgba(0,0,0,0.6) !important;
         z-index: 99999 !important;
         transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
-        
-        /* Complete elimination of text blurring artifacts */
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
         filter: none !important;
@@ -824,7 +825,6 @@ body.light .bar { background: #0f172a; }
         visibility: visible !important;
     }
 
-    /* Clear dynamic transforms on open state to keep text pixel-perfect */
     aside.open,
     #sidebar.open { 
         left: 0 !important; 
@@ -839,7 +839,7 @@ body.light .bar { background: #0f172a; }
         width: 100% !important;
     }
 
-    /* Force parent links to stay solid and white */
+    /* HARD OVERRIDE: Forcing every link element to bright white layout profiles */
     html body aside .filter-link,
     html body #sidebar .filter-link,
     html body aside .searchable-item,
@@ -850,38 +850,46 @@ body.light .bar { background: #0f172a; }
     html body #sidebar a {
         display: flex !important;
         align-items: center !important;
-        color: #ffffff !important; 
+        color: #ffffff !important; /* Force parent link color */
         opacity: 1 !important;
         font-weight: 700 !important;
-        font-size: 1.05rem !important;
-        background: rgba(255, 255, 255, 0.07) !important; 
-        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        font-size: 1.1rem !important;
+        background: rgba(255, 255, 255, 0.08) !important; /* Light card background overlay */
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
         border-radius: 12px !important;
         padding: 14px 18px !important;
         width: 100% !important;
         text-align: left !important;
         margin-bottom: 4px !important;
-        transition: none !important; /* Removes color blending delays */
+        transition: none !important; 
         filter: none !important;
         -webkit-filter: none !important;
         visibility: visible !important;
     }
 
-    /* CRITICAL TARGETING: Forces all inner text/spans to be solid white and crisp */
+    /* THE DEEP FIX: Strip away all variable-driven themes from inner text blocks */
+    html body aside .filter-link,
+    html body #sidebar .filter-link,
     html body aside .filter-link *,
     html body #sidebar .filter-link *,
     html body aside .searchable-item *,
     html body #sidebar .searchable-item * {
-        color: #ffffff !important;
+        color: #ffffff !important; /* Forces text nodes to stay true white */
         opacity: 1 !important;
         font-weight: 700 !important;
-        background: transparent !important;
-        transition: none !important;
+        text-shadow: none !important;
         filter: none !important;
         -webkit-filter: none !important;
     }
 
-    /* Active Highlight state updates */
+    /* Keep drop arrows clearly visible */
+    html body aside .arrow, 
+    html body #sidebar .arrow {
+        color: #ffffff !important;
+        opacity: 0.8 !important;
+    }
+
+    /* Active State Glow Profile */
     html body aside .filter-link.active,
     html body #sidebar .filter-link.active {
         background: linear-gradient(135deg, #a855f7 0%, #d946ef 100%) !important;
@@ -892,7 +900,7 @@ body.light .bar { background: #0f172a; }
         color: #ffffff !important;
     }
 
-    /* Submenu Internal Links Visibility */
+    /* Submenu Internal Links Custom Frame */
     html body aside .sub-link,
     html body #sidebar .sub-link,
     html body aside .sub-link * {
@@ -906,11 +914,11 @@ body.light .bar { background: #0f172a; }
         transition: none !important;
     }
 
-    /* Main Navigation Label Title Headers */
+    /* Main Navigation Label Header Titles */
     html body aside .nav-label,
     html body #sidebar .nav-label {
         display: block !important;
-        color: #ff79c6 !important; /* Vivid bright high contrast pink */
+        color: #ff79c6 !important; /* Vivid pink for perfect legibility */
         opacity: 1 !important;
         font-weight: 800 !important;
         font-size: 0.85rem !important;
