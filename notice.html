@@ -3,116 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Vault | Notices</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Notices | Academic Vault</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Specific page adjustments for Notice Board alignment */
+        /* Specific Styles for Notice Page */
         .notice-container {
             max-width: 900px;
-            margin: 0 auto;
+            margin: 50px auto;
+            padding: 20px;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .notice-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .notice-header h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .notice-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .notice-list {
             display: flex;
             flex-direction: column;
             gap: 25px;
         }
 
-        .notice-board-card {
+        .notice-card-item {
             background: var(--card-bg);
             border: 1px solid var(--border-glass);
-            border-radius: 24px;
-            padding: 35px;
+            border-radius: 20px;
+            padding: 30px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            transition: var(--transition-smooth);
-            animation: fadeUp 0.7s cubic-bezier(0.25, 1, 0.5, 1) both;
-            will-change: transform, opacity;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .notice-board-card:hover {
-            transform: translateY(-4px);
+        .notice-card-item:hover {
+            transform: translateY(-5px);
             background: var(--card-hover-bg);
-            border-color: rgba(217, 70, 239, 0.25);
-            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+            border-color: rgba(217, 70, 239, 0.3);
+            box-shadow: 0 12px 40px rgba(217, 70, 239, 0.15);
+        }
+
+        body.light .notice-card-item:hover {
+            border-color: rgba(124, 58, 237, 0.3);
+            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.1);
+        }
+
+        .notice-number {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 3rem;
+            font-weight: 900;
+            color: rgba(217, 70, 239, 0.15);
+            line-height: 1;
+        }
+
+        body.light .notice-number {
+            color: rgba(124, 58, 237, 0.12);
         }
 
         .notice-meta {
             display: flex;
-            justify-content: space-between;
+            gap: 15px;
             align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .notice-number {
-            font-weight: 800;
-            color: #d946ef;
-            background: rgba(217, 70, 239, 0.1);
-            padding: 6px 14px;
-            border-radius: 10px;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
+            margin-bottom: 15px;
         }
 
         .notice-date {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .notice-board-card h2 {
-            font-size: 1.5rem;
-            color: var(--text-main);
-            margin-bottom: 14px;
+            font-size: 0.85rem;
+            color: var(--accent-color);
             font-weight: 700;
-            letter-spacing: -0.3px;
+            text-transform: uppercase;
         }
 
-        .notice-board-card p {
+        .notice-badge {
+            background: rgba(217, 70, 239, 0.15);
+            color: #f472b6;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        body.light .notice-badge {
+            background: rgba(124, 58, 237, 0.1);
+            color: #7c3aed;
+        }
+
+        .notice-card-item h2 {
+            font-size: 1.4rem;
+            color: var(--text-main);
+            margin-bottom: 12px;
+            padding-right: 50px;
+        }
+
+        .notice-card-item p {
             color: var(--text-muted);
-            line-height: 1.75;
+            line-height: 1.7;
             font-size: 1rem;
         }
 
-        /* Light mode structural balance overrides */
-        body.light .notice-board-card {
-            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
-        }
-        body.light .notice-board-card h2 {
-            color: #0f172a;
-        }
-        body.light .notice-number {
-            background: rgba(168, 85, 247, 0.1);
-            color: #a855f7;
+        /* Back to Home Button Link */
+        .back-home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 700;
+            margin-bottom: 30px;
+            padding: 10px 18px;
+            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-glass);
+            transition: all 0.3s ease;
         }
 
-        /* Staggered card appearance delays */
-        .notice-board-card:nth-child(1) { animation-delay: 0.05s; }
-        .notice-board-card:nth-child(2) { animation-delay: 0.10s; }
-        .notice-board-card:nth-child(3) { animation-delay: 0.15s; }
-        .notice-board-card:nth-child(4) { animation-delay: 0.20s; }
-        .notice-board-card:nth-child(5) { animation-delay: 0.25s; }
-
-        @media (max-width: 768px) {
-            .notice-board-card {
-                padding: 24px;
-            }
-            .notice-meta {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            .notice-board-card h2 {
-                font-size: 1.3rem;
-            }
+        .back-home-btn:hover {
+            background: var(--card-hover-bg);
+            transform: translateX(-4px);
         }
     </style>
 </head>
 <body>
-
-    <div id="pageLoader" class="loader-overlay" aria-hidden="true">
-        <div class="spinner"></div>
-    </div>
 
     <canvas id="bg-canvas"></canvas>
 
@@ -120,145 +150,138 @@
         <div class="sc-background-text">ME S.C</div>
     </div>
 
-    <header class="mobile-header">
-        <div class="brand">AcademicVault</div>
-        <button id="menuToggle" class="touch-target" aria-label="Toggle Navigation Menu" aria-expanded="false" aria-controls="sidebar">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
-    </header>
+    <div class="notice-container">
+        <a href="index.html" class="back-home-btn">← Back to Dashboard</a>
 
-    <div class="app-container">
-        <aside id="sidebar" aria-label="Primary Navigation">
-            <div class="brand desktop-only">AcademicVault</div>
-            
-            <p class="nav-label">Navigation System</p>
-            <nav class="filter-menu">
-                <a href="index.html" class="filter-link searchable-item touch-target">
-                    <span>← Back to Home</span>
-                </a>
-                <a href="#" class="filter-link searchable-item touch-target">
-                    <span>Class Routine</span>
-                </a>
-                
-                <div class="submenu-container">
-                    <button class="filter-link submenu-toggle searchable-item touch-target" aria-haspopup="true" aria-expanded="false">
-                        <span class="menu-title">CT</span>
-                        <span class="arrow" aria-hidden="true">▼</span>
-                    </button>
-                    <div class="submenu" role="menu">
-                        <a href="#" class="filter-link sub-link searchable-item touch-target" role="menuitem">CT Syllabus</a>
-                        <a href="#" class="filter-link sub-link searchable-item touch-target" role="menuitem">CT Routine</a>
-                    </div>
+        <header class="notice-header">
+            <h1>Academic Notices</h1>
+            <p>Stay updated with the latest schedules, exam updates, and official announcements.</p>
+        </header>
+
+        <div class="notice-list">
+
+            <article class="notice-card-item">
+                <span class="notice-number">01</span>
+                <div class="notice-meta">
+                    <span class="notice-date">October 24, 2026</span>
+                    <span class="notice-badge">Important</span>
                 </div>
+                <h2>Upcoming Term Final Examination Schedule</h2>
+                <p>
+                    Please find the official routine for the upcoming Term Final Examinations. Ensure that all sessional reports, laboratory books, and pending assignments are finalized and signed by the respective course coordinators before the preparatory leave.
+                </p>
+            </article>
 
-                <a href="#" class="filter-link searchable-item touch-target">
-                    <span>Lab</span>
-                </a>
-                <a href="#" class="filter-link searchable-item touch-target">
-                    <span>Cover Page Generator</span>
-                </a>
-                
-                <div class="submenu-container">
-                    <button class="filter-link submenu-toggle searchable-item touch-target" aria-haspopup="true" aria-expanded="false">
-                        <span class="menu-title">Contacts</span>
-                        <span class="arrow" aria-hidden="true">▼</span>
-                    </button>
-                    <div class="submenu" role="menu">
-                        <a href="#" class="filter-link sub-link searchable-item touch-target" role="menuitem">25 Series</a>
-                        <a href="#" class="filter-link sub-link searchable-item touch-target" role="menuitem">24 Series</a>
-                    </div>
+            <article class="notice-card-item">
+                <span class="notice-number">02</span>
+                <div class="notice-meta">
+                    <span class="notice-date">October 18, 2026</span>
+                    <span class="notice-badge">Academic</span>
                 </div>
+                <h2>Chemistry Lab Notebook Submission & Viva</h2>
+                <p>
+                    The CHEM-1122 Chemistry lab notebooks must be submitted to the department office by 2:00 PM next Monday. This will be followed by a short individual oral evaluation. Attendance is highly mandatory.
+                </p>
+            </article>
 
-                <a href="#" class="filter-link searchable-item touch-target">
-                    <span>MechaVerse</span>
-                </a>
-                <a href="#" class="filter-link searchable-item touch-target">
-                    <span>MechaBot</span>
-                </a>
-            </nav>
-        </aside>
+            <article class="notice-card-item">
+                <span class="notice-number">03</span>
+                <div class="notice-meta">
+                    <span class="notice-date">October 12, 2026</span>
+                    <span class="notice-badge">Update</span>
+                </div>
+                <h2>Class Test Syllabus for Mathematics (MATH-1121)</h2>
+                <p>
+                    The syllabus for Class Test 03 in Engineering Mathematics comprises Matrix Transformations, Eigenvalues, and Eigenvectors. Extra revision sheets are now accessible via the Google Drive link on the home dashboard.
+                </p>
+            </article>
 
-        <main id="mainContent">
-            <div class="top-bar">
-                <div class="bar-spacer"></div>
-                <button id="themeBtn" class="touch-target" aria-label="Toggle Brightness Theme Mode">🌙 Theme</button>
-            </div>
+            <article class="notice-card-item">
+                <span class="notice-number">04</span>
+                <div class="notice-meta">
+                    <span class="notice-date">October 05, 2026</span>
+                    <span class="notice-badge">Sessional</span>
+                </div>
+                <h2>Workshop Practice (ME-1102) Project Submissions</h2>
+                <p>
+                    All metal turning and woodworking project components must be turned in to the mechanical engineering shop instructors. Ensure your roll numbers are legibly engraved or tagged onto your designated metal castings.
+                </p>
+            </article>
 
-            <div class="center-title">
-                <h1>Official Notice Board</h1>
-            </div>
+            <article class="notice-card-item">
+                <span class="notice-number">05</span>
+                <div class="notice-meta">
+                    <span class="notice-date">September 28, 2026</span>
+                    <span class="notice-badge">Routine</span>
+                </div>
+                <h2>Rescheduled Class Routine Updates</h2>
+                <p>
+                    Please note that next Thursday's Humanities (HUM-1121) lecture has been rescheduled to Tuesday at 9:00 AM due to scheduled maintenance in the main academic gallery. Please coordinate with your respective batch class representatives.
+                </p>
+            </article>
 
-            <div class="notice-container">
-                
-                <article class="notice-board-card">
-                    <div class="notice-meta">
-                        <span class="notice-number">Notice #01</span>
-                        <span class="notice-date">Post Date: July 14, 2026</span>
-                    </div>
-                    <h2>Upcoming Term Examination Schedule</h2>
-                    <p>
-                        Please find your upcoming mid-term sessional and theory breakdown allocations inside the corresponding drive folder links. Direct parameters concerning room matrices and physical assignments will be uploaded explicitly by corresponding instructors.
-                    </p>
-                </article>
-
-                <article class="notice-board-card">
-                    <div class="notice-meta">
-                        <span class="notice-number">Notice #02</span>
-                        <span class="notice-date">Post Date: July 10, 2026</span>
-                    </div>
-                    <h2>Mechanical Workshop Manual Updates</h2>
-                    <p>
-                        The workshop manual criteria listings for sessional courses ME-1102 and ME-1100 have been synchronized. Make sure to check updates and reference points ahead of submission target gates.
-                    </p>
-                </article>
-
-                <article class="notice-board-card">
-                    <div class="notice-meta">
-                        <span class="notice-number">Notice #03</span>
-                        <span class="notice-date">Post Date: July 05, 2026</span>
-                    </div>
-                    <h2>Class Test (CT) Routine Adjustments</h2>
-                    <p>
-                        Review the newly appended CT submenus configuration on the primary sidebar navigation panels. Syllabi revisions map directly to recent evaluation directives.
-                    </p>
-                </article>
-
-                <article class="notice-board-card">
-                    <div class="notice-meta">
-                        <span class="notice-number">Notice #04</span>
-                        <span class="notice-date">Post Date: June 28, 2026</span>
-                    </div>
-                    <h2>Cover Page Generator Release</h2>
-                    <p>
-                        Automated compilation frameworks have been linked. Use the sidebar link to map cover profiles with consistent typographical parameters across standard lab reports.
-                    </p>
-                </article>
-
-                <article class="notice-board-card">
-                    <div class="notice-meta">
-                        <span class="notice-number">Notice #05</span>
-                        <span class="notice-date">Post Date: June 15, 2026</span>
-                    </div>
-                    <h2>Welcome to Academic Vault Modular Portal</h2>
-                    <p>
-                        Your resource node deployment is active. Use search tools or category structures to query notes, module documents, or batch connection lines cleanly.
-                    </p>
-                </article>
-
-            </div>
-        </main>
+        </div>
     </div>
 
-    <button id="topBtn" class="touch-target" title="Scroll back to Top orientation layout" aria-label="Scroll back to Top">↑</button>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Synchronize Light/Dark Theme Preference
+            if (localStorage.getItem("theme") === "light") {
+                document.body.classList.add("light");
+            }
 
-    <a href="https://gemini.google.com" target="_blank" class="ai-button touch-target" title="Open Gemini Assistant Platform Interface" aria-label="Open Gemini Assistant">
-        🤖
-    </a>
+            // Particle Background initialization matching the main index logic
+            const canvas = document.getElementById("bg-canvas");
+            const ctx = canvas.getContext("2d");
 
-    <div id="sidebarOverlay" aria-hidden="true"></div>
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener("resize", resize);
 
-    <script src="script.js"></script>
+            let particles = [];
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedX = Math.random() * 0.3 - 0.15;
+                    this.speedY = Math.random() * 0.3 - 0.15;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.x > canvas.width) this.x = 0;
+                    if (this.x < 0) this.x = canvas.width;
+                    if (this.y > canvas.height) this.y = 0;
+                    if (this.y < 0) this.y = canvas.height;
+                }
+                draw() {
+                    ctx.fillStyle = document.body.classList.contains("light") 
+                        ? "rgba(124, 58, 237, 0.1)" 
+                        : "rgba(168, 85, 247, 0.2)";
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < 40; i++) {
+                particles.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+        });
+    </script>
 </body>
 </html>
