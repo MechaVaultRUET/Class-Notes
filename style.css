@@ -4,46 +4,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 /* ==========================================================================
-   2. ROOT VARIABLES & THEMES (Glossy Glow Enhancements)
+   2. ROOT VARIABLES & THEMES
    ========================================================================== */
 :root {
-    /* Dark Space Mode (Default) */
-    --bg-gradient: linear-gradient(135deg, #020208 0%, #080512 50%, #020205 100%);
-    --sidebar-bg: rgba(8, 10, 24, 0.75);
-    --card-bg: rgba(255, 255, 255, 0.02);
-    --card-hover-bg: rgba(255, 255, 255, 0.06);
-    --text-main: #f1f5f9;
+    /* Dark Mode (Default) */
+    --bg-gradient: linear-gradient(135deg, #020205 0%, #05030a 100%);
+    --sidebar-bg: rgba(10, 15, 30, 0.85);
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-hover-bg: rgba(255, 255, 255, 0.07);
+    --text-main: #f8fafc;
     --text-muted: #94a3b8;
     --accent-color: #d946ef;
-    --accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
-    --border-glass: rgba(255, 255, 255, 0.08);
-    --highlight-bg: rgba(217, 70, 239, 0.25);
-    --active-menu-bg: rgba(139, 92, 246, 0.15);
-    
+    --accent-gradient: linear-gradient(135deg, #a855f7 0%, #d946ef 100%);
+    --border-glass: rgba(255, 255, 255, 0.06);
+    --highlight-bg: rgba(217, 70, 239, 0.3);
+    --active-menu-bg: rgba(168, 85, 247, 0.2);
+
     /* Font configurations */
-    --font-space: 'Space Grotesk', system-ui, sans-serif;
-    --font-robot: 'Orbitron', system-ui, sans-serif;
+    --font-space: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    --font-robot: 'Orbitron', system-ui, -apple-system, sans-serif;
     
-    /* Neon Glossy Glows */
-    --text-glow: 0 0 10px rgba(217, 70, 239, 0.5), 0 0 20px rgba(139, 92, 246, 0.3);
-    --glass-shine: linear-gradient(115deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0) 100%);
+    /* Text Glossy Reflection effect */
+    --text-gloss: 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
-/* Light Space Mode - Bright cosmic theme, high legibility */
+/* Light Mode Override */
 body.light {
-    --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
     --sidebar-bg: rgba(255, 255, 255, 0.85);
     --card-bg: rgba(255, 255, 255, 0.65);
     --card-hover-bg: rgba(255, 255, 255, 0.9);
     --text-main: #0f172a;
     --text-muted: #475569;
-    --accent-color: #7c3aed;
-    --accent-gradient: linear-gradient(135deg, #6d28d9 0%, #a855f7 100%);
+    --accent-color: #a855f7;
+    --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
     --border-glass: rgba(15, 23, 42, 0.12);
     --highlight-bg: rgba(168, 85, 247, 0.25);
-    --active-menu-bg: rgba(124, 58, 237, 0.12);
-    --text-glow: 0 0 8px rgba(124, 58, 237, 0.25);
-    --glass-shine: linear-gradient(115deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 100%);
+    --active-menu-bg: rgba(124, 58, 237, 0.15);
+    --text-gloss: none;
 }
 
 /* ==========================================================================
@@ -53,7 +51,7 @@ body.light {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: var(--font-space);
+    font-family: var(--font-space); /* Space Grotesk globally for body text */
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -90,29 +88,32 @@ body {
 }
 
 .sc-background-text {
-    font-family: var(--font-robot);
+    font-family: var(--font-robot); /* Orbitron for massive space background text */
     font-size: 5.5rem;
     font-weight: 900;
-    color: #e2b6ff;
+    color: #e0aaff;
     letter-spacing: 12px;
     text-shadow:
-        0 0 15px rgba(223, 36, 255, 0.6),
-        0 0 35px rgba(168, 85, 247, 0.4),
-        0 0 70px rgba(217, 70, 239, 0.2);
+        0 0 10px #df24ff,
+        0 0 25px #a855f7,
+        0 0 50px #d946ef,
+        0 0 80px rgba(217, 70, 239, 0.6);
     animation: diagonalMovement 12s ease-in-out infinite alternate;
 }
 
+/* High contrast background text in Light Mode */
 body.light .sc-background-text {
-    color: rgba(124, 58, 237, 0.08);
+    color: rgba(124, 58, 237, 0.12);
     text-shadow: none;
 }
 
 @keyframes diagonalMovement {
-    0% { transform: translate(-50px, -50px) scale(0.95); }
+    0% { transform: translate(-50px, -50px); }
     50% { transform: translate(0px, 0px) scale(1.05); }
-    100% { transform: translate(50px, 50px) scale(0.95); }
+    100% { transform: translate(50px, 50px); }
 }
 
+/* App structure */
 .app-container {
     display: flex;
     position: relative;
@@ -120,13 +121,13 @@ body.light .sc-background-text {
 }
 
 /* ==========================================================================
-   4. SIDEBAR NAVIGATION (Robotic Clean styling)
+   4. SIDEBAR NAVIGATION
    ========================================================================== */
 aside {
     width: 280px;
     background: var(--sidebar-bg);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-right: 1px solid var(--border-glass);
     padding: 30px 20px;
     position: fixed;
@@ -137,24 +138,119 @@ aside {
 }
 
 .brand {
-    font-family: var(--font-robot);
-    font-size: 1.4rem;
+    font-family: var(--font-robot); /* Orbitron brand logo */
+    font-size: 1.5rem;
     font-weight: 900;
     letter-spacing: 1.5px;
     background: var(--accent-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 35px;
-    text-shadow: var(--text-glow);
+    margin-bottom: 30px;
+    text-shadow: var(--text-gloss);
 }
 
 .nav-label {
-    font-family: var(--font-robot);
-    font- 
+    font-family: var(--font-robot); /* Orbitron nav indicators */
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
 
+.filter-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
 
-   /* ==========================================================================
-   5. MAIN CONTENT & TOP BAR (Cosmic Alignment)
+.filter-link, .submenu-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    padding: 13px 16px;
+    border-radius: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.filter-link:hover, .submenu-trigger:hover {
+    background: var(--card-hover-bg);
+    color: var(--text-main);
+    transform: translateX(4px);
+}
+
+/* Active Class Highlight with subtle neon scale */
+.filter-link.active, .submenu-link.active {
+    background: var(--accent-gradient);
+    color: white !important;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(217, 70, 239, 0.3);
+}
+
+/* Submenu Containers */
+.submenu-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.submenu-trigger .arrow {
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+}
+
+.submenu-container.open .submenu-trigger .arrow {
+    transform: rotate(180deg);
+}
+
+.submenu-container.open .submenu-trigger {
+    background: var(--active-menu-bg);
+    color: var(--text-main);
+}
+
+.submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.submenu-container.open .submenu {
+    max-height: 150px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.submenu-link {
+    text-decoration: none;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.submenu-link:hover {
+    background: var(--card-hover-bg);
+    color: var(--text-main);
+    transform: translateX(4px);
+}
+
+/* ==========================================================================
+   5. MAIN CONTENT & TOP BAR
    ========================================================================== */
 main {
     margin-left: 280px;
@@ -172,11 +268,11 @@ main {
 }
 
 #themeBtn {
-    font-family: var(--font-robot);
+    font-family: var(--font-robot); /* Orbitron toggle style */
     font-size: 0.8rem;
     letter-spacing: 1px;
     background: var(--accent-gradient);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: none;
     padding: 12px 22px;
     border-radius: 14px;
     color: white;
@@ -188,7 +284,7 @@ main {
 
 #themeBtn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
 }
 
 .center-title {
@@ -198,14 +294,14 @@ main {
 }
 
 .center-title h1 {
-    font-family: var(--font-robot);
-    font-size: 2.8rem;
+    font-family: var(--font-robot); /* Orbitron main landing title */
+    font-size: 2.5rem;
     font-weight: 900;
     background: var(--accent-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: 4px;
-    filter: drop-shadow(var(--text-glow));
+    letter-spacing: 3px;
+    text-shadow: var(--text-gloss);
 }
 
 .main-header {
@@ -217,20 +313,11 @@ main {
 }
 
 .welcome-text h1 {
-    font-family: var(--font-robot);
+    font-family: var(--font-robot); /* Orbitron secondary headings */
     font-size: 1.8rem;
     margin-bottom: 10px;
     font-weight: 800;
-    letter-spacing: 1px;
-    background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-body.light .welcome-text h1 {
-    background: none;
-    -webkit-text-fill-color: initial;
-    color: var(--text-main);
+    letter-spacing: 0.5px;
 }
 
 .welcome-text p {
@@ -238,17 +325,12 @@ body.light .welcome-text h1 {
 }
 
 #clock {
-    font-family: var(--font-robot);
+    font-family: var(--font-robot); /* Robotic-style tracking clock */
     margin-top: 10px;
     font-weight: 700;
     color: var(--accent-color);
-    font-size: 0.95rem;
+    font-size: 1rem;
     letter-spacing: 1px;
-    text-shadow: var(--text-glow);
-}
-
-body.light #clock {
-    text-shadow: none;
 }
 
 /* ==========================================================================
@@ -263,21 +345,20 @@ body.light #clock {
     padding: 15px 20px;
     border-radius: 14px;
     border: 1px solid var(--border-glass);
-    background: rgba(8, 10, 24, 0.8);
+    background: rgba(15, 23, 42, 0.6);
     color: white;
     outline: none;
     font-size: 0.95rem;
-    font-family: var(--font-space);
     transition: all 0.3s ease;
 }
 
 .search-bar:focus {
     border-color: var(--accent-color);
-    box-shadow: 0 0 20px rgba(217, 70, 239, 0.3);
+    box-shadow: 0 0 15px rgba(217, 70, 239, 0.25);
 }
 
 body.light .search-bar {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.9);
     color: #0f172a;
     border: 1px solid rgba(15, 23, 42, 0.15);
 }
@@ -287,7 +368,6 @@ body.light .search-bar:focus {
     box-shadow: 0 0 15px rgba(124, 58, 237, 0.15);
 }
 
-/* Search Highlight style */
 mark.highlight {
     background: var(--highlight-bg);
     color: inherit;
@@ -302,13 +382,12 @@ mark.highlight {
     background: var(--card-bg);
     border-radius: 20px;
     border: 1px solid var(--border-glass);
-    font-family: var(--font-robot);
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: var(--text-muted);
 }
 
 /* ==========================================================================
-   7. STATS & COURSE CARDS (Glossy Glass Panels)
+   7. STATS & COURSE CARDS
    ========================================================================== */
 .stats-grid {
     display: grid;
@@ -319,23 +398,21 @@ mark.highlight {
 
 .stat-card {
     background: var(--card-bg);
-    background-image: var(--glass-shine);
     padding: 30px;
     border-radius: 20px;
     text-align: center;
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--border-glass);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
 }
 
 .stat-card h2 {
-    font-family: var(--font-robot);
+    font-family: var(--font-robot); /* Orbitron counts/stats */
     font-size: 2.2rem;
-    color: var(--text-main);
+    color: var(--accent-color);
     margin-bottom: 10px;
     font-weight: 800;
-    text-shadow: var(--text-glow);
 }
 
 .notes-grid {
@@ -346,7 +423,6 @@ mark.highlight {
 
 .note-card {
     background: var(--card-bg);
-    background-image: var(--glass-shine);
     border: 1px solid var(--border-glass);
     border-radius: 20px;
     padding: 28px;
@@ -357,20 +433,41 @@ mark.highlight {
     position: relative;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
     animation: fadeUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+
+/* Glossy highlight line overlay on top of note cards */
+.note-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 150%;
+    height: 100%;
+    background: linear-gradient(
+        90deg, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 0.04) 50%, 
+        rgba(255, 255, 255, 0) 100%
+    );
+    transition: left 0.6s ease;
+}
+
+.note-card:hover::after {
+    left: 150%;
 }
 
 .note-card:hover {
     transform: translateY(-8px);
-    background-color: var(--card-hover-bg);
-    border-color: rgba(217, 70, 239, 0.4);
-    box-shadow: 0 12px 40px rgba(217, 70, 239, 0.25);
+    background: var(--card-hover-bg);
+    border-color: rgba(217, 70, 239, 0.3);
+    box-shadow: 0 12px 40px rgba(217, 70, 239, 0.15);
 }
 
 body.light .note-card:hover {
     border-color: rgba(124, 58, 237, 0.3);
-    box-shadow: 0 12px 40px rgba(124, 58, 237, 0.15);
+    box-shadow: 0 12px 40px rgba(124, 58, 237, 0.1);
 }
 
 .card-header {
@@ -378,8 +475,8 @@ body.light .note-card:hover {
 }
 
 .tag {
-    font-family: var(--font-robot);
-    background: rgba(217, 70, 239, 0.15);
+    font-family: var(--font-robot); /* Orbitron for small structural tags */
+    background: rgba(217, 70, 239, 0.12);
     color: #f472b6;
     padding: 6px 12px;
     border-radius: 8px;
@@ -394,10 +491,10 @@ body.light .tag {
 }
 
 .note-card h3 {
-    font-family: var(--font-robot);
+    font-family: var(--font-robot); /* Orbitron Subject codes */
     color: var(--text-main);
     margin: 15px 0;
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     font-weight: 800;
     letter-spacing: 0.5px;
 }
@@ -419,11 +516,11 @@ body.light .tag {
 }
 
 .action-btn {
-    font-family: var(--font-robot);
+    font-family: var(--font-robot); /* Orbitron actions */
     font-size: 0.75rem;
+    letter-spacing: 0.5px;
     color: var(--accent-color);
     font-weight: 700;
-    letter-spacing: 0.5px;
     transition: transform 0.3s ease;
 }
 
@@ -440,7 +537,7 @@ body.light .tag {
     right: 30px;
     width: 55px;
     height: 55px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: none;
     border-radius: 50%;
     background: var(--accent-gradient);
     color: white;
@@ -501,7 +598,7 @@ body.light .tag {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(2, 2, 8, 0.6);
+    background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(4px);
     z-index: 95;
     opacity: 0;
@@ -515,8 +612,8 @@ body.light .tag {
         justify-content: space-between;
         align-items: center;
         background: var(--sidebar-bg);
-        backdrop-filter: blur(25px);
-        -webkit-backdrop-filter: blur(25px);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         border-bottom: 1px solid var(--border-glass);
         padding: 15px 25px;
         position: fixed;
@@ -529,7 +626,7 @@ body.light .tag {
 
     .mobile-brand {
         font-family: var(--font-robot);
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         font-weight: 900;
         letter-spacing: 1px;
         background: var(--accent-gradient);
@@ -571,7 +668,7 @@ body.light .tag {
         top: 70px;
         height: calc(100vh - 70px);
         width: 290px;
-        box-shadow: 15px 0 30px rgba(0, 0, 0, 0.5);
+        box-shadow: 15px 0 30px rgba(0, 0, 0, 0.4);
     }
 
     aside.active {
@@ -607,7 +704,7 @@ body.light .tag {
 
     .sc-background-text {
         font-size: 3rem;
-        letter-spacing: 6px;
+        letter-spacing: 4px;
     }
 }
 
