@@ -951,32 +951,9 @@ body.light .bar { background: #0f172a; }
 @media (max-width:768px){
 
     aside .submenu,
-    #sidebar .submenu {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 6px !important;
-        overflow: hidden !important;
-        max-height: 0 !important;
-        opacity: 0 !important;
-    }
-
-    aside .submenu-container.expanded .submenu,
-    #sidebar .submenu-container.expanded .submenu {
-        max-height: 500px !important;
-        opacity: 1 !important;
-        margin-top: 6px !important;
-        margin-bottom: 6px !important;
-    }
-
-    aside .sub-link,
-    #sidebar .sub-link {
-        display: block !important;
-        width: 100% !important;
-    }
-
-}
+    #sidebar 
 /* ===== FINAL MOBILE SUBMENU FIX ===== */
-@media (max-width:768px){
+
 
     .submenu{
         display:flex !important;
