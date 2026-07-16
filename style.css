@@ -975,3 +975,24 @@ body.light .bar { background: #0f172a; }
     }
 
 }
+/* ===== FINAL MOBILE SUBMENU FIX ===== */
+@media (max-width:768px){
+
+    .submenu{
+        display:flex !important;
+        flex-direction:column !important;
+        max-height:0 !important;
+        opacity:0 !important;
+        overflow:hidden !important;
+        transition:max-height .3s ease, opacity .3s ease !important;
+    }
+
+    .submenu-container.expanded .submenu{
+        max-height:500px !important;
+        opacity:1 !important;
+        overflow:visible !important;
+        margin-top:8px !important;
+        margin-bottom:8px !important;
+    }
+
+}
