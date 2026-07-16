@@ -948,28 +948,103 @@ body.light .bar { background: #0f172a; }
 }
 /* ================= MOBILE LIGHT MODE SIDEBAR FIX ================= */
 
-@media (max-width:768px){
+/* ==========================================
+   1. SIDEBAR & MOBILE NAVIGATION
+   ========================================== */
 
-    aside .submenu,
-    #sidebar 
-/* ===== FINAL MOBILE SUBMENU FIX ===== */
-
-
-    .submenu{
-        display:flex !important;
-        flex-direction:column !important;
-        max-height:0 !important;
-        opacity:0 !important;
-        overflow:hidden !important;
-        transition:max-height .3s ease, opacity .3s ease !important;
-    }
-
-    .submenu-container.expanded .submenu{
-        max-height:500px !important;
-        opacity:1 !important;
-        overflow:visible !important;
-        margin-top:8px !important;
-        margin-bottom:8px !important;
-    }
-
+/* Desktop Sidebar Base */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background-color: #1a1a1a; /* solid, highly visible background */
+  color: #ffffff;
+  transition: transform 0.3s ease;
+  z-index: 1000; /* Keeps it above everything else */
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
 }
+
+/* Mobile View Adjustments (Fixes the blur and visibility) */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 280px; /* Slightly wider on mobile for readability */
+    transform: translateX(-100%); /* Hidden off-screen by default */
+    
+    /* FIX: Explicitly remove any filters or blurs */
+    filter: none !important; 
+    backdrop-filter: none !important; 
+    -webkit-backdrop-filter: none !important;
+    
+    /* Ensure maximum visibility and contrast */
+    background-color: #111111 !important; 
+    opacity: 1 !important; 
+    visibility: visible;
+  }
+
+  /* When the mobile menu is toggled active */
+  .sidebar.active {
+    transform: translateX(0);
+    /* Make absolutely sure it sits on top of any page-blur overlays */
+    z-index: 9999 !important; 
+  }
+}
+
+
+/* ==========================================
+   2. DROPDOWN MENU FUNCTIONALITY
+   ========================================== */
+
+/* Dropdown Container */
+.dropdown {
+  position: relative;
+}
+
+/* Dropdown Menu (Hidden by default) */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  background-color: #2a2a2a;
+  border-radius: 4px;
+  padding: 10px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1001; /* Must sit above the sidebar elements */
+  
+  /* Reset pointer events just in case they were disabled */
+  pointer-events: auto; 
+}
+
+/* Dropdown Items */
+.dropdown-menu a {
+  display: block;
+  padding: 10px 20px;
+  color: #dddddd;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  background-color: #3a3a3a;
+  color: #ffffff;
+}
+
+/* FIX: Dropdown Triggers (Both Hover & Click options) */
+
+/* Option A: Hover-based dropdowns (Desktop) */
+@media (min-width: 769px) {
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+}
+
+/* Option B: Click-based dropdowns (Mobile & JS-friendly) 
+   Simply toggle the '.open' class on the '.dropdown' element via JS */
+.dropdown.open .dropdown-menu {
+  display: block !important;
+}
+
+
