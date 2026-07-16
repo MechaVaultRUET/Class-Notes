@@ -1,333 +1,356 @@
 /**
- * Academic Vault | ME-C1 Core Optimization Engine
- * Comprehensive Feature Handling: High-contrast toggles, active routing state highlights, 
- * performant layout memory preservation, and multi-node text highlights.
+ * Academic Vault | ME-C1
+ * Main JavaScript Controller (Part 1)
  */
 
-document.addEventListener("DOMContentLoaded", () => {
-
-    /* ==========================================================================
-       1. SUBTLE PAGE LOADER LAYER INTERFACE REFINEMENTS
-       ========================================================================== */
-    const pageLoader = document.getElementById("pageLoader");
-    
-    // Ensure smooth frame appearance transitions
-    window.addEventListener("load", () => {
-        if (pageLoader) {
-            pageLoader.classList.add("fade-out");
-            document.body.classList.add("page-loaded");
-            // Allow transitions to clear before pruning interactive contexts
-            setTimeout(() => {
-                pageLoader.style.display = "none";
-            }, 350);
-        }
-    });
-
-    // Fallback gate execution pattern if asset processing lags behind window loops
-    setTimeout(() => {
-        if (pageLoader && !pageLoader.classList.contains("fade-out")) {
-            pageLoader.classList.add("fade-out");
-            document.body.classList.add("page-loaded");
-        }
-    }, 1200);
-
-
-    /* ==========================================================================
-       2. REFINED OPTIMIZED PARTICLE BACKGROUND LOOP ANIMATION
-       ========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+    // Core Layout Elements
     const canvas = document.getElementById("bg-canvas");
-    if (canvas) {
-        const ctx = canvas.getContext("2d");
-        let particles = [];
-        let animationFrameId;
-        
-        // Use a lightweight debounce routine to optimize runtime layout rendering
-        let resizeTimeout;
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        
-        window.addEventListener("resize", () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(resizeCanvas, 150);
-        });
+    const ctx = canvas.getContext("2d");
+    const themeBtn = document.getElementById("themeBtn");
+    const topBtn = document.getElementById("topBtn");
+    const sidebar = document.getElementById("sidebar");
+    const menuToggle = document.getElementById("menu-toggle");
+    const overlay = document.getElementById("sidebar-overlay");
+    const clockElement = document.getElementById("clock");
 
-        class Particle {
-            constructor() {
-                this.reset();
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-            }
+    // State preservation for open submenus
+    const openMenus = JSON.parse(sessionStorage.getItem("openSubmenus")) || [];
 
-            reset() {
-                this.size = Math.random() * 1.8 + 0.4;
-                this.speedX = Math.random() * 0.25 - 0.125;
-                this.speedY = Math.random() * 0.25 - 0.125;
-            }
+    /* ==========================================================================
+       1. PARTICLE BACKGROUND ANIMATION
+       ========================================================================== */
+    let particles = [];
 
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
 
-                if (this.x > canvas.width || this.x < 0 || this.y > canvas.height || this.y < 0) {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                }
-            }
-
-            draw() {
-                ctx.fillStyle = "rgba(217, 70, 239, 0.15)";
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 2 + 0.5;
+            this.speedX = Math.random() * 0.3 - 0.15;
+            this.speedY = Math.random() * 0.3 - 0.15;
         }
 
-        // Reduced count layout targets to improve rendering pipelines on mobile screens
-        const particleCount = window.innerWidth <= 768 ? 35 : 70;
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.x > canvas.width) this.x = 0;
+            if (this.x < 0) this.x = canvas.width;
+            if (this.y > canvas.height) this.y = 0;
+            if (this.y < 0) this.y = canvas.height;
+        }
+
+        draw() {
+            ctx.fillStyle = document.body.classList.contains("light") 
+                ? "rgba(124, 58, 237, 0.1)" 
+                : "rgba(168, 85, 247, 0.2)";
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        particles = [];
+        const particleCount = window.innerWidth < 768 ? 30 : 60;
         for (let i = 0; i < particleCount; i++) {
             particles.push(new Particle());
         }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-            }
-            animationFrameId = requestAnimationFrame(animateParticles);
-        }
-        animateParticles();
     }
 
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animateParticles);
+    }
+
+    window.addEventListener("resize", () => {
+        resizeCanvas();
+        initParticles();
+    });
+
+    resizeCanvas();
+    initParticles();
+    animateParticles();
 
     /* ==========================================================================
-       3. PERSISTENT SUBMENU STATE PRESERVATION ENGINE
+       2. REAL-TIME CLOCK
        ========================================================================== */
-    const toggles = document.querySelectorAll(".submenu-toggle");
-
-    toggles.forEach((toggle, idx) => {
-        const parent = toggle.closest(".submenu-container");
-        const cacheKey = `vault_menu_expanded_${idx}`;
-
-        // Restore verified expansion indexes across current page loops
-        if (sessionStorage.getItem(cacheKey) === "true") {
-            parent.classList.add("expanded");
-            toggle.setAttribute("aria-expanded", "true");
+    function updateClock() {
+        if (clockElement) {
+            clockElement.textContent = new Date().toLocaleString();
         }
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
 
-        toggle.addEventListener("click", (e) => {
+    /* ==========================================================================
+       3. EXPANDABLE SUBMENUS WITH STATE RETENTION
+       ========================================================================== */
+    const submenuContainers = document.querySelectorAll('.submenu-container');
+
+    // Restore submenu states from session storage
+    submenuContainers.forEach(container => {
+        const menuId = container.getAttribute('data-menu');
+        if (openMenus.includes(menuId)) {
+            container.classList.add('open');
+            const trigger = container.querySelector('.submenu-trigger');
+            if (trigger) trigger.setAttribute('aria-expanded', 'true');
+        }
+    });
+
+    submenuContainers.forEach(container => {
+        const trigger = container.querySelector('.submenu-trigger');
+        const menuId = container.getAttribute('data-menu');
+
+        trigger.addEventListener('click', (e) => {
             e.preventDefault();
-            const isOpen = parent.classList.toggle("expanded");
-            toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-            sessionStorage.setItem(cacheKey, isOpen ? "true" : "false");
+            const isOpen = container.classList.contains('open');
+
+            // Close other sibling submenus
+            submenuContainers.forEach(other => {
+                if (other !== container) {
+                    other.classList.remove('open');
+                    other.querySelector('.submenu-trigger').setAttribute('aria-expanded', 'false');
+                    const otherId = other.getAttribute('data-menu');
+                    const idx = openMenus.indexOf(otherId);
+                    if (idx > -1) openMenus.splice(idx, 1);
+                }
+            });
+
+            // Toggle state
+            if (isOpen) {
+                container.classList.remove('open');
+                trigger.setAttribute('aria-expanded', 'false');
+                const idx = openMenus.indexOf(menuId);
+                if (idx > -1) openMenus.splice(idx, 1);
+            } else {
+                container.classList.add('open');
+                trigger.setAttribute('aria-expanded', 'true');
+                if (!openMenus.includes(menuId)) openMenus.push(menuId);
+            }
+
+            // Update session storage
+            sessionStorage.setItem("openSubmenus", JSON.stringify(openMenus));
         });
     });
 
+    /* ==========================================================================
+       4. ACTIVE SIDEBAR NAVIGATION HIGHLIGHTING
+       ========================================================================== */
+    const allLinks = document.querySelectorAll('.filter-link, .submenu-link');
+    
+    // Read the current active link from session storage to keep it active across interactions
+    const activeLinkHref = sessionStorage.getItem('activeSidebarLink');
+    if (activeLinkHref) {
+        allLinks.forEach(link => {
+            if (link.getAttribute('href') === activeLinkHref) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+
+    allLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            // Remove active style from everything
+            allLinks.forEach(item => item.classList.remove('active'));
+            // Highlight clicked item
+            this.classList.add('active');
+            // Save selection
+            if (this.getAttribute('href') !== '#') {
+                sessionStorage.setItem('activeSidebarLink', this.getAttribute('href'));
+            }
+        });
+    }); 
+
+
+
+        /* ==========================================================================
+       5. MOBILE RESPONSIVE SIDEBAR LOGIC
+       ========================================================================== */
+    function closeMobileSidebar() {
+        if (sidebar && menuToggle && overlay) {
+            sidebar.classList.remove('active');
+            menuToggle.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = ''; // Restore page scrolling
+        }
+    }
+
+    if (menuToggle && sidebar && overlay) {
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isActive = sidebar.classList.contains('active');
+            
+            sidebar.classList.toggle('active', !isActive);
+            menuToggle.classList.toggle('active', !isActive);
+            overlay.classList.toggle('active', !isActive);
+            
+            // Prevent body scroll when mobile sidebar is open
+            document.body.style.overflow = !isActive ? 'hidden' : '';
+        });
+
+        // Close sidebar when clicking outside on overlay
+        overlay.addEventListener('click', closeMobileSidebar);
+
+        // Auto-close sidebar after clicking any link inside it
+        const sidebarLinks = sidebar.querySelectorAll('a, .submenu-link');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                // Perform quick fade animation for navigation link click
+                link.style.opacity = '0.5';
+                setTimeout(() => { link.style.opacity = ''; }, 200);
+                
+                // Close sidebar after minor delay to ensure visual feedback
+                setTimeout(closeMobileSidebar, 250);
+            });
+        });
+    }
 
     /* ==========================================================================
-       4. PERFORMANT LIVE SEARCH & DEEP TEXT SELECTION HIGHLIGHTER
+       6. POWERFUL UNIVERSAL SEARCH ENGINE (WITH TEXT HIGHLIGHTING)
        ========================================================================== */
     const searchInput = document.getElementById("searchInput");
-    const noResults = document.getElementById("noResults");
+    const noResults = document.getElementById("no-results");
 
-    function processHighlight(element, queryText) {
-        if (!element) return;
-        if (!queryText) {
-            if (element.hasAttribute("data-raw-content")) {
-                element.innerHTML = element.getAttribute("data-raw-content");
+    /**
+     * Highlights search queries inside elements matching input.
+     * Preserves original inner HTML structures while highlighting search parameters.
+     */
+    function highlightSearch(element, text) {
+        if (!text) {
+            // Restore clean text from stored raw attribute if present
+            if (element.hasAttribute('data-original-text')) {
+                element.innerHTML = element.getAttribute('data-original-text');
+                element.removeAttribute('data-original-text');
             }
             return;
         }
 
-        if (!element.hasAttribute("data-raw-content")) {
-            element.setAttribute("data-raw-content", element.innerHTML);
+        // Store original text state if not already saved
+        if (!element.hasAttribute('data-original-text')) {
+            element.setAttribute('data-original-text', element.innerHTML);
         }
 
-        const standardHTML = element.getAttribute("data-raw-content");
-        const safeQuery = queryText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-        const expression = new RegExp(`(${safeQuery})`, "gi");
-
-        element.innerHTML = standardHTML.replace(expression, `<mark class="search-match">$1</mark>`);
+        const rawText = element.getAttribute('data-original-text');
+        const regex = new RegExp(`(${escapeRegExp(text)})`, 'gi');
+        
+        // Highlight terms while skipping internal HTML tag structures
+        const highlighted = rawText.replace(regex, '<mark class="highlight">$1</mark>');
+        element.innerHTML = highlighted;
     }
 
-    // Guard clause protects pages lacking search structures (like notice.html) from crashing
-    if (searchInput && noResults) {
+    function escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    if (searchInput) {
         searchInput.addEventListener("input", () => {
-            const val = searchInput.value.trim().toLowerCase();
-            let matchedElements = 0;
+            const query = searchInput.value.trim().toLowerCase();
+            let hasMatches = false;
 
-            // --- Grid Cards Search Core ---
-            const searchableCards = document.querySelectorAll(".note-card-searchable");
-            searchableCards.forEach(card => {
-                const titleNode = card.querySelector(".searchable-title");
-                const descNode = card.querySelector(".searchable-desc");
-                if (!titleNode || !descNode) return;
-                
-                const plainString = `${titleNode.textContent} ${descNode.textContent}`.toLowerCase();
+            // 1. Process and filter Subject Cards
+            const cards = document.querySelectorAll(".note-card");
+            cards.forEach(card => {
+                const titleEl = card.querySelector(".searchable-title");
+                const descEl = card.querySelector(".searchable-desc");
+                const cardTitle = titleEl ? titleEl.textContent : "";
+                const cardDesc = descEl ? descEl.textContent : "";
 
-                if (plainString.includes(val)) {
+                const matchesTitle = cardTitle.toLowerCase().includes(query);
+                const matchesDesc = cardDesc.toLowerCase().includes(query);
+
+                if (matchesTitle || matchesDesc) {
                     card.style.display = "flex";
-                    matchedElements++;
-                    processHighlight(titleNode, val);
-                    processHighlight(descNode, val);
+                    hasMatches = true;
+
+                    // Apply highlights if query exists
+                    if (titleEl) highlightSearch(titleEl, query);
+                    if (descEl) highlightSearch(descEl, query);
                 } else {
                     card.style.display = "none";
-                    processHighlight(titleNode, "");
-                    processHighlight(descNode, "");
+                    if (titleEl) highlightSearch(titleEl, "");
+                    if (descEl) highlightSearch(descEl, "");
                 }
             });
 
-            // --- Sidebar List Elements Search Core ---
-            const interactiveNavItems = document.querySelectorAll(".searchable-item");
-            interactiveNavItems.forEach(item => {
-                const innerTextElement = item.querySelector(".menu-title") || item.querySelector("span") || item;
-                const matchStringText = innerTextElement.textContent.toLowerCase();
-
-                if (matchStringText.includes(val)) {
-                    item.style.opacity = "1";
-                    item.style.pointerEvents = "auto";
-                    if (val.length > 0) {
-                        matchedElements++;
-                        processHighlight(innerTextElement, val);
-
-                        // Auto-expand parents if items match within closed dropdown paths
-                        const subBlock = item.closest(".submenu-container");
-                        if (subBlock && !subBlock.classList.contains("expanded")) {
-                            subBlock.classList.add("expanded");
-                            const toggleBtn = subBlock.querySelector(".submenu-toggle");
-                            if (toggleBtn) toggleBtn.setAttribute("aria-expanded", "true");
-                        }
-                    } else {
-                        processHighlight(innerTextElement, "");
+            // 2. Process and highlight Sidebar Navigation Links
+            const menuLinks = document.querySelectorAll(".filter-link, .submenu-link");
+            menuLinks.forEach(link => {
+                const text = link.textContent.trim().toLowerCase();
+                if (query && text.includes(query)) {
+                    hasMatches = true;
+                    highlightSearch(link, query);
+                    
+                    // If a sublink matches, automatically expand parent submenu
+                    const parentContainer = link.closest('.submenu-container');
+                    if (parentContainer && !parentContainer.classList.contains('open')) {
+                        parentContainer.classList.add('open');
+                        const trigger = parentContainer.querySelector('.submenu-trigger');
+                        if (trigger) trigger.setAttribute('aria-expanded', 'true');
                     }
                 } else {
-                    if (val.length > 0) {
-                        item.style.opacity = "0.25"; // Visual filtering feedback
-                        processHighlight(innerTextElement, "");
-                    } else {
-                        item.style.opacity = "1";
-                        processHighlight(innerTextElement, "");
-                    }
+                    highlightSearch(link, "");
                 }
             });
 
-            // --- Handle Blank Fallback States ---
-            if (matchedElements === 0 && val.length > 0) {
-                noResults.className = "no-results-visible";
-            } else {
-                noResults.className = "no-results-hidden";
+            // 3. Display or Hide "No results found" notification card
+            if (noResults) {
+                noResults.style.display = (!hasMatches && query !== "") ? "block" : "none";
             }
         });
     }
 
-
     /* ==========================================================================
-       5. INTERACTIVE MOBILE DRAWER LAYOUT CONTROLS
+       7. BACK TO TOP CONFIGURATION
        ========================================================================== */
-    const menuToggle = document.getElementById("menuToggle");
-    const sidebar = document.getElementById("sidebar");
-    const sidebarOverlay = document.getElementById("sidebarOverlay");
-
-    function shutMobileSidebar() {
-        if (menuToggle) {
-            menuToggle.classList.remove("active");
-            menuToggle.setAttribute("aria-expanded", "false");
-        }
-        if (sidebar) sidebar.classList.remove("open");
-        if (sidebarOverlay) sidebarOverlay.classList.remove("visible");
-    }
-
-    if (menuToggle && sidebar && sidebarOverlay) {
-        menuToggle.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const sideActive = menuToggle.classList.toggle("active");
-            menuToggle.setAttribute("aria-expanded", sideActive ? "true" : "false");
-            sidebar.classList.toggle("open");
-            sidebarOverlay.classList.toggle("visible");
-        });
-
-        // Click tracking layers to intercept tap-outside operations safely
-        sidebarOverlay.addEventListener("click", shutMobileSidebar);
-        
-        document.addEventListener("click", (e) => {
-            if (window.innerWidth <= 768 && !sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
-                shutMobileSidebar();
-            }
-        });
-    }
-
-    // Capture links to activate visual status tracking anchors
-    const primaryNavLinks = document.querySelectorAll(".filter-link:not(.submenu-toggle)");
-    primaryNavLinks.forEach(link => {
-        link.addEventListener("click", () => {
-            primaryNavLinks.forEach(node => node.classList.remove("active"));
-            link.classList.add("active");
-
-            if (window.innerWidth <= 768) {
-                // Instantly shut mobile menus upon selection
-                setTimeout(shutMobileSidebar, 150);
-            }
-        });
-    });
-
-
-    /* ==========================================================================
-       6. HIGH-CONTRAST ACCESSIBILITY BRIGHTNESS ENGINE (REVERTED)
-       ========================================================================== */
-    const themeBtn = document.getElementById("themeBtn");
-
-    if (themeBtn) {
-        if (localStorage.getItem("vault_theme") === "light") {
-            document.body.classList.add("light");
-            themeBtn.innerHTML = "☀️ Theme";
-        }
-
-        themeBtn.addEventListener("click", () => {
-            const activeState = document.body.classList.toggle("light");
-            themeBtn.innerHTML = activeState ? "☀️ Theme" : "🌙 Theme";
-            localStorage.setItem("vault_theme", activeState ? "light" : "dark");
-        });
-    }
-
-
-    /* ==========================================================================
-       7. CLEAN DIGITAL CORE CLOCK & VIEWPORT UTILITY HANDLERS
-       ========================================================================== */
-    const clock = document.getElementById("clock");
-
-    function cycleClock() {
-        if (clock) {
-            const current = new Date();
-            clock.innerHTML = current.toLocaleDateString(undefined, { 
-                weekday: 'short', 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric' 
-            }) + " | " + current.toLocaleTimeString(undefined, { hour12: true });
-        }
-    }
-    if (clock) {
-        setInterval(cycleClock, 1000);
-        cycleClock();
-    }
-
-    // Scroll offset mechanics for top floating triggers
-    const topBtn = document.getElementById("topBtn");
     if (topBtn) {
         window.addEventListener("scroll", () => {
-            if (window.scrollY > 350) {
-                topBtn.classList.add("visible");
+            if (window.scrollY > 300) {
+                topBtn.classList.add("show");
             } else {
-                topBtn.classList.remove("visible");
+                topBtn.classList.remove("show");
             }
-        }, { passive: true }); // Performance modification for scrolling layout tracking
+        });
 
         topBtn.addEventListener("click", () => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
         });
     }
 
+    /* ==========================================================================
+       8. THEME TOGGLE & STATE PRESERVATION
+       ========================================================================== */
+    // Apply saved theme state on initialization
+    if (localStorage.getItem("theme") === "light") {
+        document.body.classList.add("light");
+        if (themeBtn) themeBtn.textContent = "☀️ Theme";
+    } else {
+        document.body.classList.remove("light");
+        if (themeBtn) themeBtn.textContent = "🌙 Theme";
+    }
+
+    if (themeBtn) {
+        themeBtn.onclick = () => {
+            document.body.classList.toggle("light");
+            const isLight = document.body.classList.contains("light");
+            
+            localStorage.setItem("theme", isLight ? "light" : "dark");
+            themeBtn.textContent = isLight ? "☀️ Theme" : "🌙 Theme";
+        };
+    }
 });
